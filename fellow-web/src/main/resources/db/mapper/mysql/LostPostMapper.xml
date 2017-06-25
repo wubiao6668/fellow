@@ -36,7 +36,7 @@
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO (
+        INSERT INTO lost_post (
         post_type,
         good_type,
         place_type,
@@ -92,7 +92,7 @@
     </insert>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO (
+        INSERT INTO lost_post (
         <if test="@Ognl@isNotEmpty(postType)">
             post_type,
         </if>
@@ -230,7 +230,7 @@
     </insert>
 
     <update id="update" >
-        UPDATE SET
+        UPDATE lost_post SET
         <if test="@Ognl@isNotEmpty(postType)">
             post_type = #{postType},
         </if>
@@ -522,38 +522,38 @@
 
     <select id="selectPost" resultMap="LostPost">
         SELECT
-            id,
-            post_type,
-            good_type,
-            place_type,
-            title,
-            brief,
-            post_account,
-            post_time,
-            happened_date,
-            up_num,
-            down_num,
-            view_num,
-            reply_num,
-            love_num,
-            img_num,
-            post_lng,
-            post_lat
+        id,
+        post_type,
+        good_type,
+        place_type,
+        title,
+        brief,
+        post_account,
+        post_time,
+        happened_date,
+        up_num,
+        down_num,
+        view_num,
+        reply_num,
+        love_num,
+        img_num,
+        post_lng,
+        post_lat
         FROM
-            lost_post
-            <include refid="selectLostPost_where"/>
-            <if test="@Ognl@isNotEmpty(sortColumns)">
-                ORDER BY ${sortColumns}
-            </if>
-            LIMIT ${limit}
+        lost_post
+        <include refid="selectLostPost_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        LIMIT ${limit}
     </select>
 
     <select id="selectPostCount" resultType="long">
         SELECT
-            COUNT(id)
+        COUNT(id)
         FROM
-            lost_post
-            <include refid="selectLostPost_where"/>
+        lost_post
+        <include refid="selectLostPost_where"/>
     </select>
 
     <sql id="selectLostPost_where">
@@ -592,66 +592,67 @@
     </sql>
 
     <update id="replyIncrement">
-        UPDATE SET reply_num = reply_num+1 WHERE id = #{id}
+        UPDATE lost_post SET reply_num = reply_num+1 WHERE id = #{id}
     </update>
     <update id="upIncrement">
-        UPDATE SET up_num = up_num+1 WHERE id = #{id}
+        UPDATE lost_post SET up_num = up_num+1 WHERE id = #{id}
     </update>
     <update id="downIncrement">
-        UPDATE SET down_num = down_num+1 WHERE id = #{id}
+        UPDATE lost_post SET down_num = down_num+1 WHERE id = #{id}
     </update>
     <update id="viewIncrement">
-        UPDATE SET view_num = view_num+1 WHERE id = #{id}
+        UPDATE lost_post SET view_num = view_num+1 WHERE id = #{id}
     </update>
     <update id="loveIncrement">
-        UPDATE SET love_num = love_num+1 WHERE id = #{id}
+        UPDATE lost_post SET love_num = love_num+1 WHERE id = #{id}
     </update>
 
     <update id="replyDecrement">
-        UPDATE SET reply_num = reply_num - 1 WHERE id = #{id}
+        UPDATE lost_post SET reply_num = reply_num - 1 WHERE id = #{id}
     </update>
 
     <select id="selectPostTitleByIds" resultMap="LostPost">
         SELECT
-            id,
-            title
+        id,
+        title
         FROM
-            lost_post
+        lost_post
         WHERE
-            id  IN
-            <foreach collection="idList" item="idTemp" open="(" separator="," close=")">
-                #{idTemp}
-            </foreach>
+        id  IN
+        <foreach collection="idList" item="idTemp" open="(" separator="," close=")">
+            #{idTemp}
+        </foreach>
     </select>
 
 
     <select id="selectMyPost" resultMap="LostPost">
         SELECT
-            post_type,
-            good_type,
-            place_type,
-            title,
-            brief,
-            post_account,
-            happened_date,
-            post_time,
-            up_num,
-            down_num,
-            view_num,
-            reply_num,
-            love_num,
-            img_num,
-            post_lng,
-            post_lat
+        id,
+        post_type,
+        good_type,
+        place_type,
+        title,
+        brief,
+        post_account,
+        happened_date,
+        post_time,
+        up_num,
+        down_num,
+        view_num,
+        reply_num,
+        love_num,
+        img_num,
+        post_lng,
+        post_lat
         FROM
-            lost_post
+        lost_post
         WHERE
-            is_delete = 0
-            AND post_account = #{postAccount}
-            <if test="@Ognl@isNotEmpty(sortColumns)">
-                ORDER BY ${sortColumns}
-            </if>
-            LIMIT ${limit}
+        is_delete = 0
+        AND post_account = #{postAccount}
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        LIMIT ${limit}
     </select>
 
 </mapper>

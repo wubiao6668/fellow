@@ -1,6 +1,6 @@
 #if(${collectionUtils.isNotEmpty($postList)})
     #foreach($post in  $postList)
-    <a href="#" class="list-group-item">
+    <a href="/post/lost/postDetail/index?postId=${post.id}" target="_blank" class="list-group-item">
         <span class="glyphicon glyphicon-star-empty"></span>
         <span class="">$!{post.title}</span>
     ##                <span class="text-muted" style="font-size: 11px;">- More content here</span>
