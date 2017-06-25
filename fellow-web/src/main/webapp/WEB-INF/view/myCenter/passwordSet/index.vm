@@ -1,0 +1,100 @@
+#set($layout="/layout/empty.vm")
+<div class="row">
+    <div class="col-sm-12">
+        <form id="passwordForm">
+            <div class="form-group col-sm-12">
+                <label class="col-sm-5 control-label text-right">原始密码</label>
+
+                <div class="col-sm-6">
+                    <input type="password" name="oldPw">
+                    <span class="red"><b><em name="field_validate" id="oldPw_error"></em></span>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label class="col-sm-5 control-label text-right">新密码</label>
+
+                <div class="col-sm-6">
+                    <input type="password" name="newPw">
+                    <span class="red"><b><em name="field_validate" id="newPw_error"></em></span>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label class="col-sm-5 control-label text-right">再次输入新密码</label>
+
+                <div class="col-sm-6">
+                    <input type="password" name="confirmPw">
+                    <span class="red"><b><em name="field_validate" id="confirmPw_error"></em></span>
+                </div>
+            </div>
+        </form>
+        <div class="form-group col-sm-12 text-center">
+            <button class="btn btn-sm btn-info dropdown-toggle" onclick="return updatePassword(this);">
+                <i class="ace-icon glyphicon glyphicon-check   bigger-110"></i>
+                保存
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function updatePassword(obj) {
+        var isValidate = true;
+        $("[name='field_validate']").html("");
+        var passwordForm = $("#passwordForm").serializeJSON();
+        if ("" == $.trim(passwordForm.oldPw)) {
+            $("#oldPw_error").html("原始密码不能为空！");
+            isValidate = false;
+        } else if ("" == $.trim(passwordForm.newPw)) {
+            $("#newPw_error").html("新密码不能为空！");
+            isValidate = false;
+        } else if ("" == $.trim(passwordForm.confirmPw)) {
+            $("#confirmPw_error").html("确认密码不能为空！");
+            isValidate = false;
+        } else if (passwordForm.newPw != passwordForm.confirmPw) {
+            $("#confirmPw_error").html("确认密码与新密码不一致！");
+            isValidate = false;
+        }
+        if (!isValidate) {
+            return false;
+        }
+        $.ajax({
+            url: "/myCenter/passwordSet/updatePassword",
+            type: 'POST',
+            data: passwordForm,
+            dataType: "json",
+            success: function (response) {
+                var message = "";
+                if (response) {
+                    message = response.message;
+                    if (response.success) {
+                        alert("密码修改成功！");
+                        return false;
+                    } else {
+                        if ("" != $.trim(response.status)) {
+                            if (1 == response.status) {
+                                $("#oldPw_error").html(message);
+                            }
+                            if (2 == response.status) {
+                                $("#newPw_error").html(message);
+                            }
+                            if (3 == response.status) {
+                                $("#confirmPw_error").html(message);
+                            }
+                            return false;
+                        }
+                    }
+                }
+                message = "" == $.trim(message) ? "密码修改失败，系统出问题了！" : message;
+                alert(message);
+                return false;
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+                return false;
+            }
+        });
+        return false;
+    }
+
+</script>

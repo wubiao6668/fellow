@@ -1,0 +1,166 @@
+#set($layout="/layout/empty.vm")
+#if(${collectionUtils.isNotEmpty($postReplyList)})
+    #foreach($postReply in $postReplyList)
+    <div  class="list-group-item">
+        <p style="padding-top: 10px">
+            <span class="glyphicon glyphicon-star-empty"></span>我：$!{postReply.content}
+            #if(${collectionUtils.isNotEmpty($!{postReply.imgList})})
+                <div>
+                    <ul class="ace-thumbnails clearfix" data-rel-name="colorbox_${postReply.id}">
+                        <!-- #section:pages/gallery -->
+                        #foreach($lostImg in ${postReply.imgList})
+                            <li>
+                                <div>
+                                    <img width="80" height="110" style="max-width: 120px" alt="120x120"
+                                         src="${lostImg.imgRootPath}/${lostImg.imgRelativePath}"/>
+                                    <div class="text">
+                                        <div class="inner">
+                                            <a href="${lostImg.imgRootPath}/${lostImg.imgRelativePath}"
+                                               data-rel="colorbox_${postReply.id}">
+                                                <i class="ace-icon fa fa-search-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    #if($velocityCount == 1)
+                                        <div class="tags">
+                                            <!-- #section:pages/gallery.tags -->
+                                                    <span class="label-holder">
+                                                        <span class="label label-warning arrowed-in">共 ${postReply.imgList.size()}张</span>
+                                                    </span>
+                                            <!-- /section:pages/gallery.tags -->
+                                        </div>
+                                    #end
+                                </div>
+                            </li>
+                        #end
+                    </ul>
+                </div>
+            #end
+        <p>
+           <span class="name">
+                    <em>$!{postReply.replyTimeString}我评论帖子<a target="_blank" href="/post/lost/postDetail/index?postId=$!{postReply.postId}">$!{postReply.title}</a></em>
+            </span>
+
+            <span class="pull-right">
+                <a href="javascript:;" onclick="removePostComment(this)" postId="$!{postReply.postId}" replyId="$!{postReply.id}">
+                    <i class="ace-icon fa fa-trash-o red">删除</i>
+                </a>
+            </span>
+
+           <span class="pull-right" style="margin-right: 10px">
+                <span class="badge badge-light">
+                    <i class="glyphicon glyphicon-thumbs-down green"></i> $!{postReply.downNum}
+                </span>
+            </span>
+
+              <span class="pull-right" style="margin-right: 10px">
+                 <span class="badge badge-light">
+                     <i class="glyphicon glyphicon-thumbs-up blue"></i> $!{postReply.upNum}
+                 </span>
+            </span>
+
+           <span class="pull-right" style="margin-right: 10px">
+                <span class="badge badge-light">
+                    <i class="ace-icon fa fa-heart red"></i> $!{postReply.loveNum}
+                </span>
+            </span>
+            <span class="pull-right" style="margin-right: 10px">
+                <span class="badge badge-light">
+                    <i class="ace-icon fa fa-comments green"></i> $!{postReply.replyNum}
+                </span>
+            </span>
+        </p>
+        </p>
+    </div>
+    #end
+    <div class="text-right no-padding">
+    <ul class="pagination">
+        #set($paginator = $!{replyPaginator})
+        <li  #if(${paginator.isFirstPage()}) class="disabled"  #end>
+            <a href="javascript:;" onclick="loadPostReplyList(${paginator.prePage})">
+                上一页
+            </a>
+        </li>
+        #set( $sliders = ${paginator.slider})
+        #foreach($pIndex in $sliders)
+            #if($velocityCount == 1 && $pIndex != 1)
+                <li>
+                    <a href="javascript:;"
+                       onclick="loadPostList(1)">1 #if($pIndex != 2) ...  #end</a>
+                </li>
+            #end
+            <li #if($pIndex == ${paginator.page}) class="active" #end>
+                <a href="javascript:;"
+                   onclick="loadPostList(${pIndex})">$pIndex</a>
+            </li>
+            #if($velocityCount == ${sliders.size()} && $pIndex < ${paginator.totalPages})
+                <li>
+                    #set($preLastPage = ${pIndex} + 1)
+                    <a href="javascript:;"
+                       onclick="loadPostList(${paginator.totalPages})"> #if(${preLastPage} != ${paginator.totalPages})
+                        ...#end ${paginator.totalPages}</a>
+                </li>
+            #end
+        #end
+        <li  #if(${paginator.isLastPage()}) class="disabled"  #end>
+            <a  #if(!${paginator.isLastPage()}) href="javascript:;"  #end
+                                                onclick="loadPostList(${paginator.nextPage})">
+                下一页
+            </a>
+        </li>
+        <li>
+            <input type="number" placeholder="页码" style="width:50px;text-align:center;float:left"
+                   id="gotoPageText" value="">
+        </li>
+        <li>
+            <a href="javascript:;" onclick="gotoPage(this)" limit="${paginator.limit}"
+               totalPages="${paginator.totalPages}" class="btn btn-mini btn-success">
+                跳转
+            </a>
+        </li>
+    </ul>
+    </div>
+#else
+    <div class="text-center">
+        <div class="alert alert-warning">
+            <i class="ace-icon glyphicon glyphicon-user"></i>我没有评论过帖子！
+        </div>
+    </div>
+#end
+
+<script>
+
+    function loadPostList(page){
+        $.get("/myCenter/myPostReply/index?page=" + page, function (html) {
+            $("#myPostReplyTab").html(html);
+        })
+    }
+
+    function removePostComment(obj){
+        var replyId = $(obj).attr("replyId");
+        var postId = $(obj).attr("postId");
+        var param = "id=" + replyId + "&postId=" + postId;
+        $.ajax({
+            url: "/myCenter/myPostReply/deleteByAccount",
+            type: 'POST',
+            data: param,
+            dataType: "json",
+            success: function (response) {
+                var message = "";
+                if (response) {
+                    message = response.message;
+                    if (response.success) {
+                        loadPostList(1);
+                        return false;
+                    }
+                }
+                message = "" == $.trim(message) ? "帖子查询失败！" : message;
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+    }
+
+</script>

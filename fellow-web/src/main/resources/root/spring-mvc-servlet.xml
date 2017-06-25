@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+	     http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         http://www.springframework.org/schema/aop
+	     http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/util
+    	 http://www.springframework.org/schema/util/spring-util.xsd"
+       default-autowire="byName" default-lazy-init="true">
+    <context:property-placeholder location="classpath:important.properties"/>
+    <mvc:default-servlet-handler/>
+    <!-- 自动扫描 -->
+    <context:annotation-config/>
+    <context:component-scan base-package="com.fellow.web.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!-- 启用注解支持 -->
+    <mvc:annotation-driven>
+        <mvc:return-value-handlers>
+            <bean class="com.fellow.common.plugin.JqGrid.JqGridTablePageHandlerMethodReturnValueHandler">
+                <constructor-arg>
+                    <util:list>
+                        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                            <property name="supportedMediaTypes">
+                                <list>
+                                    <value>application/json</value>
+                                    <value>application/javascript</value>
+                                    <value>text/json</value>
+                                    <value>text/javascript</value>
+                                    <value>text/html</value>
+                                </list>
+                            </property>
+                        </bean>
+                    </util:list>
+                </constructor-arg>
+            </bean>
+        </mvc:return-value-handlers>
+    </mvc:annotation-driven>
+
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="layoutUrl" value="/layout/default.vm"/>
+        <property name="cache" value="false"/>
+        <property name="suffix" value=".vm"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="dateToolAttribute" value="dateTool"/>
+        <property name="numberToolAttribute" value="numberTool"/>
+        <!--<property name="viewClass" value="com.fellow.test.web.core.filter.VelocityLayoutToolboxView"/>-->
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+        <!-- Merge urlBuilderMap to view context for convenience. You can put your tools which must be thread safe. -->
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="order" value="1"/>
+        <!-- <property name="attributesMap">
+             <map>
+                 <entry key="sec">
+                     <ref bean="authz"/>
+                 </entry>
+             </map>
+         </property>-->
+    </bean>
+
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/view/"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">UTF-8</prop>
+                <prop key="output.encoding">UTF-8</prop>
+                <prop key="contentType">text/html;charset=UTF-8</prop>
+                <prop key="velocimacro.library">macro.vm</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="ignoreDefaultModelOnRedirect" value="true"/>
+        <property name="messageConverters">
+            <list>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="viewResolvers">
+            <list>
+                <ref bean="velocityViewResolver"/>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonJsonView"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!--默认异常错误提示页面-->
+        <property name="defaultErrorView" value="error/default_error"/>
+        <property name="exceptionMappings">
+            <props>
+                <!-- 遇到MaxUploadSizeExceededException异常时，跳转到错误提示页面 -->
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">
+                    /error/maxuploadsize_error
+                </prop>
+                <!--其他所有运行时异常，均跳转到统一错误提示页面-->
+                <prop key="java.lang.RuntimeException">error/default_error</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--    <bean id="authz" class="org.springframework.security.taglibs.velocity.AuthzImpl"/>-->
+
+    <!--文件上传处理-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5242880"/>
+    </bean>
+
+    <mvc:resources mapping="/image/**" location="/image/"/>
+    <mvc:resources mapping="/plugins/**" location="/plugins/"/>
+    <mvc:resources mapping="/static/**" location="/static/"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!--<mvc:exclude-mapping path="/login/**"/>-->
+            <!--<mvc:exclude-mapping path="/"/>-->
+            <mvc:exclude-mapping path="/static/**"/>
+            <bean class="com.fellow.common.interceptor.LoginContextInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login/**"/>
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/static/**"/>
+            <bean class="com.fellow.common.interceptor.CheckLoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

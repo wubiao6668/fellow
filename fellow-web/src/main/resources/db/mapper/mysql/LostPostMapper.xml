@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.LostPostMapper">
+
+    <resultMap id="LostPost" type="com.fellow.domain.model.LostPost">
+        <result property="id" column="id"/>
+        <result property="postType" column="post_type"/>
+        <result property="goodType" column="good_type"/>
+        <result property="placeType" column="place_type"/>
+        <result property="title" column="title"/>
+        <result property="brief" column="brief"/>
+        <result property="postAccount" column="post_account"/>
+        <result property="postTime" column="post_time"/>
+        <result property="happenedDate" column="happened_date"/>
+        <result property="upNum" column="up_num"/>
+        <result property="downNum" column="down_num"/>
+        <result property="viewNum" column="view_num"/>
+        <result property="replyNum" column="reply_num"/>
+        <result property="loveNum" column="love_num"/>
+        <result property="imgNum" column="img_num"/>
+        <result property="postLng" column="post_lng"/>
+        <result property="postLat" column="post_lat"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,post_type,good_type,place_type,title,brief,post_account,post_time,happened_date,up_num,down_num,view_num,reply_num,love_num,img_num,post_lng,post_lat,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO (
+        post_type,
+        good_type,
+        place_type,
+        title,
+        brief,
+        post_account,
+        post_time,
+        happened_date,
+        up_num,
+        down_num,
+        view_num,
+        reply_num,
+        love_num,
+        img_num,
+        post_lng,
+        post_lat,
+        create_account,
+        create_name,
+        create_time,
+        update_account,
+        update_name,
+        update_time,
+        sys_version,
+        is_delete
+
+        ) VALUES (
+        #{postType},
+        #{goodType},
+        #{placeType},
+        #{title},
+        #{brief},
+        #{postAccount},
+        #{postTime},
+        #{happenedDate},
+        #{upNum},
+        #{downNum},
+        #{viewNum},
+        #{replyNum},
+        #{loveNum},
+        #{imgNum},
+        #{postLng},
+        #{postLat},
+        #{createAccount},
+        #{createName},
+        now(),
+        #{updateAccount},
+        #{updateName},
+        #{updateTime},
+        1,
+        0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO (
+        <if test="@Ognl@isNotEmpty(postType)">
+            post_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(goodType)">
+            good_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(placeType)">
+            place_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title,
+        </if>
+        <if test="@Ognl@isNotEmpty(brief)">
+            brief,
+        </if>
+        <if test="@Ognl@isNotEmpty(postAccount)">
+            post_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(postTime)">
+            post_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(happenedDate)">
+            happened_date,
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(viewNum)">
+            view_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(postLng)">
+            post_lng,
+        </if>
+        <if test="@Ognl@isNotEmpty(postLat)">
+            post_lat,
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name,
+        </if>
+        create_time,
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time,
+        </if>
+        sys_version,
+        is_delete
+        ) VALUES (
+        <if test="@Ognl@isNotEmpty(postType)">
+            #{postType},
+        </if>
+        <if test="@Ognl@isNotEmpty(goodType)">
+            #{goodType},
+        </if>
+        <if test="@Ognl@isNotEmpty(placeType)">
+            #{placeType},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(brief)">
+            #{brief},
+        </if>
+        <if test="@Ognl@isNotEmpty(postAccount)">
+            #{postAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(postTime)">
+            #{postTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(happenedDate)">
+            #{happenedDate},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(viewNum)">
+            #{viewNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(postLng)">
+            #{postLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(postLat)">
+            #{postLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            #{createName},
+        </if>
+        now(),
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            #{updateTime},
+        </if>
+        1,
+        0
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE SET
+        <if test="@Ognl@isNotEmpty(postType)">
+            post_type = #{postType},
+        </if>
+        <if test="@Ognl@isNotEmpty(goodType)">
+            good_type = #{goodType},
+        </if>
+        <if test="@Ognl@isNotEmpty(placeType)">
+            place_type = #{placeType},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title = #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(brief)">
+            brief = #{brief},
+        </if>
+        <if test="@Ognl@isNotEmpty(postAccount)">
+            post_account = #{postAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(postTime)">
+            post_time = #{postTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(happenedDate)">
+            happened_date = #{happenedDate},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num = #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(viewNum)">
+            view_num = #{viewNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num = #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num = #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(postLng)">
+            post_lng = #{postLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(postLat)">
+            post_lat = #{postLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time = now(),
+        </if>
+        <if test="@Ognl@isNotEmpty(sysVersion)">
+            sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE lost_post
+        SET
+        <if test="@Ognl@isNotEmpty(postType)">
+            post_type = #{postType},
+        </if>
+        <if test="@Ognl@isNotEmpty(goodType)">
+            good_type = #{goodType},
+        </if>
+        <if test="@Ognl@isNotEmpty(placeType)">
+            place_type = #{placeType},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title = #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(brief)">
+            brief = #{brief},
+        </if>
+        <if test="@Ognl@isNotEmpty(postAccount)">
+            post_account = #{postAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(postTime)">
+            post_time = #{postTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(happenedDate)">
+            happened_date = #{happenedDate},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num = #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(viewNum)">
+            view_num = #{viewNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num = #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num = #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(postLng)">
+            post_lng = #{postLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(postLat)">
+            post_lat = #{postLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_account =#{updateAccount} ,
+        update_name = #{updateName} ,
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE lost_post
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM lost_post
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getByKey" resultMap="LostPost">
+        SELECT <include refid="columns" />
+        FROM lost_post
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findList" resultMap="LostPost">
+        SELECT <include refid="columns" />
+        FROM lost_post
+        <include refid="findList_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+        SELECT count(1)
+        FROM lost_post
+        <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(postType)">
+                AND post_type = #{postType}
+            </if>
+            <if test="@Ognl@isNotEmpty(goodType)">
+                AND good_type = #{goodType}
+            </if>
+            <if test="@Ognl@isNotEmpty(placeType)">
+                AND place_type = #{placeType}
+            </if>
+            <if test="@Ognl@isNotEmpty(title)">
+                AND title = #{title}
+            </if>
+            <if test="@Ognl@isNotEmpty(brief)">
+                AND brief = #{brief}
+            </if>
+            <if test="@Ognl@isNotEmpty(postAccount)">
+                AND post_account = #{postAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(postTimeBegin)">
+                AND post_time &gt;= #{postTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(postTimeEnd)">
+                AND post_time &lt;= #{postTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(happenedDateBegin)">
+                AND happened_date &gt;= #{happenedDateBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(happenedDateEnd)">
+                AND happened_date &lt;= #{happenedDateEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(upNum)">
+                AND up_num = #{upNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(downNum)">
+                AND down_num = #{downNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(viewNum)">
+                AND view_num = #{viewNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyNum)">
+                AND reply_num = #{replyNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(loveNum)">
+                AND love_num = #{loveNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(imgNum)">
+                AND img_num = #{imgNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLng)">
+                AND post_lng = #{postLng}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLat)">
+                AND post_lat = #{postLat}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="selectPost" resultMap="LostPost">
+        SELECT
+            id,
+            post_type,
+            good_type,
+            place_type,
+            title,
+            brief,
+            post_account,
+            post_time,
+            happened_date,
+            up_num,
+            down_num,
+            view_num,
+            reply_num,
+            love_num,
+            img_num,
+            post_lng,
+            post_lat
+        FROM
+            lost_post
+            <include refid="selectLostPost_where"/>
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectPostCount" resultType="long">
+        SELECT
+            COUNT(id)
+        FROM
+            lost_post
+            <include refid="selectLostPost_where"/>
+    </select>
+
+    <sql id="selectLostPost_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(postType)">
+                AND post_type = #{postType}
+            </if>
+            <if test="@Ognl@isNotEmpty(goodType)">
+                AND good_type = #{goodType}
+            </if>
+            <if test="@Ognl@isNotEmpty(placeType)">
+                AND place_type = #{placeType}
+            </if>
+            <if test="@Ognl@isNotEmpty(postAccount)">
+                AND post_account = #{postAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLng)">
+                AND post_lng = #{postLng}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLngStart)">
+                AND post_lng &gt;= #{postLngStart}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLngEnd)">
+                AND post_lng &lt;= #{postLngEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLat)">
+                AND post_lat = #{postLat}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLatStart)">
+                AND post_lat  &gt;= #{postLatStart}
+            </if>
+            <if test="@Ognl@isNotEmpty(postLatEnd)">
+                AND post_lat &lt;= #{postLatEnd}
+            </if>
+        </where>
+    </sql>
+
+    <update id="replyIncrement">
+        UPDATE SET reply_num = reply_num+1 WHERE id = #{id}
+    </update>
+    <update id="upIncrement">
+        UPDATE SET up_num = up_num+1 WHERE id = #{id}
+    </update>
+    <update id="downIncrement">
+        UPDATE SET down_num = down_num+1 WHERE id = #{id}
+    </update>
+    <update id="viewIncrement">
+        UPDATE SET view_num = view_num+1 WHERE id = #{id}
+    </update>
+    <update id="loveIncrement">
+        UPDATE SET love_num = love_num+1 WHERE id = #{id}
+    </update>
+
+    <update id="replyDecrement">
+        UPDATE SET reply_num = reply_num - 1 WHERE id = #{id}
+    </update>
+
+    <select id="selectPostTitleByIds" resultMap="LostPost">
+        SELECT
+            id,
+            title
+        FROM
+            lost_post
+        WHERE
+            id  IN
+            <foreach collection="idList" item="idTemp" open="(" separator="," close=")">
+                #{idTemp}
+            </foreach>
+    </select>
+
+
+    <select id="selectMyPost" resultMap="LostPost">
+        SELECT
+            post_type,
+            good_type,
+            place_type,
+            title,
+            brief,
+            post_account,
+            happened_date,
+            post_time,
+            up_num,
+            down_num,
+            view_num,
+            reply_num,
+            love_num,
+            img_num,
+            post_lng,
+            post_lat
+        FROM
+            lost_post
+        WHERE
+            is_delete = 0
+            AND post_account = #{postAccount}
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+</mapper>

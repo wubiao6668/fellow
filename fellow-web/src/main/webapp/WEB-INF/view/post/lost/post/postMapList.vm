@@ -1,0 +1,110 @@
+###set($layout="layout/empty.vm")
+#if(${collectionUtils.isNotEmpty(${postList})})
+    #foreach($post in ${postList} )
+        #set($postCount = $velocityCount)
+    <div class="profile-activity clearfix" mapHtmlName="$!{post.mapHtmlName}"
+         postLng="$!{post.postLng}" postLat="$!{post.postLat}">
+        <div class="col-xs-12 no-padding">
+
+            <div class="col-xs-1 no-padding">
+                <img alt="$!{post.postAccount}" src="$!{post.postUser.avatar}"/>
+            </div>
+            <div class="col-xs-11">
+                <a class="user" href="javascript:;"> $!{post.postAccount} </a>
+                            <span class="pull-right">
+                                <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                $!{post.postTimeString}
+                            </span>
+
+                <div class="media-body">
+                    <div>
+                        <h4 class="media-heading">
+                            <a class="blue" target="_blank" href="/post/lost/postDetail/index?postId=$!{post.id}">$!{post.title}</a>
+                        </h4>
+                    </div>
+                    <p>$!{post.brief}</p>
+                    #if(${collectionUtils.isNotEmpty(${post.lostImgList})})
+                        <div>
+                            <ul class="ace-thumbnails clearfix"
+                                data-rel-name="colorbox_${postCount}">
+                                #foreach($lostImg in ${post.lostImgList})
+                                    <!-- #section:pages/gallery -->
+                                    <li>
+                                        <div>
+                                            <img width="80" height="82" alt="80x82"
+                                                 src="${lostImg.imgRootPath}${lostImg.imgRelativePath}"/>
+
+                                            <div class="text">
+                                                <div class="inner">
+                                                    <a href="${lostImg.imgRootPath}${lostImg.imgRelativePath}"
+                                                       data-rel="colorbox_${postCount}">
+                                                        <i class="ace-icon fa fa-search-plus"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            #if($velocityCount == 1)
+                                                <div class="tags">
+                                                    <!-- #section:pages/gallery.tags -->
+                                                    <span class="label-holder">
+                                                        <span class="label label-warning arrowed-in">共$!{post.lostImgList.size()}张</span>
+                                                    </span>
+                                                    <!-- /section:pages/gallery.tags -->
+                                                </div>
+                                            #end
+                                        </div>
+                                    </li>
+                                #end
+                            </ul>
+                        </div><!-- PAGE CONTENT ENDS -->
+                    #end
+
+                    <div class="col-md-offset-0 postView">
+                        <span>
+                            <i class="ace-icon fa fa-comments green"></i>
+                            ${post.replyNum}
+                        </span>
+                        <span>
+                            <i class="ace-icon fa fa-eye blue"></i>
+                            ${post.viewNum}
+                        </span>
+                        <span>
+                            <i class="ace-icon fa fa-heart red"></i>
+                            ${post.viewNum}
+                        </span>
+                        <span>
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                            ${post.upNum}
+                        </span>
+                        <span>
+                            <i class="glyphicon glyphicon-thumbs-down"></i>
+                            ${post.downNum}
+                        </span>
+                    </div>
+                    <div class="" style="clear: both">
+                        <i class="fa fa-map-marker"></i> &nbsp; <span name="geoPointToText" postLng="$!{post.postLng}" postLat="$!{post.postLat}">....</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    #end
+#else
+没有数据可显示，可以到其它地方看看哦
+#end
+<script>
+    $(function () {
+        $.each($('.ace-thumbnails[data-rel-name^="colorbox_"]'), function () {
+            var colorbox = $(this).attr("data-rel-name");
+            initColorbox(colorbox, '.ace-thumbnails [data-rel="' + colorbox + '"]');
+        });
+        $('.postList').ace_scroll({
+            size: 555,
+            'observeContent': true,
+            'hideOnIdle': true,
+            'mouseWheelLock': true,
+            'lockAnyway': true
+        });
+    })
+
+</script>

@@ -1,0 +1,61 @@
+#set($layout="/layout/empty.vm")
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        请选择学科门类：  <select name="select">
+        <option value="">-请选择-</option>
+        <option value="100">哲学</option>
+        <option value="200">经济学</option>
+        <option value="300">法学</option>
+        <option value="400">教育学</option>
+    </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm" title="哲学" majorId="10" majorFirst="99" onclick="selectMajor(this)">哲学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">北京航空航天大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">北京邮电大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">北京师范大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">北京科技大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">中国农业大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">北京理工大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">北京化工大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">中国政法大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">对外经贸大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">中央财经大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">北方工业大学</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">中国石油大学（北京）</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">外交学院</button>
+        </div>
+        <div class="col-xs-3 col-sm-3" style="padding:8px 0px 0px 0px">
+            <button type="button" class="btn btn-white btn-purple btn-sm">中国青年政治学院</button>
+        </div>
+    </div>
+</div>

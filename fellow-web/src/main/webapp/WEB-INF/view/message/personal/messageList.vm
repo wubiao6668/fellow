@@ -1,0 +1,98 @@
+#if($collectionUtils.isNotEmpty(${messageList}))
+##<tr class="unread">
+<div class="table-responsive" >
+<table class="table table-hover table-email">
+<tbody>
+#foreach($message in $messageList)
+<tr  #if($message.unreadNum > 0) class="" #end>
+    <td>
+        <div class="ckbox ckbox-theme">
+            <input type="checkbox" name="messageChk" account="$!{message.otherUser.account}" class="mail-checkbox">
+            <label for="checkbox1"></label>
+        </div>
+    </td>
+    <td>
+        <a href="#" class="star star-checked"><i class="fa fa-star"></i></a>
+    </td>
+    <td>
+        <div class="media" onclick="showMsgDetail(this,'$!{message.otherUser.account}','$!{message.unreadNum}');" style="cursor:pointer">
+            <a href="#" class="pull-left">
+                <img alt="..." src="$!{message.otherUser.avatar}" class="media-object">
+            </a>
+
+            <div class="media-body">
+                <h4 class="text-primary">$!{message.otherUser.account}</h4>
+
+                <p class="email-summary">$!{message.message}
+                </p>
+                <span class="media-meta">$!{message.sendTimeString}
+                    <div class="chat-alert text-right">
+                        #if($message.unreadNum > 0)
+                            <span name="nuReadNumDetailSpan">
+                            <span  class="text-muted"><em>未读</em></span><span
+                                class="badge badge-success">$!{message.unreadNum}</span>
+                            </span>
+                        #end
+##                        <span class="text-muted"><em>共</em></span><span
+##                            class="badge badge-important">$!{message.detailCount}</span>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </td>
+</tr>
+#end
+</tbody>
+</table>
+</div>
+<div class="col-sm-12 text-right">
+    <ul class="pagination">
+        #set($paginator = ${paginatorImpl})
+        <li  #if(${paginator.isFirstPage()}) class="disabled"  #end>
+            <a href="javascript:;" onclick="loadPersonMessage(${paginator.prePage},${paginator.limit})">
+                上一页
+            </a>
+        </li>
+        #set( $sliders = ${paginator.slider})
+        #foreach($pIndex in $sliders)
+            #if($velocityCount == 1 && $pIndex != 1)
+                <li>
+                    <a href="javascript:;" onclick="loadPersonMessage(1,${paginator.limit})">1 #if($pIndex != 2)
+                        ...  #end</a>
+                </li>
+            #end
+            <li #if($pIndex == ${paginator.page}) class="active" #end>
+                <a href="javascript:;" onclick="loadPersonMessage(${pIndex},${paginator.limit})">$pIndex</a>
+            </li>
+            #if($velocityCount == ${sliders.size()} && $pIndex < ${paginator.totalPages})
+                <li>
+                    #set($preLastPage = ${pIndex} + 1)
+                    <a href="javascript:;"
+                       onclick="loadPersonMessage(${paginator.totalPages},${paginator.limit})"> #if(${preLastPage} != ${paginator.totalPages})
+                        ...#end ${paginator.totalPages}</a>
+                </li>
+            #end
+        #end
+        <li  #if(${paginator.isLastPage()}) class="disabled"  #end>
+            <a  #if(!${paginator.isLastPage()}) href="javascript:;"  #end
+                                                onclick="loadPersonMessage(${paginator.nextPage},${paginator.limit})">
+                下一页
+            </a>
+        </li>
+        <li>
+            <input type="number" placeholder="页码" style="width:50px;text-align:center;float:left" id="gotoPageText" value="">
+        </li>
+        <li>
+            <a href="javascript:;" onclick="gotoMessagePage(this)" limit="${paginator.limit}"
+               totalPages="${paginator.totalPages}" class="btn btn-mini btn-success">
+                跳转
+            </a>
+        </li>
+    </ul>
+</div>
+#else
+<div class="alert alert-info text-center">
+        <i class="ace-icon fa fa-comments"></i>
+        没有消息
+</div>
+#end

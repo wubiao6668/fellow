@@ -1,0 +1,198 @@
+<style type="text/css">
+    body {
+        margin-top: 20px;
+        background: #ebeef0;
+    }
+
+    .img-sm {
+        width: 46px;
+        height: 46px;
+    }
+
+    .panel {
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.075);
+        border-radius: 0;
+        border: 0;
+        margin-bottom: 15px;
+    }
+
+    .panel .panel-footer, .panel > :last-child {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .panel .panel-heading, .panel > :first-child {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .panel-body {
+        padding: 25px 20px;
+    }
+
+    .media-block .media-left {
+        display: block;
+        float: left
+    }
+
+    .media-block .media-right {
+        float: right
+    }
+
+    .media-block .media-body {
+        display: block;
+        overflow: hidden;
+        z-index: 10;
+        width: auto
+    }
+
+    .middle .media-left,
+    .middle .media-right,
+    .middle .media-body {
+        z-index: 10;
+        vertical-align: middle
+    }
+
+    .thumbnail {
+        border-radius: 0;
+        border-color: #e9e9e9
+    }
+
+    .tag.tag-sm, .btn-group-sm > .tag {
+        padding: 5px 10px;
+    }
+
+    .tag:not(.label) {
+        background-color: #fff;
+        padding: 6px 12px;
+        border-radius: 2px;
+        border: 1px solid #cdd6e1;
+        font-size: 12px;
+        line-height: 1.42857;
+        vertical-align: middle;
+        -webkit-transition: all .15s;
+        transition: all .15s;
+    }
+
+    .text-muted, a.text-muted:hover, a.text-muted:focus {
+        color: #acacac;
+    }
+
+    .text-sm {
+        font-size: 0.9em;
+    }
+
+    .text-5x, .text-4x, .text-5x, .text-2x, .text-lg, .text-sm, .text-xs {
+        line-height: 1.25;
+    }
+
+    .btn-trans {
+        background-color: transparent;
+        border-color: transparent;
+        color: #929292;
+    }
+
+    .btn-icon {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+    .btn-sm, .btn-group-sm > .btn, .btn-icon.btn-sm {
+        padding: 5px 10px !important;
+    }
+
+    .mar-top {
+        margin-top: 15px;
+    }
+</style>
+
+<div class="bootstrap snippets">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10">
+            <!-- #section:pages/timeline -->
+            <div class="timeline-container">
+                <div class="timeline-items">
+                    <!-- #section:pages/timeline.item -->
+                    <div class="timeline-item clearfix">
+                        <div class="timeline-info">
+                            <img alt="Susan't Avatar" src="/static/assets/avatars/avatar1.png"/>
+                            <span class="label label-info label-sm">16:22</span>
+                        </div>
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-small">
+                                <h5 class="widget-title smaller">Haloween party</h5>
+                                <span class="widget-toolbar">
+                                    <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                    1 hour ago
+                                </span>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <form id="timelimeFormId">
+                                        <div class="clearfix">
+                                            <div>
+                                                <textarea id="timelineArea" name="content"
+                                                          class="autosize-transition form-control"
+                                                          style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 120px;"></textarea>
+                                            </div>
+                                            <div>
+                                                <div class="clearfix">
+                                                    <div class="pull-left">
+                                                        <span id="emoji1" class="emoji-container">
+                                                            <img alt="smile" style="width:58px;height:59px"
+                                                                 src="/plugins/emoji/emoji/unicode/1f604.png"
+                                                                 class="emoji-tbtn">
+                                                        </span>
+                                                        <img alt="Image 1" class="dropz" width="60"
+                                                             src="/image/plus.jpg"/> 每张图片不能超过5M，最多上传5张
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <a class="btn btn-success"
+                                                           onclick="return publishLineTime(this)">发布</a>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                    <ul class="ace-thumbnails clearfix" id="publishImagListId">
+                                                    ##
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="peronalDynamicTimelineId">
+
+                        </div>
+                    </div>
+                </div><!-- /.timeline-items -->
+
+            </div><!-- /.timeline-container -->
+            <!-- /section:pages/timeline -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 text-center">
+            <button id="loadMoreDynamic" type="button" class="btn btn-sm btn-primary btn-white btn-round" page="1"
+                    count="1" idLt="" onclick="loadFriendDynamics()">
+                <i class="ace-icon fa fa-rss bigger-150 middle orange2"></i>
+                <span class="bigger-110">加载更多。。。</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="replyImagListTemplateId" style="display: none">
+    <li>
+        <input type="hidden" name="imgStrs">
+        <img width="80" height="80" alt="80x80" src=""/>
+
+        <div class="tools tools-bottom">
+            <a href="javascript:;" onclick="replyImgDelete(this)">
+                <i class="ace-icon fa fa-times red"></i>删除
+            </a>
+        </div>
+    </li>
+</div>
+
+<script src="/static/js/app/personal/personalDynamics.js"></script>

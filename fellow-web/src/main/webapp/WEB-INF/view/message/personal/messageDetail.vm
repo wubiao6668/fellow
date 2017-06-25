@@ -1,0 +1,346 @@
+#set($layout="/layout/empty.vm")
+<style type="text/css">
+    .chat-message {
+        padding: 4px 20px 17px;
+    }
+
+    .chat {
+        list-style: none;
+        margin: 0;
+    }
+
+    .chat-message {
+        background: #f9f9f9;
+    }
+
+    .chat li .chat-img img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50em;
+        -moz-border-radius: 50em;
+        -webkit-border-radius: 50em;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    .chat-body {
+        padding-bottom: 20px;
+    }
+
+    .chat li.left .chat-body {
+        margin-left: 70px;
+        background-color: #fff;
+    }
+
+    .chat li .chat-body {
+        position: relative;
+        font-size: 13px;
+        padding: 0px 10px 10px 10px;
+        border: 1px solid #f1f5fc;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    }
+
+    .chat li .chat-body .msg-header {
+        padding-bottom: 5px;
+        border-bottom: 1px solid #f1f5fc;
+    }
+
+    .chat li .chat-body p {
+        margin: 0;
+    }
+
+    .chat li.left .chat-body:before {
+        position: absolute;
+        top: 10px;
+        left: -8px;
+        display: inline-block;
+        background: #fff;
+        width: 16px;
+        height: 16px;
+        border-top: 1px solid #f1f5fc;
+        border-left: 1px solid #f1f5fc;
+        content: '';
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+    }
+
+    .chat li.right .chat-body:before {
+        position: absolute;
+        top: 10px;
+        right: -8px;
+        display: inline-block;
+        background: #fff;
+        width: 16px;
+        height: 16px;
+        border-top: 1px solid #f1f5fc;
+        border-right: 1px solid #f1f5fc;
+        content: '';
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+    }
+
+    .chat li {
+        margin: 15px 0;
+    }
+
+    .chat li.right .chat-body {
+        margin-right: 70px;
+        background-color: #fff;
+    }
+
+    .chat-box {
+        position: fixed;
+        bottom: 0;
+        left: 444px;
+        right: 0;
+        padding: 15px;
+        border-top: 1px solid #eee;
+        transition: all .5s ease;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        -ms-transition: all .5s ease;
+        -o-transition: all .5s ease;
+    }
+
+    .primary-font {
+        color: #3c8dbc;
+    }
+
+    a:hover, a:active, a:focus {
+        text-decoration: none;
+        outline: 0;
+    }
+
+    .chat-body .mes-del {
+        display: none;
+    }
+
+    .chat-body:hover .mes-del {
+        display: block;
+    }
+</style>
+
+<div class="row">
+    <input type="hidden" id="sendAccount" value="$!{sendAccount}">
+    <input type="hidden" name="minId" id="minId" value="$!{minId}">
+    <!--=========================================================-->
+    <!-- selected chat -->
+    <div id="messageDivId" class="col-md-12 bg-white">
+        <div class="widget-box ui-sortable-handle">
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="chat-message" id="message-scroll">
+                        #set($layout="/layout/empty.vm")
+                        #if($collectionUtils.isNotEmpty(${messageList}))
+                            #if($isShowMore)
+                                <div class="text-center">
+                                    <input type="hidden" name="maxId" id="maxId" value="$!{maxId}">
+                                    <a href="javascript:;" id="loadMoreDetailId" onclick="loadMessageDetail(${page},${pageSize})"><i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>加载更多</a>
+                                </div>
+                            #end
+                            <ul class="chat" id="chatListId">
+                                #foreach($messageDetail in ${messageList})
+                                    #if($messageDetail.receiveAccount == ${account})
+                                        <li class="left clearfix" name="messageDetailBlock" msgId="$!{messageDetail.id}" receiveAccount="$!{messageDetail.receiveAccount}" sendAccount="$!{messageDetail.sendAccount}">
+                                            <span class="chat-img pull-left">
+                                                <img src="$!{messageDetail.receiveUser.avatar}" alt="User Avatar">
+                                            </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="msg-header">
+                                                    <div class="inline position-relative">
+                                                        <button class="btn btn-minier bigger btn-yellow dropdown-toggle"
+                                                                data-toggle="dropdown">
+                                                            <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-toggle dropdown-menu-left dropdown-caret dropdown-close">
+                                                            <li>
+                                                                <a href="javascript:;" onclick=" deleteMessageDetail(this)" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                                    <span class="red">
+                                                                      <i class="ace-icon fa fa-trash-o bigger-110"></i>删除
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <strong class="primary-font">$!{messageDetail.sendAccount}</strong>
+                                                    <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> $!{messageDetail.sendTimeString}
+                                                    </small>
+                                                </div>
+                                                <p>
+                                                    $!{messageDetail.message}
+                                                </p>
+                                            </div>
+                                        </li>
+                                    #else
+                                        <li class="right clearfix" name="messageDetailBlock" msgId="$!{messageDetail.id}" receiveAccount="$!{messageDetail.receiveAccount}" sendAccount="$!{messageDetail.sendAccount}">
+                                            <span class="chat-img pull-right">
+                                                <img src="$!{messageDetail.sendUser.avatar}" alt="">
+                                            </span>
+                                            <div class="chat-body clearfix">
+                                                <div class="msg-header">
+                                                    <div class="inline position-relative">
+                                                        <button class="btn btn-minier bigger btn-yellow dropdown-toggle"
+                                                                data-toggle="dropdown">
+                                                            <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-toggle dropdown-menu-left dropdown-caret dropdown-close">
+                                                            <li>
+                                                                <a href="javascript:;" onclick=" deleteMessageDetail(this)" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                                    <span class="red">
+                                                                      <i class="ace-icon fa fa-trash-o bigger-110"></i>删除
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <strong class="primary-font">$!{messageDetail.sendAccount}</strong>
+                                                    <small class="pull-right text-muted"><i class="fa fa-clock-o"></i>$!{messageDetail.sendTimeString}</small>
+                                                </div>
+                                                <p>
+                                                    $!{messageDetail.message}
+                                                </p>
+                                            </div>
+                                        </li>
+                                    #end
+                                #end
+                            </ul>
+                        #else
+                        <ul class="chat" id="chatListId">
+                            <div id="noMessageChatDiv" class="text-center">
+                                <a  href="javascript:;" class="text-muted"><i class="ace-icon fa fa-comment icon-only bigger-110"></i>没有可查看的消息</a>
+                            </div>
+                        </ul>
+                        #end
+                    </div>
+                    <div class="chat-message" style="border-top: solid 1px">
+                        <form id="timelimeFormId">
+                            <div style="padding: 1px 80px 15px 23px;">
+                                <input type="hidden" name="receiveAccount" value="$!{sendAccount}">
+                                <textarea id="timelineArea" name="message" class="autosize-transition form-control"
+                                          style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 120px;"></textarea>
+                            </div>
+                            <div>
+                                <div class="clearfix">
+                                    <div class="pull-left" style="padding-left:14px">
+                                        <span id="emoji1" class="emoji-container">
+                                            <img alt="smile" style="width:25px;height:24px"  src="/plugins/emoji/emoji/unicode/1f604.png"   class="emoji-tbtn">
+                                        </span>
+                                        <img alt="Image 1" style="width:25px;height:24px" class="dropz" src="/image/plus.jpg" width="60">
+                                    </div>
+                                    <div class="pull-right" style="padding-right:79px">
+                                        <button class="btn btn-success" onclick="return sendMessage(this)">发布</button>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <ul class="ace-thumbnails clearfix" id="publishImagListId">
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="replyImagListTemplateId" style="display: none">
+    <li>
+        <input type="hidden" name="imgStrs">
+        <img width="80" height="80" alt="80x80" src=""/>
+
+        <div class="tools tools-bottom">
+            <a href="javascript:;" onclick="replyImgDelete(this)">
+                <i class="ace-icon fa fa-times red"></i>删除
+            </a>
+        </div>
+    </li>
+</div>
+
+<div id="chatLiTemplateId" style="display: none">
+    <li class="right clearfix" name="messageDetailBlock" msgId=""  receiveAccount=""  sendAccount="">
+        <span class="chat-img pull-right">
+            <img src="/static/assets/avatars/avatar1.png" alt="">
+        </span>
+        <div class="chat-body clearfix">
+            <div class="msg-header">
+                <div class="inline position-relative">
+                    <button class="btn btn-minier bigger btn-yellow dropdown-toggle"
+                            data-toggle="dropdown">
+                        <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-only-icon dropdown-toggle dropdown-menu-left dropdown-caret dropdown-close">
+                        <li>
+                            <a href="javascript:;" onclick=" deleteMessageDetail(this)" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                <span class="red">
+                                  <i class="ace-icon fa fa-trash-o bigger-110"></i>删除
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <strong class="primary-font">$!{account}</strong>
+                <small class="pull-right text-muted"><i class="fa fa-clock-o"></i><span name="liTime"></span></small>
+            </div>
+            <p name="liMessage">
+            </p>
+        </div>
+    </li>
+</div>
+<script type="text/javascript" src="/static/js/app/messageDetail.js"></script>
+<script>
+    var receiveInterval;
+    $(function(){
+        receiveInterval = setInterval(function () {
+            if ("" == $.trim($("#sendAccount").val())) {
+                clearInterval(receiveInterval);
+                return false;
+            }
+            loadMessageReceiveDetail(1, 4);
+        }, 1000000)
+    })
+
+     function deleteMessageDetail(obj){
+         var messageDetailBlockObj = $(obj).closest("[name='messageDetailBlock']");
+         var msgId = $(messageDetailBlockObj).attr("msgId");
+         var receiveAccount = $(messageDetailBlockObj).attr("receiveAccount");
+         var sendAccount = $(messageDetailBlockObj).attr("sendAccount");
+         $.ajax({
+             url: "/message/personal/deleteMessageDetail",
+             type: 'POST',
+             data: $.jsonToParam({
+                 "messageDetails.id": msgId,
+                 "messageDetails.receiveAccount": receiveAccount,
+                 "messageDetails.sendAccount": sendAccount
+             }, true),
+             dataType: "json",
+             success: function (result) {
+                 //信息
+                 var message = "";
+                 if (result) {
+                     message = result.message;
+                     if (result.success) {
+                         messageDetailBlockObj.remove();
+                         return;
+                     }
+                 }
+                 message = ("" == $.trim(message) ? "删除消息失败！" : message );
+                 alert(message);
+             },
+             error: function (request, ajaxOptions, thrownError) {
+                 alert("系统或网络异常！");
+             }
+         });
+         return false;
+     }
+</script>

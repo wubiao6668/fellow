@@ -1,0 +1,44 @@
+<ul name="paginationUl" class="pagination">
+    #set($paginator = ${paginatorImpl})
+    <li  #if(${paginator.isFirstPage()}) class="disabled"  #end name="pagePre">
+        <a href="javascript:;"  #if(!${paginator.isFirstPage()}) onclick="loadPostList(${paginator.prePage})" #end >
+            上一页
+        </a>
+    </li>
+    <li  #if(${paginator.isLastPage()}) class="disabled"  #end>
+        <a href="javascript:;"   #if(!${paginator.isLastPage()}) onclick="loadPostList(${paginator.nextPage})"    #end name="pageNext">
+            下一页
+        </a>
+    </li>
+    #if(${paginator.totalCount} > 0)
+        #set( $sliders = ${paginator.slider})
+        #foreach($pIndex in $sliders)
+            #if($velocityCount == 1 && $pIndex != 1)
+                <li>
+                    <a href="javascript:;" onclick="loadPostList(1,${paginator.limit})">1 #if($pIndex != 2)
+                        ...  #end</a>
+                </li>
+            #end
+            <li #if($pIndex == ${paginator.page}) class="active" #end>
+                <a href="javascript:;" onclick="loadPostList(${pIndex},${paginator.limit})">$pIndex</a>
+            </li>
+            #if($velocityCount == ${sliders.size()} && $pIndex < ${paginator.totalPages})
+                <li>
+                    #set($preLastPage = ${pIndex} + 1)
+                    <a href="javascript:;"
+                       onclick="loadPostList(${paginator.totalPages},${paginator.limit})"> #if(${preLastPage} != ${paginator.totalPages})
+                        ...#end ${paginator.totalPages}</a>
+                </li>
+            #end
+        #end
+        <li>
+            <input type="number" placeholder="页码" style="width:50px;text-align:center;float:left" id="gotoPageText" value="">
+        </li>
+        <li>
+            <a href="javascript:;" onclick="gotoPage(this)" limit="${paginator.limit}"
+               totalPages="${paginator.totalPages}" class="btn btn-mini btn-success">
+                跳转
+            </a>
+        </li>
+    #end
+</ul>

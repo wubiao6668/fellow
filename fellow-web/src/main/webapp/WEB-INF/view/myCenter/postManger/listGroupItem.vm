@@ -1,0 +1,48 @@
+#if(${collectionUtils.isNotEmpty($postList)})
+    #foreach($post in  $postList)
+    <a href="#" class="list-group-item">
+        <span class="glyphicon glyphicon-star-empty"></span>
+        <span class="">$!{post.title}</span>
+    ##                <span class="text-muted" style="font-size: 11px;">- More content here</span>
+         <span class="pull-right myPostViewDetail text-right">
+            <span class="name" style="min-width: 120px; font-size: 11px; display: inline-block;">
+                <em>$!{post.postTimeString} 发布于</em>
+                <span class="label label-info">$!{post.postTypeString}</span>
+            </span>
+              <button class="btn btn-link">
+                  <i class="ace-icon fa fa-trash-o red">删除</i>
+              </button>
+        </span>
+          <span class="pull-right myPostView">
+             <span class="badge badge-light">
+                 <i class="ace-icon fa fa-comments green"></i> $!{post.replyNum}
+             </span>
+        </span>
+        <span class="pull-right myPostView">
+            <span class="badge badge-light">
+                <i class="ace-icon fa fa-eye blue"></i> $!{post.viewNum}
+            </span>
+        </span>
+    </a>
+    #end
+<div class="text-right no-padding">
+    <ul class="pagination">
+        <li #if(!${isHadPrePage}) class="disabled" #end>
+            <a href="javascript:;" #if(${isHadPrePage}) onclick="searchMypost($!{prePage})"  #end>
+                上一页
+            </a>
+        </li>
+        <li #if(!${isHadNextPage}) class="disabled" #end>
+            <a href="javascript:;" #if(${isHadNextPage}) onclick="searchMypost($!{nextPage})" #end>
+                下一页
+            </a>
+        </li>
+    </ul>
+</div>
+#else
+<div class="text-center">
+    <div class="alert alert-warning">
+        <i class="ace-icon glyphicon glyphicon-user"></i>没有发布的帖子！
+    </div>
+</div>
+#end

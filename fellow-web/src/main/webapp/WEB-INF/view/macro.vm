@@ -1,0 +1,14 @@
+#macro(mc_reply $postId $replyId $toAccount $replyType $commentReplyId)
+<span   class="popover-info btn btn-link" data-rel="popover"
+        data-placement="bottom" title='<span name="emojiReply"  class="emoji-container"><img class="emoji-tbtn" src="/plugins/emoji/emoji/unicode/1f604.png" alt="smile"></span>'
+        data-content='<input type="hidden" class="form-field" name="postId" value="$!{postId}">
+            <input type="hidden" class="form-field" name="replyId" value="$!{replyId}">
+            <input type="hidden" class="form-field" name="toAccount" value="$!{toAccount}">
+            <input type="hidden" class="form-field" name="commentReplyId" value="$!{commentReplyId}">
+            <input type="hidden" class="form-field" name="replyType" value="$!{replyType}">
+            <textarea class="area form-field" name="content"></textarea>
+            <div class="text-right" style="padding:8px 1px 2px 3px"><button onclick="commentReply(this)" type="button" style="padding:3px 16px" class="btn  btn-success btn-xs ">发送</button></div>'>
+    <i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
+    回复
+</span>
+#end

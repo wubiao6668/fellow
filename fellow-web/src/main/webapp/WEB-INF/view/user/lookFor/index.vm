@@ -1,0 +1,497 @@
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hMOwbodAwP7lGCPyYoTOPf2K"></script>
+<script type="text/javascript" src="/static/js/app/map.js"></script>
+<style>
+    #allmap {
+        width: 100%;
+        height: 600px;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+
+    .user-look-div {
+        margin-bottom: -7px;
+    }
+
+    .user-look {
+        /*margin-bottom: 10px;*/
+        padding: 10px;
+        /*border-bottom: 1px dotted #d0d8e0;*/
+        /*border-top: 1px dotted #d0d8e0;*/
+        background: #fff none repeat scroll 0 0;
+        display: inline-block;
+    }
+
+    .user-look:hover {
+        background-color: #f4f9fd;
+        border-left: 1px dotted #d0d8e0;
+        border-right: 1px dotted #d0d8e0;
+        width: 100%;
+        display: inline-block;
+    }
+</style>
+<div class="row">
+    <form id="findUserFormId">
+        <div class="col-sm-12">
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-4 text-right control-label no-padding">现居：</label>
+
+                <div class="col-md-7 input-group  no-padding">
+                    <input id="domicile_title_id" onclick="showUserOrgTree('domicile_panel_id'); return false;" class="form-control" type="text" placeholder="现居"/>
+                    <div id="domicile_panel_id" class="well  no-padding" name="downPanel"
+                         style="display:none; position: absolute;z-index: 10;margin-top: 36px;">
+                        <select id="domicile1" name="domicileFirst" titleId="domicile"
+                                onchange="loadDistrictSelect(this,['#domicile2'],['#domicile2','#domicile3','#domicile4'])"
+                                style="margin:6px 3px 3px 10px">
+                            <option value="">请选择</option>
+                        </select>
+                        <select id="domicile2" name="domicileSecond"  titleId="domicile"
+                                onchange="loadDistrictSelect(this,['#domicile3'],['#domicile3','#domicile4'])"
+                                style="margin:6px 3px 3px 10px">
+                            <option value="">请选择</option>
+                        </select>
+                        <select id="domicile3" name="domicileThird"  titleId="domicile"
+                                onchange="loadDistrictSelect(this,['#domicile4'],['#domicile4'])"
+                                style="margin:6px 3px 3px 10px">
+                            <option value="">请选择</option>
+                        </select>
+                        <select id="domicile4" name="domicileFourth" titleId="domicile" onchange="loadDistrictSelect(this)"
+                                style="margin:6px 3px 3px 10px">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">故乡：</label>
+
+                <div class="col-md-6 input-group  no-padding">
+                    <input id="hometown_title_id" onclick="showUserOrgTree('hometown_panel_id'); return false;" class="form-control"
+                           type="text" placeholder="故乡"/>
+
+                    <div id="hometown_panel_id" class="well  no-padding" name="downPanel"
+                         style="display:none; position: absolute;z-index: 10;margin-top: 36px;">
+                        <select style="margin:6px 3px 3px 10px" id="hometown1" name="hometownFirst"  titleId="hometown"
+                                onchange="loadDistrictSelect(this,['#hometown2'],['#hometown2','#hometown3','#hometown4'])">
+                            <option value="">请选择</option>
+                        </select>
+                        <select style="margin:6px 3px 3px 10px" id="hometown2" name="hometownSecond" titleId="hometown"
+                                onchange="loadDistrictSelect(this,['#hometown3'],['#hometown3','#hometown4'])">
+                            <option value="">请选择</option>
+                        </select>
+                        <select style="margin:6px 3px 3px 10px" id="hometown3" name="hometownThird" titleId="hometown"
+                                onchange="loadDistrictSelect(this,['#hometown4'],['#hometown4'])">
+                            <option value="">请选择</option>
+                        </select>
+                        <select style="margin:6px 3px 3px 10px" id="hometown4"  name="hometownFourth"  titleId="hometown"
+                                onchange="loadDistrictSelect(this)">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">专业：</label>
+
+                <div class="col-md-6 input-group  no-padding">
+                    <input id="major_title_id" onclick="showUserOrgTree('major_panel_id'); return false;" class="form-control"
+                           type="text" placeholder="专业"/>
+
+                    <div id="major_panel_id" class="well  no-padding" name="downPanel"
+                         style="display:none; position: absolute;z-index: 10;margin-top: 36px;">
+                        <select style="margin:6px 3px 3px 10px" id="major1" id="major2" titleId="major"
+                                onchange="loadSkill(this.value,['#major2'],['#major2'],'/common/major/selectMajorByUpid')">>
+                            <option value="">请选择</option>
+                        </select>
+                        <select style="margin:6px 3px 3px 10px" id="major2" name="majorId" titleId="major" onchange="loadSkillSelect(this)">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">大学就读城市：</label>
+
+                <div class="col-md-6 input-group  no-padding">
+                    <input id="collegeSchool_title_id" onclick="showUserOrgTree('college_school_panel_id'); return false;" class="form-control"
+                           type="text" placeholder="大学"/>
+
+                    <div id="college_school_panel_id" class="well  no-padding" name="downPanel"
+                         style="display:none; position: absolute;z-index: 10;margin-top: 36px;">
+                        <select id="collegeSchool1" style="margin:6px 3px 3px 10px" titleId="collegeSchool" name="collegeSchoolFirst"
+                            onchange="loadDistrictSelect(this,['#collegeSchool2'],['#collegeSchool2'])">
+                            <option value="">&nbsp;</option>
+                            <option value="AL">辽宁辽宁</option>
+                            <option value="AK">吉林</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                        <select id="collegeSchool2" style="margin:6px 3px 3px 10px" name="collegeSchoolSecond" titleId="collegeSchool"
+                                onchange="loadDistrictSelect(this)">>
+                            <option value="">&nbsp;</option>
+                            <option value="AL">辽宁辽宁</option>
+                            <option value="AK">吉林</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-4 text-right control-label no-padding">掌握技能：</label>
+
+                <div class="col-md-7 input-group  no-padding">
+                    <input id="masterySkill_title_id" onclick="showUserOrgTree('skill_panel_id'); return false;" class="form-control"   type="text" placeholder="掌握技能"/>
+
+                    <div id="skill_panel_id" class="well  no-padding" name="downPanel"
+                         style="display:none; position: absolute;z-index: 10;margin-top: 36px;">
+                        <select style="margin:6px 3px 3px 10px" id="masterySkill1" titleId="masterySkill"
+                                onchange="loadSkill(this.value,['#masterySkill2'],['#masterySkill2'],'/common/cfgSkill/selectSkillByUpid')">
+                            <option value="">请选择</option>
+                        </select>
+                        <select style="margin:6px 3px 3px 10px" id="masterySkill2" titleId="masterySkill"
+                                onchange="loadSkillSelect(this)">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">想学技能：</label>
+
+                <div class="col-md-6 input-group  no-padding">
+                    <input id="learnSkill_title_id" onclick="showUserOrgTree('learn_skill_panel_id'); return false;" class="form-control"
+                           type="text" placeholder="想学技能"/>
+
+                    <div id="learn_skill_panel_id" class="well  no-padding" name="downPanel"
+                         style="display:none; position: absolute;z-index: 10;margin-top: 36px;">
+                        <select style="margin:6px 3px 3px 10px" id="learnSkill1" titleId="learnSkill"
+                                onchange="loadSkill(this.value,['#learnSkill2'],['#learnSkill2'],'/common/cfgSkill/selectSkillByUpid')">
+                            <option value="">请选择</option>
+                        </select>
+                        <select style="margin:6px 3px 3px 10px" id="learnSkill2" titleId="learnSkill"
+                                onchange="loadSkillSelect(this)">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">年龄：</label>
+
+                <div class="col-md-3 no-padding">
+                    <select name="ageBegin" id="ageBegin" class="form-control" onchange="ageBeginChange(this)">
+                    </select>
+                </div>
+                <div class="col-md-1 no-padding text-center">
+                    -
+                </div>
+                <div class="col-md-3 no-padding">
+                    <select name="ageEnd" id="ageEnd" class="form-control">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">性别：</label>
+
+                <div class="col-md-6 no-padding">
+                    <select name="ageBegin" id="ageBegin" class="form-control" onchange="ageBeginChange(this)">
+                        <option value="">请选择</option>
+                        #foreach($sexEnum in $sexEnums)
+                            <option value="$sexEnum.key">$sexEnum.value</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-4 text-right control-label no-padding">身高：</label>
+
+                <div class="col-md-3 no-padding">
+                    <select name="heightBegin" id="heightBegin" class="form-control" onchange="heightBeginChange(this)">
+                    </select>
+                </div>
+##                <div class="col-md-1 no-padding text-center">
+##                    -
+##                </div>
+                <div class="col-md-3 no-padding">
+                    <select name="heightEnd" id="heightEnd" class="form-control">
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">情感状态：</label>
+
+                <div class="col-md-6 no-padding">
+                    <select name="ageBegin" id="ageBegin" class="form-control">
+                        <option value="">请选择</option>
+                        #foreach($relationshipStatusEnum in $relationshipStatusEnums)
+                            <option value="$relationshipStatusEnum.key">$relationshipStatusEnum.value</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">月收入：</label>
+
+                <div class="col-md-3 no-padding">
+                    <select class="form-select" id="monthlyIncome" name="userDetail.monthlyIncome">
+                        <option value="">请选择</option>
+                        #foreach($monthlyIncomeEnum in $!monthlyIncomeEnums)
+                            <option value="$monthlyIncomeEnum.key">$monthlyIncomeEnum.value</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+##            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+##                <label class="col-md-4 text-right control-label no-padding">职业：</label>
+##
+##                <div class="col-md-3 no-padding">
+##                    <select class="form-select" id="monthlyIncome" name="monthlyIncome">
+##                        <option value="">请选择</option>
+##                        #foreach($professionEnum in $!professionEnums)
+##                            <option value="$professionEnum.key">$professionEnum.value</option>
+##                        #end
+##                    </select>
+##                </div>
+##            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">职业：</label>
+
+                <div class="col-md-6 input-group  no-padding">
+                    <select class="form-control" id="monthlyIncome" name="monthlyIncome">
+                        <option value="">请选择</option>
+                        #foreach($professionEnum in $!professionEnums)
+                            <option value="$professionEnum.key">$professionEnum.value</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-4 text-right control-label no-padding">毕业时间：</label>
+
+                <div class="col-md-7 input-group  no-padding">
+                    <input class="form-control" name="collegeYear" readonly onclick="WdatePicker({ dateFmt: 'yyyy'})"   type="text">
+                    <span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">学历：</label>
+
+                <div class="col-md-6 no-padding">
+                    <select name="ageBegin" id="ageBegin" class="form-control">
+                        <option value="">请选择</option>
+                        #foreach($educationEnum in $educationEnums)
+                            <option value="$educationEnum.key">$educationEnum.value</option>
+                        #end
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                <label class="col-md-5 text-right control-label no-padding">账号或者邮箱：</label>
+
+                <div class="col-md-6 no-padding">
+                    <input  class="form-control" type="text" placeholder="账号或者邮箱"/>
+                </div>
+            </div>
+            <div class="form-group col-lg-12 col-md-12 col-sm-12 text-center">
+                <button class="btn btn-sm btn-success dropdown-toggle" onclick="return searchUser(1);">
+                    <i class="ace-icon glyphicon glyphicon-search  bigger-110"></i>
+                    查找
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="row" id="userListId">
+
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        ace.settingFunction.main_container_fixed(null, true);
+        initAgeBegin();
+        initHeightBegin();
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true
+        })
+        loadDistrict(0, ['#domicile1',"#hometown1","#collegeSchool1"], []);
+        loadSkill(0, ['#masterySkill1','#learnSkill1',], [],'/common/cfgSkill/selectSkillByUpid')
+        loadSkill(0,['#major1'],['#major1'],'/common/major/selectMajorByUpid');
+        searchUser(1);
+    });
+    var maxAge = 65;
+    var mixAge = 16;
+    function initAgeBegin() {
+        var optionHtml = "<option value=''>请选择</option>";
+        for (var i = mixAge; i <= maxAge; i++) {
+            optionHtml += "<option value='" + i + "'>" + i + "岁</option>";
+        }
+        $("#ageBegin").html(optionHtml);
+        $("#ageEnd").html(optionHtml);
+    }
+
+    function ageBeginChange(obj) {
+        var beginAge = mixAge;
+        if ("" != $.trim(obj.value)) {
+            beginAge = obj.value;
+        }
+        var optionHtml = "<option value=''>请选择</option>";
+        for (var i = beginAge; i <= maxAge; i++) {
+            optionHtml += "<option value='" + i + "'>" + i + "岁</option>";
+        }
+        $("#ageEnd").html(optionHtml);
+    }
+
+    function searchUser(page) {
+        var param = $("#findUserFormId").serializeJSON();
+        param.page = page;
+        $.ajax({
+            url: "/user/lookFor/findUser",
+            type: 'POST',
+            data: param,
+            dataType: "json",
+            success: function (response) {
+                var message = "";
+                if (response) {
+                    message = response.message;
+                    if (response.success) {
+                        $("#userListId").html(response.body);
+                        return false;
+                    }
+                }
+                message = "" == $.trim(message) ? "用户查找失败！" : message;
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+        return false;
+    }
+
+
+    var maxHeight = 210;
+    var minHeight = 150;
+    function initHeightBegin() {
+        var optionHtml = "<option value=''>请选择</option>";
+        for (var i = minHeight; i <= maxHeight; i++) {
+            optionHtml += "<option value='" + i + "'>" + i + "厘米</option>";
+        }
+        $("#heightBegin").html(optionHtml);
+        $("#heightEnd").html(optionHtml);
+    }
+
+    function heightBeginChange(obj) {
+        var beginHeight = minHeight;
+        if ("" != $.trim(obj.value)) {
+            beginHeight = obj.value;
+        }
+        var optionHtml = "<option value=''>请选择</option>";
+        for (var i = beginHeight; i <= maxHeight; i++) {
+            optionHtml += "<option value='" + i + "'>" + i + "厘米</option>"
+        }
+        $("#heightEnd").html(optionHtml);
+    }
+
+    function loadDistrictSelect(obj, showSelectors, emptySelectors) {
+        var optionHtml = "";
+        $.each($("[name^=" + $(obj).attr("titleId") + "]"), function () {
+            if ("" != $.trim($(this).val())) {
+                optionHtml = ($(this).find("option:selected").html())  + "-"+ optionHtml;
+            }
+        });
+        $("#" + $(obj).attr("titleId") + "_title_id").val(optionHtml);
+        if (showSelectors instanceof Array) {
+            loadDistrict(obj.value, showSelectors, emptySelectors)
+        }
+    }
+
+    function loadDistrict(upid, showSelectors, emptySelectors) {
+        var optionHtml = "<option value=''>请选择</option>";
+        if (emptySelectors instanceof Array) {
+            for (index in emptySelectors) {
+                $(emptySelectors[index]).html(optionHtml);
+            }
+        }
+        if ("" == $.trim(upid)) {
+            return false;
+        }
+        $.ajax({
+            url: "/common/district/selectByUpid",
+            type: 'POST',
+            data: "upid=" + upid,
+            dataType: "json",
+            success: function (result) {
+                optionHtml = "<option value=''>请选择</option>";
+                //信息
+                var message = "";
+                if (result) {
+                    message = result.message;
+                    if (result.success) {
+                        var data = result.body;
+                        for (var i = 0; i < data.length; i++) {
+                            optionHtml += "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                        }
+                    }
+                }
+                if (showSelectors instanceof Array) {
+                    for (index in showSelectors) {
+                        $(showSelectors[index]).html(optionHtml);
+                    }
+                }
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+    }
+
+    function loadSkillSelect(obj) {
+        if ("" != $.trim(obj.value)) {
+            $("#" + $(obj).attr("titleId") + "_title_id").val($(obj).find("option:selected").html());
+        }else{
+            $("#" + $(obj).attr("titleId") + "_title_id").val("");
+        }
+    }
+
+    function loadSkill(upid, showSelectors, emptySelectors,url) {
+        var optionHtml = "<option value=''>请选择</option>";
+        if (emptySelectors instanceof Array) {
+            for (index in emptySelectors) {
+                $(emptySelectors[index]).html(optionHtml);
+            }
+        }
+        if ("" == $.trim(upid)) {
+            return false;
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: "upid=" + upid,
+            dataType: "json",
+            success: function (result) {
+                optionHtml = "<option value=''>请选择</option>";
+                //信息
+                var message = "";
+                if (result) {
+                    message = result.message;
+                    if (result.success) {
+                        var data = result.body;
+                        for (var i = 0; i < data.length; i++) {
+                            optionHtml += "<option value='" + data[i].id + "'>" + data[i].name + "</option>";
+                        }
+                    }
+                }
+                if (showSelectors instanceof Array) {
+                    for (index in showSelectors) {
+                        $(showSelectors[index]).html(optionHtml);
+                    }
+                }
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+    }
+</script>

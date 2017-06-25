@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.UserDetailMapper">
+
+    <resultMap id="UserDetail" type="com.fellow.domain.model.UserDetail">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="account" column="account"/>
+        <result property="username" column="username"/>
+        <result property="avatar" column="avatar"/>
+        <result property="email" column="email"/>
+        <result property="sex" column="sex"/>
+        <result property="profession" column="profession"/>
+        <result property="domicilePath" column="domicile_path"/>
+        <result property="domicileName" column="domicile_name"/>
+        <result property="hometownPath" column="hometown_path"/>
+        <result property="hometownName" column="hometown_name"/>
+        <result property="birthday" column="birthday"/>
+        <result property="height" column="height"/>
+        <result property="relationshipStatus" column="relationship_status"/>
+        <result property="workUnit" column="work_unit"/>
+        <result property="weight" column="weight"/>
+        <result property="monthlyIncome" column="monthly_income"/>
+        <result property="education" column="education"/>
+        <result property="majorId" column="major_id"/>
+        <result property="majorPath" column="major_path"/>
+        <result property="collegeSchoolId" column="college_school_id"/>
+        <result property="collegeSchoolPath" column="college_school_path"/>
+        <result property="collegeYear" column="college_year"/>
+        <result property="liveLng" column="live_lng"/>
+        <result property="liveLat" column="live_lat"/>
+        <result property="workLng" column="work_lng"/>
+        <result property="workLat" column="work_lat"/>
+        <result property="studyLng" column="study_lng"/>
+        <result property="studyLat" column="study_lat"/>
+        <result property="aboutMe" column="about_me"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,user_id,account,username,avatar,email,sex,profession,domicile_path,domicile_name,hometown_path,hometown_name,birthday,height,relationship_status,work_unit,weight,monthly_income,education,major_id,major_path,college_school_id,college_school_path,college_year,live_lng,live_lat,work_lng,work_lat,study_lng,study_lat,about_me,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_detail (
+        user_id,
+        account,
+        username,
+        avatar,
+        email,
+        sex,
+        profession,
+        domicile_path,
+        domicile_name,
+        hometown_path,
+        hometown_name,
+        birthday,
+        height,
+        relationship_status,
+        work_unit,
+        weight,
+        monthly_income,
+        education,
+        major_id,
+        major_path,
+        college_school_id,
+        college_school_path,
+        college_year,
+        live_lng,
+        live_lat,
+        work_lng,
+        work_lat,
+        study_lng,
+        study_lat,
+        about_me,
+        create_account,
+        create_name,
+        create_time,
+        update_account,
+        update_name,
+        update_time,
+        sys_version,
+        is_delete
+
+        ) VALUES (
+        #{userId},
+        #{account},
+        #{username},
+        #{avatar},
+        #{email},
+        #{sex},
+        #{profession},
+        #{domicilePath},
+        #{domicileName},
+        #{hometownPath},
+        #{hometownName},
+        #{birthday},
+        #{height},
+        #{relationshipStatus},
+        #{workUnit},
+        #{weight},
+        #{monthlyIncome},
+        #{education},
+        #{majorId},
+        #{majorPath},
+        #{collegeSchoolId},
+        #{collegeSchoolPath},
+        #{collegeYear},
+        #{liveLng},
+        #{liveLat},
+        #{workLng},
+        #{workLat},
+        #{studyLng},
+        #{studyLat},
+        #{aboutMe},
+        #{createAccount},
+        #{createName},
+        now(),
+        #{updateAccount},
+        #{updateName},
+        #{updateTime},
+        1,
+        0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_detail (
+        <if test="@Ognl@isNotEmpty(userId)">
+            user_id,
+        </if>
+        <if test="@Ognl@isNotEmpty(account)">
+            account,
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            username,
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            avatar,
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            email,
+        </if>
+        <if test="@Ognl@isNotEmpty(sex)">
+            sex,
+        </if>
+        <if test="@Ognl@isNotEmpty(profession)">
+            profession,
+        </if>
+        <if test="@Ognl@isNotEmpty(domicilePath)">
+            domicile_path,
+        </if>
+        <if test="@Ognl@isNotEmpty(domicileName)">
+            domicile_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownPath)">
+            hometown_path,
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownName)">
+            hometown_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(birthday)">
+            birthday,
+        </if>
+        <if test="@Ognl@isNotEmpty(height)">
+            height,
+        </if>
+        <if test="@Ognl@isNotEmpty(relationshipStatus)">
+            relationship_status,
+        </if>
+        <if test="@Ognl@isNotEmpty(workUnit)">
+            work_unit,
+        </if>
+        <if test="@Ognl@isNotEmpty(weight)">
+            weight,
+        </if>
+        <if test="@Ognl@isNotEmpty(monthlyIncome)">
+            monthly_income,
+        </if>
+        <if test="@Ognl@isNotEmpty(education)">
+            education,
+        </if>
+        <if test="@Ognl@isNotEmpty(majorId)">
+            major_id,
+        </if>
+        <if test="@Ognl@isNotEmpty(majorPath)">
+            major_path,
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolId)">
+            college_school_id,
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolPath)">
+            college_school_path,
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeYear)">
+            college_year,
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLng)">
+            live_lng,
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLat)">
+            live_lat,
+        </if>
+        <if test="@Ognl@isNotEmpty(workLng)">
+            work_lng,
+        </if>
+        <if test="@Ognl@isNotEmpty(workLat)">
+            work_lat,
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLng)">
+            study_lng,
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLat)">
+            study_lat,
+        </if>
+        <if test="@Ognl@isNotEmpty(aboutMe)">
+            about_me,
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name,
+        </if>
+        create_time,
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time,
+        </if>
+        sys_version,
+        is_delete
+        ) VALUES (
+        <if test="@Ognl@isNotEmpty(userId)">
+            #{userId},
+        </if>
+        <if test="@Ognl@isNotEmpty(account)">
+            #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            #{username},
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            #{avatar},
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            #{email},
+        </if>
+        <if test="@Ognl@isNotEmpty(sex)">
+            #{sex},
+        </if>
+        <if test="@Ognl@isNotEmpty(profession)">
+            #{profession},
+        </if>
+        <if test="@Ognl@isNotEmpty(domicilePath)">
+            #{domicilePath},
+        </if>
+        <if test="@Ognl@isNotEmpty(domicileName)">
+            #{domicileName},
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownPath)">
+            #{hometownPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownName)">
+            #{hometownName},
+        </if>
+        <if test="@Ognl@isNotEmpty(birthday)">
+            #{birthday},
+        </if>
+        <if test="@Ognl@isNotEmpty(height)">
+            #{height},
+        </if>
+        <if test="@Ognl@isNotEmpty(relationshipStatus)">
+            #{relationshipStatus},
+        </if>
+        <if test="@Ognl@isNotEmpty(workUnit)">
+            #{workUnit},
+        </if>
+        <if test="@Ognl@isNotEmpty(weight)">
+            #{weight},
+        </if>
+        <if test="@Ognl@isNotEmpty(monthlyIncome)">
+            #{monthlyIncome},
+        </if>
+        <if test="@Ognl@isNotEmpty(education)">
+            #{education},
+        </if>
+        <if test="@Ognl@isNotEmpty(majorId)">
+            #{majorId},
+        </if>
+        <if test="@Ognl@isNotEmpty(majorPath)">
+            #{majorPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolId)">
+            #{collegeSchoolId},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolPath)">
+            #{collegeSchoolPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeYear)">
+            #{collegeYear},
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLng)">
+            #{liveLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLat)">
+            #{liveLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(workLng)">
+            #{workLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(workLat)">
+            #{workLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLng)">
+            #{studyLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLat)">
+            #{studyLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(aboutMe)">
+            #{aboutMe},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            #{createName},
+        </if>
+        now(),
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            #{updateTime},
+        </if>
+        1,
+        0
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE user_detail SET
+        <if test="@Ognl@isNotEmpty(userId)">
+            user_id = #{userId},
+        </if>
+        <if test="@Ognl@isNotEmpty(account)">
+            account = #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            username = #{username},
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            avatar = #{avatar},
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            email = #{email},
+        </if>
+        <if test="@Ognl@isNotEmpty(sex)">
+            sex = #{sex},
+        </if>
+        <if test="@Ognl@isNotEmpty(profession)">
+            profession = #{profession},
+        </if>
+        <if test="@Ognl@isNotEmpty(domicilePath)">
+            domicile_path = #{domicilePath},
+        </if>
+        <if test="@Ognl@isNotEmpty(domicileName)">
+            domicile_name = #{domicileName},
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownPath)">
+            hometown_path = #{hometownPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownName)">
+            hometown_name = #{hometownName},
+        </if>
+        <if test="@Ognl@isNotEmpty(birthday)">
+            birthday = #{birthday},
+        </if>
+        <if test="@Ognl@isNotEmpty(height)">
+            height = #{height},
+        </if>
+        <if test="@Ognl@isNotEmpty(relationshipStatus)">
+            relationship_status = #{relationshipStatus},
+        </if>
+        <if test="@Ognl@isNotEmpty(workUnit)">
+            work_unit = #{workUnit},
+        </if>
+        <if test="@Ognl@isNotEmpty(weight)">
+            weight = #{weight},
+        </if>
+        <if test="@Ognl@isNotEmpty(monthlyIncome)">
+            monthly_income = #{monthlyIncome},
+        </if>
+        <if test="@Ognl@isNotEmpty(education)">
+            education = #{education},
+        </if>
+        <if test="@Ognl@isNotEmpty(majorId)">
+            major_id = #{majorId},
+        </if>
+        <if test="@Ognl@isNotEmpty(majorPath)">
+            major_path = #{majorPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolId)">
+            college_school_id = #{collegeSchoolId},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolPath)">
+            college_school_path = #{collegeSchoolPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeYear)">
+            college_year = #{collegeYear},
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLng)">
+            live_lng = #{liveLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLat)">
+            live_lat = #{liveLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(workLng)">
+            work_lng = #{workLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(workLat)">
+            work_lat = #{workLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLng)">
+            study_lng = #{studyLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLat)">
+            study_lat = #{studyLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(aboutMe)">
+            about_me = #{aboutMe},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time = now(),
+        </if>
+        <if test="@Ognl@isNotEmpty(sysVersion)">
+            sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE user_detail
+        SET
+        <if test="@Ognl@isNotEmpty(userId)">
+            user_id = #{userId},
+        </if>
+        <if test="@Ognl@isNotEmpty(account)">
+            account = #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            username = #{username},
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            avatar = #{avatar},
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            email = #{email},
+        </if>
+        <if test="@Ognl@isNotEmpty(sex)">
+            sex = #{sex},
+        </if>
+        <if test="@Ognl@isNotEmpty(profession)">
+            profession = #{profession},
+        </if>
+        <if test="@Ognl@isNotEmpty(domicilePath)">
+            domicile_path = #{domicilePath},
+        </if>
+        <if test="@Ognl@isNotEmpty(domicileName)">
+            domicile_name = #{domicileName},
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownPath)">
+            hometown_path = #{hometownPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(hometownName)">
+            hometown_name = #{hometownName},
+        </if>
+        <if test="@Ognl@isNotEmpty(birthday)">
+            birthday = #{birthday},
+        </if>
+        <if test="@Ognl@isNotEmpty(height)">
+            height = #{height},
+        </if>
+        <if test="@Ognl@isNotEmpty(relationshipStatus)">
+            relationship_status = #{relationshipStatus},
+        </if>
+        <if test="@Ognl@isNotEmpty(workUnit)">
+            work_unit = #{workUnit},
+        </if>
+        <if test="@Ognl@isNotEmpty(weight)">
+            weight = #{weight},
+        </if>
+        <if test="@Ognl@isNotEmpty(monthlyIncome)">
+            monthly_income = #{monthlyIncome},
+        </if>
+        <if test="@Ognl@isNotEmpty(education)">
+            education = #{education},
+        </if>
+        <if test="@Ognl@isNotEmpty(majorId)">
+            major_id = #{majorId},
+        </if>
+        <if test="@Ognl@isNotEmpty(majorPath)">
+            major_path = #{majorPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolId)">
+            college_school_id = #{collegeSchoolId},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeSchoolPath)">
+            college_school_path = #{collegeSchoolPath},
+        </if>
+        <if test="@Ognl@isNotEmpty(collegeYear)">
+            college_year = #{collegeYear},
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLng)">
+            live_lng = #{liveLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(liveLat)">
+            live_lat = #{liveLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(workLng)">
+            work_lng = #{workLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(workLat)">
+            work_lat = #{workLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLng)">
+            study_lng = #{studyLng},
+        </if>
+        <if test="@Ognl@isNotEmpty(studyLat)">
+            study_lat = #{studyLat},
+        </if>
+        <if test="@Ognl@isNotEmpty(aboutMe)">
+            about_me = #{aboutMe},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_account =#{updateAccount} ,
+        update_name = #{updateName} ,
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE user_detail
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM user_detail
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getByKey" resultMap="UserDetail">
+        SELECT <include refid="columns" />
+        FROM user_detail
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findList" resultMap="UserDetail">
+        SELECT <include refid="columns" />
+        FROM user_detail
+        <include refid="findList_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+        SELECT count(1)
+        FROM user_detail
+        <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(userId)">
+                AND user_id = #{userId}
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                AND account = #{account}
+            </if>
+            <if test="@Ognl@isNotEmpty(username)">
+                AND username = #{username}
+            </if>
+            <if test="@Ognl@isNotEmpty(avatar)">
+                AND avatar = #{avatar}
+            </if>
+            <if test="@Ognl@isNotEmpty(email)">
+                AND email = #{email}
+            </if>
+            <if test="@Ognl@isNotEmpty(sex)">
+                AND sex = #{sex}
+            </if>
+            <if test="@Ognl@isNotEmpty(profession)">
+                AND profession = #{profession}
+            </if>
+            <if test="@Ognl@isNotEmpty(domicilePath)">
+                AND domicile_path = #{domicilePath}
+            </if>
+            <if test="@Ognl@isNotEmpty(domicileName)">
+                AND domicile_name = #{domicileName}
+            </if>
+            <if test="@Ognl@isNotEmpty(hometownPath)">
+                AND hometown_path = #{hometownPath}
+            </if>
+            <if test="@Ognl@isNotEmpty(hometownName)">
+                AND hometown_name = #{hometownName}
+            </if>
+            <if test="@Ognl@isNotEmpty(birthdayBegin)">
+                AND birthday &gt;= #{birthdayBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(birthdayEnd)">
+                AND birthday &lt;= #{birthdayEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(height)">
+                AND height = #{height}
+            </if>
+            <if test="@Ognl@isNotEmpty(relationshipStatus)">
+                AND relationship_status = #{relationshipStatus}
+            </if>
+            <if test="@Ognl@isNotEmpty(workUnit)">
+                AND work_unit = #{workUnit}
+            </if>
+            <if test="@Ognl@isNotEmpty(weight)">
+                AND weight = #{weight}
+            </if>
+            <if test="@Ognl@isNotEmpty(monthlyIncome)">
+                AND monthly_income = #{monthlyIncome}
+            </if>
+            <if test="@Ognl@isNotEmpty(education)">
+                AND education = #{education}
+            </if>
+            <if test="@Ognl@isNotEmpty(majorId)">
+                AND major_id = #{majorId}
+            </if>
+            <if test="@Ognl@isNotEmpty(majorPath)">
+                AND major_path = #{majorPath}
+            </if>
+            <if test="@Ognl@isNotEmpty(collegeSchoolId)">
+                AND college_school_id = #{collegeSchoolId}
+            </if>
+            <if test="@Ognl@isNotEmpty(collegeSchoolPath)">
+                AND college_school_path = #{collegeSchoolPath}
+            </if>
+            <if test="@Ognl@isNotEmpty(collegeYear)">
+                AND college_year = #{collegeYear}
+            </if>
+            <if test="@Ognl@isNotEmpty(liveLng)">
+                AND live_lng = #{liveLng}
+            </if>
+            <if test="@Ognl@isNotEmpty(liveLat)">
+                AND live_lat = #{liveLat}
+            </if>
+            <if test="@Ognl@isNotEmpty(workLng)">
+                AND work_lng = #{workLng}
+            </if>
+            <if test="@Ognl@isNotEmpty(workLat)">
+                AND work_lat = #{workLat}
+            </if>
+            <if test="@Ognl@isNotEmpty(studyLng)">
+                AND study_lng = #{studyLng}
+            </if>
+            <if test="@Ognl@isNotEmpty(studyLat)">
+                AND study_lat = #{studyLat}
+            </if>
+            <if test="@Ognl@isNotEmpty(aboutMe)">
+                AND about_me = #{aboutMe}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <update id="updateBaseInfo">
+        UPDATE user_detail
+            SET
+            sex = #{sex},
+            education = #{education},
+            profession = #{profession},
+            relationship_status = #{relationshipStatus},
+            domicile_path = #{domicilePath},
+            hometown_path = #{hometownPath},
+            birthday = #{birthday},
+            height = #{height},
+            weight = #{weight},
+            work_unit = #{workUnit},
+            monthly_income = #{monthlyIncome},
+            major_id = #{majorId},
+            major_path = #{majorPath},
+            college_school_id = #{collegeSchoolId},
+            college_school_path = #{collegeSchoolPath},
+            college_year = #{collegeYear},
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+    </update>
+
+    <select id="selectAboutMe" resultMap="UserDetail">
+        SELECT
+            about_me
+        FROM
+            user_detail
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+    </select>
+
+    <update id="updateAboutMe">
+        UPDATE user_detail
+        SET
+            about_me = #{aboutMe},
+            update_account = #{updateAccount},
+            update_name = #{updateName},
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+    </update>
+
+    <select id="findUser" resultMap="UserDetail">
+        SELECT
+            detail.username,
+            detail.avatar,
+            detail.sex,
+            detail.profession,
+            detail.domicile_path,
+            detail.domicile_name,
+            detail.hometown_path,
+            detail.hometown_name,
+            detail.birthday,
+            detail.major_id,
+            detail.major_path,
+            detail.account
+        FROM
+            user_detail AS detail
+            <if test="@Ognl@isNotEmpty(skillId)">
+                LEFT JOIN user_skill AS skill ON detail.account = skill.account
+                AND detail.is_delete = 0 AND skill.is_delete = 0
+            </if>
+            <include refid="findUser_where"/>
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+    <sql id="findUser_where">
+        <where>
+            detail.is_delete = 0
+            <if test="@Ognl@isNotEmpty(domicilePath)">
+                AND detail.domicile_path LIKE CONCAT(#{domicilePath},'%')
+            </if>
+            <if test="@Ognl@isNotEmpty(hometownPath)">
+                AND detail.hometown_path  LIKE CONCAT(#{hometownPath},'%')
+            </if>
+            <if test="@Ognl@isNotEmpty(majorId)">
+                AND detail.major_id = #{majorId}
+            </if>
+            <if test="@Ognl@isNotEmpty(majorPath)">
+                AND detail.major_path LIKE CONCAT(#{majorPath},'%')
+            </if>
+            <if test="@Ognl@isNotEmpty(collegeSchoolId)">
+                AND detail.college_school_id = #{collegeSchoolId}
+            </if>
+            <if test="@Ognl@isNotEmpty(collegeSchoolPath)">
+                AND detail.college_school_path LIKE CONCAT(#{collegeSchoolPath},'%')
+            </if>
+            <if test="@Ognl@isNotEmpty(birthdayBegin)">
+                AND detail.birthdayBegin &gt;= #{birthdayBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(birthdayEnd)">
+                AND detail.birthday  &lt;= #{birthdayEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sex)">
+                AND detail.sex = #{sex}
+            </if>
+            <if test="@Ognl@isNotEmpty(heightBegin)">
+                AND detail.height >= #{heightBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(heightEnd)">
+                AND detail.height &lt;= #{heightEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(relationshipStatus)">
+                AND detail.relationship_status = #{relationshipStatus}
+            </if>
+            <if test="@Ognl@isNotEmpty(monthlyIncome)">
+                AND detail.monthly_income = #{monthlyIncome}
+            </if>
+            <if test="@Ognl@isNotEmpty(profession)">
+                AND detail.profession = #{profession}
+            </if>
+            <if test="@Ognl@isNotEmpty(collegeYear)">
+                AND detail.college_year = #{collegeYear}
+            </if>
+            <if test="@Ognl@isNotEmpty(education)">
+                AND detail.education = #{education}
+            </if>
+            <if test="@Ognl@isNotEmpty(skillId)">
+                AND skill.skill_id = #{skillId}
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                AND account = #{account}
+            </if>
+        </where>
+    </sql>
+</mapper>

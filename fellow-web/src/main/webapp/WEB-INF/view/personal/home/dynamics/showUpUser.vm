@@ -1,0 +1,81 @@
+#set($layout="/layout/empty.vm")
+<style>
+    .modal-dialog {
+        width: 55%;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div id="friends" class="tab-pane">
+            <!-- #section:pages/profile.friends -->
+            <div id="upUserListId" class="profile-users clearfix text-center">
+
+            </div>
+
+        ##            <!-- /section:pages/profile.friends -->
+        ##            <div class="hr hr10 hr-double"></div>
+
+            <ul class="pager pull-right">
+                <li class="previous disabled">
+                    <a page="0" href="javascript:;" onclick="loadUpUser($(this).attr('page'))">&larr; 上一页</a>
+                </li>
+
+                <li class="next disabled">
+                    <a page="0" href="javascript:;" onclick="loadUpUser($(this).attr('page'))">下一页 &rarr;</a>
+                </li>
+            </ul>
+        </div><!-- /#friends -->
+    </div>
+</div>
+
+<script>
+    var personalId = ${personalId};
+    $(function () {
+        loadUpUser(1);
+    })
+
+    function loadUpUser(page) {
+        $.ajax({
+            url: "/dynamics/friend/queryUpUser",
+            type: 'POST',
+            data: "personalId=" + personalId + "&page=" + page,
+            dataType: "json",
+            success: function (response) {
+                //信息
+                var message = "";
+                if (response) {
+                    //debugger;
+                    message = response.message;
+                    if (response.object){
+                        if(response.object.isHadPre){
+                            $(".previous").removeClass("disabled");
+                            $(".previous").find("a").removeAttr("disabled");
+                            $(".previous").find("a").attr("page",page - 1);
+                        }else{
+                            $(".previous").addClass("disabled");
+                            $(".previous").find("a").attr("disabled", true);
+                        }
+                        if(response.object.isHadNext){
+                            $(".next").removeClass("disabled");
+                            $(".next").find("a").removeAttr("disabled");
+                            $(".next").find("a").attr("page",parseInt(page) + 1);
+                        }else{
+                            $(".next").addClass("disabled");
+                            $(".next").find("a").attr("disabled", true);
+                        }
+                    }
+                    if (response.success) {
+                        $("#upUserListId").html(response.body);
+                        return;
+                    }
+                }
+                message = ("" == $.trim(message) ? "删除评论失败！" : message );
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+
+    }
+</script>

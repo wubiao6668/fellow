@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-sm-12">
+        <form id="forgetPdForm">
+            <div class="form-group col-sm-12">
+                <label class="col-sm-5 control-label text-right">新密码</label>
+
+                <div class="col-sm-6">
+                    <input type="password" name="newPw">
+                    <span class="red"><b><em name="field_validate" id="newPw_error"></em></span>
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <label class="col-sm-5 control-label text-right">再次输入新密码</label>
+
+                <div class="col-sm-6">
+                    <input type="password" name="confirmPw">
+                    <span class="red"><b><em name="field_validate" id="confirmPw_error"></em></span>
+                </div>
+            </div>
+            <span class="blue col-md-offset-5"><b><em name="field_validate" id="update_succes"></em></span>
+            <input type="hidden" name="token" value="$!{token}">
+        </form>
+        <div class="form-group col-sm-12 text-center">
+            <button class="btn btn-sm btn-info dropdown-toggle" onclick="return forgetUpdatePd(this);">
+                <i class="ace-icon glyphicon glyphicon-check   bigger-110"></i>
+                确认修改
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function forgetUpdatePd() {
+        $("[name='field_validate']").html("");
+        var forgetPdForm = $("#forgetPdForm").serializeJSON();
+        var validateFlag = true;
+        if ("" == forgetPdForm.newPw) {
+            $("#newPw_error").html("请输入新密码");
+            validateFlag = false;
+        }
+        if ("" == forgetPdForm.confirmPw) {
+            $("#confirmPw_error").html("请再次输入新密码");
+            validateFlag = false;
+        }
+        if (forgetPdForm.newPw != forgetPdForm.confirmPw) {
+            $("#confirmPw_error").html("密码不一致");
+            validateFlag = false;
+        }
+        if (!validateFlag) {
+            return false;
+        }
+        $.ajax({
+            url: "/login/forget/updateForgetPd",
+            type: 'POST',
+            data: forgetPdForm,
+            dataType: "json",
+            success: function (result) {
+                //信息
+                var message = "";
+                if (result) {
+                    message = result.message;
+                    if (result.success) {
+                        message = ("" == $.trim(message) ? "密码修改成功！" : message);
+                        $("#update_succes").html(message + '<span class="red"  id="toIndexTime" style="font-size: 25px">6</span>秒后跳到登录页');
+                        return false;
+                    } else {
+                        if (1 == result.status) {
+                            $("#newPw_error").html(message)
+                        } else if (2 == result.status) {
+                            $("#newPw_error").html(message);
+                        } else if (3 == result.status) {
+                            $("#confirmPw_error").html(message);
+                        } else {
+                            message = ("" == $.trim(message) ? "修改失败，系统错误！" : message );
+                            alert(message);
+                            return false;
+                        }
+                    }
+                }
+                message = ("" == $.trim(message) ? "修改失败，系统错误！" : message );
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+        return false;
+    }
+    setInterval(function () {
+        var timeValue = $.trim($("#toIndexTime").html());
+        if ("" != timeValue) {
+            if (parseInt(timeValue) <= 0){
+                window.location.href = "/login/index";
+            }else{
+                $("#toIndexTime").html(parseInt($("#toIndexTime").html())-1);
+            }
+
+        }
+    }, 1000);
+</script>

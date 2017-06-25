@@ -1,0 +1,66 @@
+#set($layout="/layout/empty.vm")
+#if($collectionUtils.isNotEmpty(${messageList}))
+    <input type="hidden" name="minId" id="minId" value="$!{minId}">
+    #foreach($messageDetail in ${messageList})
+        #if($messageDetail.receiveAccount == ${account})
+        <li class="left clearfix" name="messageDetailBlock" msgId="$!{messageDetail.id}" receiveAccount="$!{messageDetail.receiveAccount}" sendAccount="$!{messageDetail.sendAccount}">
+            <span class="chat-img pull-left">
+                <img src="$!{messageDetail.receiveUser.avatar}" alt="User Avatar">
+            </span>
+            <div class="chat-body clearfix">
+                <div class="msg-header">
+                    <div class="inline position-relative">
+                        <button class="btn btn-minier bigger btn-yellow dropdown-toggle"
+                                data-toggle="dropdown">
+                            <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-only-icon dropdown-toggle dropdown-menu-left dropdown-caret dropdown-close">
+                            <a href="javascript:;" onclick=" deleteMessageDetail(this)" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                <span class="red">
+                                  <i class="ace-icon fa fa-trash-o bigger-110"></i>删除
+                                </span>
+                            </a>
+                        </ul>
+                    </div>
+                    <strong class="primary-font">$!{messageDetail.receiveAccount}</strong>
+                    <small class="pull-right text-muted"><i class="fa fa-clock-o"></i> $!{messageDetail.sendTimeString}
+                    </small>
+                </div>
+                <p>
+                    $!{messageDetail.message}
+                </p>
+            </div>
+        </li>
+        #else
+        <li class="right clearfix" name="messageDetailBlock" msgId="$!{messageDetail.id}" receiveAccount="$!{messageDetail.receiveAccount}" sendAccount="$!{messageDetail.sendAccount}">
+            <span class="chat-img pull-right">
+                <img src="$!{messageDetail.sendUser.avatar}" alt="">
+            </span>
+            <div class="chat-body clearfix">
+                <div class="msg-header">
+                    <div class="inline position-relative">
+                        <button class="btn btn-minier bigger btn-yellow dropdown-toggle"
+                                data-toggle="dropdown">
+                            <i class="ace-icon fa fa-angle-down icon-only bigger-120"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-only-icon dropdown-toggle dropdown-menu-left dropdown-caret dropdown-close">
+                            <li>
+                                <a href="javascript:;" onclick=" deleteMessageDetail(this)" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                    <span class="red">
+                                      <i class="ace-icon fa fa-trash-o bigger-110"></i>删除
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <strong class="primary-font">$!{messageDetail.sendAccount}</strong>
+                    <small class="pull-right text-muted"><i class="fa fa-clock-o"></i>$!{messageDetail.sendTimeString}</small>
+                </div>
+                <p>
+                    $!{messageDetail.message}
+                </p>
+            </div>
+        </li>
+        #end
+    #end
+#end

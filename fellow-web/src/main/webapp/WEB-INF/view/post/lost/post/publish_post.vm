@@ -1,0 +1,474 @@
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hMOwbodAwP7lGCPyYoTOPf2K"></script>
+<style>
+    .tangram-suggestion{
+        z-index: 999999;
+    }
+    .f_map{
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+</style>
+<div class="row">
+    <form class="form-horizontal" role="form" id="lostPostFormPulish">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <!-- #section:elements.form -->
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">标题</label>
+
+                <div class="col-sm-9">
+                    <input type="text" placeholder="主题" name="title" class="col-xs-10 col-sm-5"/>
+                    <input type="hidden" name="postType" value="200">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">主题</label>
+
+                <div id="topicDiv" class="col-sm-9 radio_btn_group">
+                    #foreach($sayEnum in $sayPostTypeEnums )
+                        #if($sayEnum.seconde)
+                            <div class="btn-group">
+                                <button value="$sayEnum.key" secondeValue="" class="btn btn-white btn-yellow btn-sm dropdown-toggle" data-toggle="dropdown" onclick="selectMutilTopic(this)" aria-expanded="false">
+                                    $sayEnum.value<span name="firstChlidren"></span>
+                                    <i class="ace-icon fa fa-angle-down icon-on-right"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-danger">
+                                    #foreach($saySecond in $sayEnum.seconde)
+                                        <li>
+                                            <a href="javascript:;" value="$saySecond.key" value="$saySecond.key" onclick="mutilTopicSelect(this)">$saySecond.value</a>
+                                        </li>
+                                    #end
+                                </ul>
+                            </div>
+                        #else
+                            <button onclick="selectSingleTopic(this)" type="button" class="btn btn-white btn-yellow  btn-sm" value="$sayEnum.key">$sayEnum.value</button>
+                        #end
+                    #end
+                </div>
+            </div>
+            <div id="placeDiv" class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">哪儿</label>
+
+                <div class="col-sm-9 radio_btn_group">
+                    #foreach($postPlaceTypeEnum in $postPlaceTypeEnums)
+                        <button onclick="selectSingleTopic(this)" type="button" value="$postPlaceTypeEnum.key" class="btn btn-white btn-yellow  btn-sm">$postPlaceTypeEnum.value</button>
+                    #end
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">时间</label>
+
+                <div class="col-sm-2">
+                    <div class="col-md-12  no-padding">
+                        <input id="pickLostRandDateId" onclick="showUserOrgTree('college_school_panel_id'); return false;"
+                               style="height: 25px" readonly=""  name="happenedDate"  class="form-control" placeholder="时间" type="text">
+
+                        <div id="college_school_panel_id" class="well  no-padding" name="downPanel"
+                             style="position: absolute; z-index: 10; margin-top: -2px; display: none;">
+                            <div style="display: block;min-width: 286px;padding:10px;">
+                        <span class="radio  pull-left">
+                        </span>
+                        <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" checked="" switchindex="1"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">日</span>
+                            </label>
+                        </span>
+                         <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" switchindex="2"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">月</span>
+                            </label>
+                         </span>
+                         <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" switchindex="3"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">年</span>
+                            </label>
+                         </span>
+                            </div>
+                            <div class="col-xs-12" name="pickLostDate1">
+                                <div class="col-md-5 no-margin  no-padding">
+                                    <input class="Wdate form-control " style="height: 25px" onclick="WdatePicker()" type="text">
+                                </div>
+                            </div>
+                            <div class="col-xs-12" name="pickLostDate2" style="display: none">
+                                <div class="col-md-5 no-margin no-padding">
+                                    <input class="Wdate form-control  " style="height: 25px"
+                                           onclick="WdatePicker({ dateFmt: 'yyyy-MM'})" type="text">
+                                </div>
+                            </div>
+                            <div class="col-xs-12" name="pickLostDate3" style="display: none">
+                                <div class="col-md-5 no-margin  no-padding">
+                                    <input class="Wdate form-control  " style="height: 25px"
+                                           onclick="WdatePicker({ dateFmt: 'yyyy'})" type="text">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 text-center" style="padding:10px">
+                                <button class="btn btn-primary btn-minier" onclick="selectPickLostDate()" type="button">
+                                    确定
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right">地点</label>
+
+                <div class="col-sm-9">
+                    <div class="col-sm-4">
+                        <input id="lostPlace" onclick="showUserOrgTree('lost_place_map_panel_id');loadMap(); return false;"
+                               style="height: 25px" readonly="" class="form-control" placeholder="丢失地点" type="text">
+
+                        <div id="lost_place_map_panel_id" class="well  no-padding" name="downPanel"
+                             style="position: absolute; width: 666px;z-index: 10; margin-top: -2px;display: none">
+                            <input id="lost_post_lng" name="postLng" type="hidden">
+                            <input id="lost_post_lat" name="postLat" type="hidden">
+
+                            <div class="col-xs-12 no-margin  well" style="padding:4px">
+                                <div class="col-xs-12 no-padding">
+                                    <div class="col-xs-1  no-margin  no-padding text-right">
+                                        <label class="smaller-90 label-warning ">地址</label>
+                                    </div>
+                                    <div class="col-xs-4 no-padding">
+                                        <input id="lostSuggestId" class="form-control input-sm" style="height:24px"
+                                               placeholder="输入地址查找" type="text">
+
+                                        <div id="lostPlaceResultPanel"
+                                             style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+                                    </div>
+                                    <div class="col-xs-1  no-margin  no-padding">
+                                        <button class="btn btn-info btn-minier" type="button" onclick="setLostPlace()">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                            查找
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="lost_map" class="f_map"></div>
+                        </div>
+                    </div>
+                    <label class="col-sm-1 control-label no-padding-right">地点补充</label>
+                    <div class="col-sm-4">
+                        <input id="lostPlace" style="height: 25px" class="form-control" placeholder="地点补充" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"></label>
+
+                <div class="col-sm-9">
+                    <div class="col-sm-12 widget-container-col">
+                        <div class="widget-box widget-color-dark">
+                            <div class="widget-header">
+                                <h6 class="widget-title">
+                                    <span id="emoji2" class="emoji-container">
+                                        <img alt="smile" src="/plugins/emoji/emoji/unicode/1f604.png"
+                                             class="emoji-tbtn">
+                                    </span>
+                                    <span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i class="dropz ace-icon glyphicon glyphicon-picture bigger-120"
+                                           style="cursor: pointer"> </i>
+                                    </span>
+                                </h6>
+
+                                <div class="widget-toolbar">
+                                    <a href="#" data-action="settings">
+                                        <i class="ace-icon fa fa-cog"></i>
+                                    </a>
+
+                                    <a href="#" data-action="reload">
+                                        <i class="ace-icon fa fa-refresh"></i>
+                                    </a>
+
+                                    <a href="#" data-action="collapse">
+                                        <i class="ace-icon fa fa-chevron-up"></i>
+                                    </a>
+
+                                    <a href="#" data-action="close">
+                                        <i class="ace-icon fa fa-times"></i>
+                                    </a>
+
+                                    <a href="#" data-action="fullscreen" class="orange2">
+                                        <i class="ace-icon fa fa-expand"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <!-- #section:custom/scrollbar -->
+                                <div class="widget-main padding-4 scrollable" data-size="125">
+                                    <div class="content">
+                                        <div id="area2" contentEditable='true' class='area'></div>
+                                    </div>
+                                </div>
+
+                                <!-- /section:custom/scrollbar -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group  text-center">
+                <label>
+                    <input name="form-field-checkbox" id="anonymousPush"  onclick="anonyPush(this)" type="checkbox" class="ace">
+                    <span class="lbl">匿名发帖</span>
+                </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label>
+                    <input name="synDynamics" checked id="synDynamics"  type="checkbox" class="ace">
+                    <span class="lbl">同步个人动态</span>
+                </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-success" onclick="return publishPost(this)">发布</button>
+                <button class="btn btn-info" onclick="window.close()">关闭</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        ace.settingFunction.main_container_fixed(null, true);
+    })
+    $(".dropz").dropzone({
+        url: "/post/lost/post/uploadImge",
+        addRemoveLinks: false,
+        maxFiles: 10,
+        maxFilesize: 5,
+        previewsContainer: false,
+        acceptedFiles: ".BMP,.JPG,.JPEG,.PNG,.GIF",
+        success: function (v1, reponse) {
+            if (reponse && reponse.success) {
+                var imgJson = JSON.parse(reponse.object);
+                $('#area2').html($('#area2').html() + "<img src='" + imgJson.root + imgJson.relative + "' />");
+            }
+        }
+    });
+
+    var em2 = $('#emoji2').emoji({
+        trigger: 'mouseover',
+        insertAfter: function (item) {
+            $('#area2').html($('#area2').html() + "<img src='" + item.src + "' class='emoji-img' />")
+        }
+    });
+
+    var maps = null;
+    function loadMap() {
+        $("#lost_place_map_panel_id").show();
+        if (null == maps) {
+            // 百度地图API功能
+            maps = new BMap.Map("lost_map");    // 创建Map实例
+            var localCity = new BMap.LocalCity();
+            localCity.get(function (localCityResult) {
+                maps.centerAndZoom(localCityResult.center, 11);  // 初始化地图,设置中心点坐标和地图级别
+            });
+            maps.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+            maps.addControl(new BMap.NavigationControl());
+            maps.addControl(new BMap.OverviewMapControl());
+            maps.addControl(new BMap.ScaleControl());
+            maps.addControl(new BMap.GeolocationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT}));
+            var size = new BMap.Size(100, 20);
+            maps.addControl(new BMap.CityListControl());
+            maps.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+            initCliSuggest();
+            setLostPoint();
+
+        }
+    }
+
+
+
+    function initCliSuggest(){
+        var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+                {"input" : "lostSuggestId"
+                    ,"location" : maps
+                });
+
+        ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+            var str = "";
+            var _value = e.fromitem.value;
+            var value = "";
+            if (e.fromitem.index > -1) {
+                value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            }
+            str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+            value = "";
+            if (e.toitem.index > -1) {
+                _value = e.toitem.value;
+                value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            }
+            str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+            $("#lostPlaceResultPanel").html(str);
+        });
+
+        var myValue;
+        ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+            var _value = e.item.value;
+            myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            $("#lostPlaceResultPanel").html("onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue);
+            console.info("*****onconfirm*******");
+            console.info(_value);
+            setLostPlace();
+        });
+    }
+    function setLostPlace() {
+        myLostValue = $("#lostSuggestId").val();
+//        if ("" == $.trim(myLostValue)) {
+//            return;
+//        }
+        function myFun() {
+            if (!local.getResults().getPoi(0)) {
+                alert("没有找到" + myLostValue + ",请重新输入！");
+                return;
+            }
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            maps.centerAndZoom(pp, 18);
+//            maps.addOverlay(new BMap.Marker(pp));    //添加标注
+            maps.clearOverlays();    //清除地图上所有覆盖物
+        }
+
+        var local = new BMap.LocalSearch(maps, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myLostValue);
+    }
+
+    function setLostPoint(){
+        maps.addEventListener("tilesloaded", function (v1, v2, v3) {
+            if($("#lost_place_map_panel_id").css("display")=="none"){
+                return;
+            }
+            var point = maps.getCenter();
+            var marker = new BMap.Marker(maps.getCenter());  // 创建标注
+            maps.clearOverlays();    //清除地图上所有覆盖物
+            maps.addOverlay(marker);               // 将标注添加到地图中
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            $("#lost_post_lng").val(point.lng);
+            $("#lost_post_lat").val(point.lat);
+            var geoc = new BMap.Geocoder();
+            geoc.getLocation(maps.getCenter(), function(rs){
+                var addComp = rs.addressComponents;
+                var lostPlace =  $.trim(addComp.city)  + $.trim(addComp.district) + $.trim(addComp.street) + $.trim(addComp.streetNumber)
+                $("#lostPlace").val($.trim(rs.address) + "附近");
+            });
+        });
+    }
+
+    function publishPost(obj) {
+//        var obj = this;
+        var publishJson = $("#lostPostFormPulish").serializeJSON();
+
+        publishJson.postType = $("#topicDiv").find("button.selected").attr("value");
+        publishJson.goodType = $("#topicDiv").find("button.selected").attr("secondeValue");
+        publishJson.placeType = $("#placeDiv").find("button.selected").attr("value");
+        publishJson['postDetailDomain.postText'] = $("#area2").html();
+        if ("" == $.trim(publishJson.title)){
+            alert("标题不能为空！");
+            return false;
+        }
+        if ("" == $.trim(publishJson.postType)){
+            alert("主题不能为空！");
+            return false;
+        }
+        if ("" == $.trim(publishJson.placeType)){
+            alert("哪儿不能为空！");
+            return false;
+        }
+        if ("" == $.trim( publishJson.happenedDate)){
+            alert("时间不能为空！");
+            return false;
+        }
+        if ("" == $.trim($("#lost_post_lng").val())) {
+            alert("地点不能为空！");
+            return false;
+        }
+
+        if ("" == $.trim(publishJson['postDetailDomain.postText'])){
+            alert("内容不能为空！");
+            return false;
+        }
+        $.ajax({
+            url: "/post/lost/post/publish",
+            type: 'POST',
+            data: publishJson,
+            dataType: "json",
+            success: function (result) {
+                //信息
+                var message = "";
+                if (result) {
+                    message = result.message;
+                    if (result.success) {
+                        if (confirm("帖子发布成功！是否继续发布？")){
+                            $("#lostPostFormPulish")[0].reset();
+                        }else{
+                            window.close();
+                        }
+
+                        return;
+                    }
+                }
+                message = ("" == $.trim(message) ? "发帖失败！" : message );
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+        return false;
+    }
+
+    function selectSingleTopic(obj){
+        $(obj).closest(".radio_btn_group").find("button").attr("class","btn btn-white btn-yellow btn-sm");
+        $(obj).attr("class","btn  btn-primary btn-sm selected");
+    }
+
+    function selectMutilTopic(obj){
+        $(obj).closest(".radio_btn_group").find("button").attr("class","btn btn-white btn-yellow btn-sm");
+        if("" != $.trim($(obj).find("[name='firstChlidren']").html())){
+            $(obj).attr("class","btn  btn-primary btn-sm selected");
+        }
+    }
+
+    function mutilTopicSelect (obj){
+        $(obj).closest(".btn-group").find("[name='firstChlidren']").html("--"+$(obj).html());
+        $(obj).closest(".btn-group").find("button").eq(0).attr("class","btn  btn-primary btn-sm selected");
+        $(obj).closest(".btn-group").find("button").eq(0).attr("secondeValue",$(obj).attr("value"));
+    }
+
+    function switchPickLostDate(obj) {
+        var switchIndex = $(obj).attr("switchIndex");
+        $("[name^='pickLostDate']").hide();
+        var curSwitchObj = $("[name='pickLostDate" + switchIndex + "']");
+        curSwitchObj.show();
+    }
+
+    function selectPickLostDate() {
+        var pickLostDateRadio = $("input[name='pickLostDateRadio']:checked");
+        var curSwitchObj = $("[name='pickLostDate" + pickLostDateRadio.attr("switchIndex") + "']");
+        var startTime = curSwitchObj.find("input:eq(0)").val();
+        $("#pickLostRandDateId").val(startTime);
+        hideTree();
+    }
+
+    function anonyPush(obj){
+        if(obj.checked){
+            $("#synDynamics").prop("checked",false);
+            $("#synDynamics").attr("disabled",true);
+        }else{
+            $("#synDynamics").prop("checked",true);
+            $("#synDynamics").removeAttr("disabled");
+        }
+    }
+</script>

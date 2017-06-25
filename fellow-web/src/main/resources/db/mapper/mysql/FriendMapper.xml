@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.FriendMapper">
+
+    <resultMap id="Friend" type="com.fellow.domain.model.Friend">
+        <result property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="friendAccount" column="friend_account"/>
+        <result property="friendAlias" column="friend_alias"/>
+        <result property="friendType" column="friend_type"/>
+        <result property="showDynamics" column="show_dynamics"/>
+        <result property="restrictDynamics" column="restrict_dynamics"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <resultMap id="FriendMeFellowVo" type="com.fellow.domain.vo.FriendMeFellowVo" extends="Friend">
+        <result property="username" column="username"/>
+        <result property="account" column="email"/>
+        <result property="avatar" column="avatar"/>
+        <result property="birthday" column="birthday"/>
+        <result property="avatar" column="avatar"/>
+        <result property="domicile_path" column="domicilePath"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,account,friend_account,friend_alias,friend_type,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO friend (
+            account,
+            friend_account,
+            friend_alias,
+            friend_type,
+            create_account,
+            create_name,
+            create_time,
+            update_account,
+            update_name,
+            update_time,
+            sys_version,
+            is_delete
+            
+        ) VALUES (
+            #{account},
+            #{friendAccount},
+            #{friendAlias},
+            #{friendType},
+            #{createAccount},
+            #{createName},
+            now(),
+            #{updateAccount},
+            #{updateName},
+            #{updateTime},
+            1,
+            0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO friend (
+            <if test="@Ognl@isNotEmpty(account)">
+                account,
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAccount)">
+                friend_account,
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAlias)">
+                friend_alias,
+            </if>
+           <if test="@Ognl@isNotEmpty(friendType)">
+               friend_type,
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account,
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name,
+            </if>
+                create_time,
+                                <if test="@Ognl@isNotEmpty(updateAccount)">
+                update_account,
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                update_name,
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                update_time,
+            </if>
+                sys_version,
+                is_delete
+                            ) VALUES (
+            <if test="@Ognl@isNotEmpty(account)">
+                #{account},
+           </if>
+            <if test="@Ognl@isNotEmpty(friendAccount)">
+                #{friendAccount},
+           </if>
+            <if test="@Ognl@isNotEmpty(friendAlias)">
+                #{friendAlias},
+           </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                #{createAccount},
+           </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                #{createName},
+           </if>
+            now(),
+                        <if test="@Ognl@isNotEmpty(updateAccount)">
+                #{updateAccount},
+           </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                #{updateName},
+           </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                #{updateTime},
+           </if>
+            1,
+            0
+            )
+    </insert>
+
+    <update id="update" >
+        UPDATE friend SET
+            <if test="@Ognl@isNotEmpty(account)">
+                account = #{account},
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAccount)">
+                friend_account = #{friendAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAlias)">
+                friend_alias = #{friendAlias},
+            </if>
+            <if test="@Ognl@isNotEmpty(friendType)">
+                friend_type = #{friendType},
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account = #{createAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name = #{createName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createTime)">
+                create_time = #{createTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                update_account = #{updateAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                update_name = #{updateName},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                update_time = now(),
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+            </if>
+            <if test="@Ognl@isNotEmpty(isDelete)">
+                is_delete = #{isDelete}
+            </if>
+        WHERE
+            id = #{id} 
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE friend
+        SET
+            <if test="@Ognl@isNotEmpty(account)">
+                account = #{account},
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAccount)">
+                friend_account = #{friendAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAlias)">
+                friend_alias = #{friendAlias},
+            </if>
+           <if test="@Ognl@isNotEmpty(friendType)">
+               friend_type = #{friendType},
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account = #{createAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name = #{createName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createTime)">
+                create_time = #{createTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(isDelete)">
+                is_delete = #{isDelete},
+            </if>
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            sys_version = #{sysVersion, jdbcType=INTEGER}
+            AND id = #{id} 
+    </update>
+
+    <delete id="delete">
+        UPDATE friend
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM friend
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <select id="getByKey" resultMap="Friend">
+        SELECT <include refid="columns" />
+        FROM friend
+        WHERE
+            id = #{id} 
+    </select>
+
+    <select id="findList" resultMap="Friend">
+    SELECT <include refid="columns" />
+    FROM friend
+    <include refid="findList_where"/>
+    <if test="@Ognl@isNotEmpty(sortColumns)">
+        ORDER BY ${sortColumns}
+    </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+    SELECT count(1)
+    FROM friend
+    <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                AND account = #{account}
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAccount)">
+                AND friend_account = #{friendAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(friendAlias)">
+                AND friend_alias = #{friendAlias}
+            </if>
+            <if test="@Ognl@isNotEmpty(friendType)">
+                AND friend_type = #{friendType}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="selectPersonalFriend" resultMap="FriendMeFellowVo">
+        SELECT
+            fd.account,
+            fd.friend_account,
+            fd.friend_alias,
+            fd.show_dynamics,
+            fd.restrict_dynamics,
+            ud.username,
+            ud.avatar,
+            ud.email,
+            ud.sex,
+            ud.birthday,
+            ud.domicile_path
+        FROM
+            user_detail AS ud
+            INNER JOIN (
+                SELECT
+                account,
+                friend_account,
+                show_dynamics,
+                restrict_dynamics,
+                friend_alias
+                FROM
+                friend
+                WHERE
+                is_delete = 0
+                AND account = #{account}
+                AND friend_type = #{friendType}
+            ) AS fd ON fd.friend_account = ud.account
+        <include refid="selectPersonalFriend_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectPersonalFriendCount" resultType="long">
+        SELECT
+            COUNT(1)
+        FROM
+            user_detail AS ud
+            INNER JOIN (
+                SELECT
+                account,
+                friend_account,
+                friend_alias
+                FROM
+                friend
+                WHERE
+                is_delete = 0
+                AND account = #{account}
+                AND friend_type = #{friendType}
+            ) AS fd ON fd.friend_account = ud.account
+        <include refid="selectPersonalFriend_where"/>
+    </select>
+
+    <sql id="selectPersonalFriend_where">
+        <where>
+            ud.is_delete = 0
+            <if test="@Ognl@isNotEmpty(fuzzyField)">
+                AND (
+                    fd.friend_account LIKE concat('%',#{fuzzyField},'%')
+                    OR fd.friend_alias LIKE concat('%',#{fuzzyField},'%')
+                    OR ud.username LIKE concat('%',#{fuzzyField},'%')
+                    OR ud.email LIKE concat('%',#{fuzzyField},'%')
+                )
+            </if>
+        </where>
+    </sql>
+
+    <update id="updateFriendAlias">
+        UPDATE
+            friend
+        SET
+            friend_alias = #{friendAlias},
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+        is_delete = 0
+            AND account = #{account}
+            AND friend_account = #{friendAccount}
+    </update>
+
+    <update id="updateShowDynamics">
+        UPDATE
+            friend
+        SET
+            show_dynamics = #{showDynamics},
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+            AND friend_account = #{friendAccount}
+    </update>
+
+    <update id="updateRestrictDynamics">
+        UPDATE
+            friend
+        SET
+            restrict_dynamics = #{restrictDynamics},
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+            AND friend_account = #{friendAccount}
+    </update>
+
+    <delete id="selectByFriendAccount">
+        SELECT
+            account,
+            friend_account,
+            friend_alias,
+            friend_type,
+            show_dynamics,
+            restrict_dynamics
+        FROM
+        WHERE
+            account = #{account}
+            AND  friend_account = #{friendAccount}
+    </delete>
+    
+    <delete id="deleteFriendByAccount">
+        DELETE
+        FROM friend
+        WHERE
+            account = #{account}
+            AND  friend_account = #{friendAccount}
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+    </delete>
+
+    <update id="updateFriendType">
+        UPDATE
+        friend
+        SET
+            friend_type = #{friendType},
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+            AND friend_account = #{friendAccount}
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+    </update>
+
+</mapper>

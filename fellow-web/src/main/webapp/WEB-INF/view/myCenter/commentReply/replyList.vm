@@ -1,0 +1,79 @@
+#if(${collectionUtils.isNotEmpty($postCommentReplyList)})
+<div class="box-info full" style="padding:0px;margin:0px;">
+    <ul class="media-list" style="padding:0px;margin:0px;">
+        #foreach($postCommentReply in $postCommentReplyList)
+            <li class="media">
+                <a class="pull-left" href="#fakelink">
+                    <img class="media-object" src="$!{postCommentReply.fromUser.avatar}" alt="Avatar">
+                </a>
+
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="#fakelink">$!{postCommentReply.fromAccount}</a>
+                        <small class="text-muted" style="font-size: 11px;"><em>$!{postCommentReply.replyTimeString}
+                            &nbsp;在帖子<a target="_blank" href="/post/lost/postDetail/index?postId=$!{postCommentReply.postId}">“$!{postCommentReply.title}”</a>上回复了<a href="#fakelink">$!{postCommentReply.toAccount}</a>的评论</em>
+                        </small>
+                        <button class="btn btn-link" commentId="$!{postCommentReply.id}" onclick="deleteCommentById(this)">
+                            <i class="ace-icon fa fa-trash-o red">删除</i>
+                        </button>
+                    </h4>
+                    <p #if(${account}==${postCommentReply.toAccount} && ${postCommentReply.isRead} == 100)  class="alert-info" #end>$!{postCommentReply.content}</p>
+                    <p><a>$!{postCommentReply.toAccount}</a> <small class="text-muted" style="font-size: 11px;"><em>$!{postCommentReply.originalSendDateString}</em></small> </p>
+                    <p >$!{postCommentReply.originalContent}</p>
+                    #if(${collectionUtils.isNotEmpty($!{postCommentReply.imgDomainList})})
+                        <div>
+                            <ul class="ace-thumbnails clearfix" data-rel-name="colorbox_${postReply.id}">
+                                <!-- #section:pages/gallery -->
+                                #foreach($lostImg in ${postCommentReply.imgDomainList})
+                                    <li>
+                                        <div>
+                                            <img width="80" height="110" style="max-width: 120px" alt="120x120"
+                                                 src="${lostImg.imgRootPath}/${lostImg.imgRelativePath}"/>
+                                            <div class="text">
+                                                <div class="inner">
+                                                    <a href="${lostImg.imgRootPath}/${lostImg.imgRelativePath}"
+                                                       data-rel="colorbox_${postReply.id}">
+                                                        <i class="ace-icon fa fa-search-plus"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            #if($velocityCount == 1)
+                                                <div class="tags">
+                                                    <!-- #section:pages/gallery.tags -->
+                                                    <span class="label-holder">
+                                                        <span class="label label-warning arrowed-in">共 ${postCommentReply.imgDomainList.size()}张</span>
+                                                    </span>
+                                                    <!-- /section:pages/gallery.tags -->
+                                                </div>
+                                            #end
+                                        </div>
+                                    </li>
+                                #end
+                            </ul>
+                        </div>
+                    #end
+                </div>
+            </li>
+        #end
+    </ul>
+</div><!-- End div .box-info .full -->
+<div class="text-right no-padding">
+    <ul class="pagination">
+        <li #if(!${isHadPrePage}) class="disabled" #end>
+            <a href="javascript:;" #if(${isHadPrePage}) onclick="searchMyCommentToMe($!{prePage})"  #end>
+                上一页
+            </a>
+        </li>
+        <li #if(!${isHadNextPage}) class="disabled" #end>
+            <a href="javascript:;" #if(${isHadNextPage}) onclick="searchMyCommentToMe($!{nextPage})" #end>
+                下一页
+            </a>
+        </li>
+    </ul>
+</div>
+#else
+<div class="text-center">
+    <div class="alert alert-warning">
+        <i class="ace-icon glyphicon glyphicon-user"></i>暂时没有与我相关的回复评论！！
+    </div>
+</div>
+#end

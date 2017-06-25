@@ -1,0 +1,366 @@
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hMOwbodAwP7lGCPyYoTOPf2K"></script>
+<script type="text/javascript" src="/static/js/app/map.js"></script>
+<style>
+    #allmap {
+        width: 100%;
+        height: 600px;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+    /*.modal-dialog{*/
+        /*width: 90%;*/
+    /*}*/
+</style>
+<div class="row">
+    <div class="col-xs-12 no-margin  well" style="padding:4px">
+        <button  onclick="selectSingleTopic(this)"  type="button" class="btn  btn-yellow  btn-sm">主题</button>
+        <span class="radio_btn_group">
+            <button  onclick="selectSingleTopic(this)"  type="button" class="btn  btn-primary btn-sm selected">不限</button>
+            #foreach($sayEnum in $sayPostTypeEnums )
+                #if($sayEnum.seconde)
+                    <div class="btn-group">
+                        <button class="btn btn-white btn-yellow  btn-sm dropdown-toggle" data-toggle="dropdown" onclick="selectMutilTopic(this)"
+                                aria-expanded="false">
+                            $sayEnum.value<span name="firstChlidren"></span>
+                            <i class="ace-icon fa fa-angle-down icon-on-right"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-danger">
+                            <li>
+                                <a  onclick="mutilTopicSelect(this)" href="javascript:;">不限</a>
+                            </li>
+                            #foreach($saySecond in $sayEnum.seconde)
+                                <li>
+                                    <a onclick="mutilTopicSelect(this)" href="javascript:;">$saySecond.value</a>
+                                </li>
+                            #end
+                        </ul>
+                    </div>
+                #else
+                    <button type="button"  onclick="selectSingleTopic(this)"   class="btn btn-white btn-yellow  btn-sm">$sayEnum.value</button>
+                #end
+            #end
+        </span>
+    </div>
+    <div class="col-xs-12 no-margin  well" style="padding:4px">
+        <button type="button"  class="btn  btn-yellow  btn-sm">哪里</button>
+        <span class="radio_btn_group">
+            <button  onclick="selectSingleTopic(this)"  type="button" class="btn  btn-primary btn-sm selected">全部</button>
+            #foreach($postPlaceTypeEnum in $postPlaceTypeEnums)
+                <button  onclick="selectSingleTopic(this)"  type="button" class="btn btn-white btn-yellow  btn-sm">$postPlaceTypeEnum.value</button>
+            #end
+        </span>
+    </div>
+    <div class="col-xs-12 no-margin  well" style="padding:4px">
+        <div class="col-xs-5 no-padding">
+            <div class="col-xs-1  no-margin  no-padding text-right">
+                <label class="smaller-90 label-warning ">地址</label>
+            </div>
+            <div class="col-xs-3 no-padding">
+                <input id="suggestId" class="form-control input-sm" style="height:25px" placeholder="输入地址查找"
+                       type="text">
+
+                <div id="searchResultPanel"
+                     style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+            </div>
+            <div class="col-xs-2  no-margin  no-padding text-right">
+                <label class="smaller-90 label-warning  no-padding">时间</label>
+            </div>
+            <div class="col-md-3  no-padding">
+                <input id="pickLostRandDateId" onclick="showUserOrgTree('college_school_panel_id'); return false;"
+                       style="height: 25px" readonly="" class="form-control" placeholder="时间" type="text">
+
+                <div id="college_school_panel_id" class="well  no-padding" name="downPanel"
+                     style="position: absolute; z-index: 10; margin-top: -2px; display: none;">
+                    <div style="display: block;min-width: 286px;padding:10px;">
+                        <span class="radio  pull-left">
+                        </span>
+                        <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" checked="" switchindex="1"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">日</span>
+                            </label>
+                        </span>
+                         <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" switchindex="2"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">月</span>
+                            </label>
+                         </span>
+                         <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" switchindex="3"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">年</span>
+                            </label>
+                         </span>
+                    </div>
+                    <div class="col-xs-12" name="pickLostDate1">
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control " style="height: 25px" onclick="WdatePicker()" type="text">
+                        </div>
+                        <div class="col-xs-2  no-margin  no-padding  text-center">
+                            <label class="smaller-90 label-warning ">至</label>
+                        </div>
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control" style="height: 25px" onclick="WdatePicker()" type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12" name="pickLostDate2" style="display: none">
+                        <div class="col-md-5 no-margin no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy-MM'})" type="text">
+                        </div>
+                        <div class="col-xs-2  no-margin  no-padding  text-center">
+                            <label class="smaller-90 label-warning ">至</label>
+                        </div>
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy-MM'})" type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12" name="pickLostDate3" style="display: none">
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy'})" type="text">
+                        </div>
+                        <div class="col-xs-2  no-margin  no-padding  text-center">
+                            <label class="smaller-90 label-warning ">至</label>
+                        </div>
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy'})" type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 text-center" style="padding:10px">
+                        <button class="btn btn-primary btn-minier" onclick="selectPickLostDate()" type="button">
+                            确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-1 no-padding">
+            <label>
+                <input name="form-field-checkbox" class="ace" checked type="checkbox">
+                &nbsp;&nbsp;
+                <span class="lbl"><span class="label-warning">移动搜索</span></span>
+            </label>
+
+        </div>
+
+        <div class="col-xs-1 no-padding">
+            <button class="btn btn-info btn-minier" type="button" onclick="setPlace()">
+                <i class="glyphicon glyphicon-search"></i>
+                查找
+            </button>
+        </div>
+    </div>
+##    <div class="col-xs-12">
+    <div id="mask_row_id" class="col-xs-8 no-padding no-margin">
+        <div id="allmap"></div>
+        <!-- /section:custom/widget-box -->
+    </div>
+    <div class="col-xs-4">
+        <div class="widget-box transparent">
+            <div class="widget-header widget-header-small">
+                <h4 class="widget-title blue smaller">
+                    <i class="ace-icon fa fa-rss orange"></i>
+##                    <div id="toggle-result-format" class="btn-group btn-overlap" data-toggle="buttons">
+                        <a href="/post/lost/post/mapIndex" target="_blank">
+##                            <label title="Map view" class="btn btn-lg btn-white btn-grey" data-class="btn-warning">
+##                                <input type="radio" value="3" autocomplete="off" />
+                                <i class="icon-only ace-icon fa fa-crosshairs"></i>
+                                地图
+##                            </label>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="/post/lost/post/listIndex" target="_blank">
+##                            <label title="List view" class="btn btn-lg btn-white btn-grey" data-class="btn-primary">
+##                                <input type="radio" value="1" checked="" autocomplete="off" />
+                                <i class="icon-only ace-icon fa fa-list"></i>
+                                列表
+##                            </label>
+                        </a>
+##                    </div>
+                </h4>
+
+                <div class="widget-toolbar action-buttons">
+                    <div class="btn-group">
+                        <input id="replySortFieldId" type="hidden" value="$!{sortColumns}">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                data-toggle="dropdown">
+                            排序<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="" href="javascript:;">发表时间</a></li>
+                            <li><a onclick="" href="javascript:;">事件时间</></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main postList no-padding">
+                    <!-- #section:pages/profile.feed -->
+                    <div id="listHtmlId" class="profile-feed">
+
+                    </div>
+                    <!-- /section:pages/profile.feed -->
+                </div>
+                <div name="paginator" index="paginator_0">
+                    <ul name="paginationUl" class="pagination">
+                        <li>
+                            <a href="javascript:;" name="pagePre" index="pagePre_1" onclick="loadPostList(1)">
+                                上一页
+                            </a>
+                        </li>
+                        <li>
+                            <a  href="javascript:;" name="pageNext" index="pageNext_1" onclick="loadPostList(2)">
+                                下一页
+                            </a>
+                        </li>
+##                        <li>
+##                            <a href="javascript:alert(1);">分页查询中。。。。。</a>
+##                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+##    </div>
+##    <span class="dropz">sdfsdfsdfsd</span>
+##    <div id="dialog-confirm" class="hide">
+##        #parse("/post/lostPost/publish_post.vm")
+##    </div><!-- #dialog-confirm -->
+</div>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+    map.addControl(new BMap.NavigationControl());
+    map.addControl(new BMap.OverviewMapControl());
+    map.addControl(new BMap.ScaleControl());
+    map.addControl(new BMap.GeolocationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT}));
+    var size = new BMap.Size(100, 20);
+    map.addControl(new BMap.CityListControl({
+        anchor: BMAP_ANCHOR_TOP_LEFT,
+        offset: size
+        // 切换城市之间事件
+        // onChangeBefore: function(){
+        //    alert('before');
+        // },
+        // 切换城市之后事件
+        // onChangeAfter:function(){
+        //   alert('after');
+        // }
+    }));
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    map.disableInertialDragging();     //开启鼠标滚轮缩放
+
+//    // 百度地图API功能
+//    var maps = new BMap.Map("lost_map");    // 创建Map实例
+//    maps.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+//    maps.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+//    maps.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+//    maps.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+//
+//    //单击获取点击的经纬度
+//    maps.addEventListener("click", function (e) {
+//        $("#lost_post_lng").val(e.point.lng);
+//        $("#lost_post_lat").val(e.point.lat);
+//        setTimeout(function () {
+//            maps.clearOverlays();
+//            var point = new BMap.Point(e.point.lng, e.point.lat);
+//            var marker = new BMap.Marker(point);  // 创建标注
+//            maps.addOverlay(marker); // 将标注添加到地图中
+//        }, 200);
+//
+//    });
+
+    // 百度地图API功能
+    function G(id) {
+        return document.getElementById(id);
+    }
+
+    var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+            {
+                "input": "suggestId"
+                , "location": map
+            });
+
+    ac.addEventListener("onhighlight", function (e) {  //鼠标放在下拉列表上的事件
+        console.info(e);
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province + _value.city + _value.district + _value.street + _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province + _value.city + _value.district + _value.street + _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("searchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+//        myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+        G("searchResultPanel").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+        setPlace();
+    });
+
+    function setPlace() {
+        myValue = $("#suggestId").val();
+        if ("" == $.trim(myValue)) {
+            loadPostList(1);
+            return;
+        }
+        function myFun() {
+            if (!local.getResults().getPoi(0)) {
+                alert("没有找到" + myValue + ",请重新输入！");
+                return;
+            }
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+//            map.addOverlay(new BMap.Marker(pp));    //添加标注
+            map.clearOverlays();    //清除地图上所有覆盖物
+        }
+
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+    }
+
+
+    var isSearch = true;
+    map.addEventListener("dragstart", function (v1, v2, v3) {
+        isSearch = false;
+    });
+    map.addEventListener("dragend", function (v1, v2, v3) {
+        setTimeout(function () {
+            isSearch = true;
+        }, 1000);
+        loadPostList(1);
+    });
+    map.addEventListener("tilesloaded", function (v1, v2, v3) {
+        console.info("tilesloaded-->isSearch=" + isSearch);
+        if (isSearch) {
+            loadPostList(1);
+        }
+    });
+</script>
+##<script src="/static/js/app/post/lostPost.js"/>
+<script src="/static/js/app/post/lostPost.js"></script>

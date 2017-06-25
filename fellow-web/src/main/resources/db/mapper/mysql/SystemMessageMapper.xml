@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.SystemMessageMapper">
+
+    <resultMap id="SystemMessage" type="com.fellow.domain.model.SystemMessage">
+        <result property="id" column="id"/>
+        <result property="sendAccount" column="send_account"/>
+        <result property="receiveAccount" column="receive_account"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="readTime" column="read_time"/>
+        <result property="messageType" column="message_type"/>
+        <result property="message" column="message"/>
+        <result property="contentType" column="content_type"/>
+        <result property="sendDelete" column="send_delete"/>
+        <result property="receiveDelete" column="receive_delete"/>
+        <result property="detailCount" column="detail_count"/>
+        <result property="receiveDetailUnreadNum" column="receive_detail_unread_num"/>
+        <result property="sendDetailUnreadNum" column="send_detail_unread_num"/>
+        <result property="status" column="status"/>
+        <result property="lastAccout" column="last_accout"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,send_account,receive_account,send_time,read_time,message_type,message,content_type,send_delete,receive_delete,detail_count,receive_detail_unread_num,send_detail_unread_num,status,last_accout,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO system_message (
+        send_account,
+        receive_account,
+        send_time,
+        read_time,
+        message_type,
+        message,
+        content_type,
+        send_delete,
+        receive_delete,
+        detail_count,
+        receive_detail_unread_num,
+        send_detail_unread_num,
+        status,
+        last_accout,
+        create_account,
+        create_name,
+        create_time,
+        update_account,
+        update_name,
+        update_time,
+        sys_version,
+        is_delete
+
+        ) VALUES (
+        #{sendAccount},
+        #{receiveAccount},
+        #{sendTime},
+        #{readTime},
+        #{messageType},
+        #{message},
+        #{contentType},
+        #{sendDelete},
+        #{receiveDelete},
+        #{detailCount},
+        #{receiveDetailUnreadNum},
+        #{sendDetailUnreadNum},
+        #{status},
+        #{lastAccout},
+        #{createAccount},
+        #{createName},
+        now(),
+        #{updateAccount},
+        #{updateName},
+        #{updateTime},
+        1,
+        0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO system_message (
+        <if test="@Ognl@isNotEmpty(sendAccount)">
+            send_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveAccount)">
+            receive_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(sendTime)">
+            send_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            read_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(messageType)">
+            message_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(message)">
+            message,
+        </if>
+        <if test="@Ognl@isNotEmpty(contentType)">
+            content_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDelete)">
+            send_delete,
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDelete)">
+            receive_delete,
+        </if>
+        <if test="@Ognl@isNotEmpty(detailCount)">
+            detail_count,
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDetailUnreadNum)">
+            receive_detail_unread_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDetailUnreadNum)">
+            send_detail_unread_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            status,
+        </if>
+        <if test="@Ognl@isNotEmpty(lastAccout)">
+            last_accout,
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name,
+        </if>
+        create_time,
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time,
+        </if>
+        sys_version,
+        is_delete
+        ) VALUES (
+        <if test="@Ognl@isNotEmpty(sendAccount)">
+            #{sendAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveAccount)">
+            #{receiveAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendTime)">
+            #{sendTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            #{readTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(messageType)">
+            #{messageType},
+        </if>
+        <if test="@Ognl@isNotEmpty(message)">
+            #{message},
+        </if>
+        <if test="@Ognl@isNotEmpty(contentType)">
+            #{contentType},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDelete)">
+            #{sendDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDelete)">
+            #{receiveDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(detailCount)">
+            #{detailCount},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDetailUnreadNum)">
+            #{receiveDetailUnreadNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDetailUnreadNum)">
+            #{sendDetailUnreadNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            #{status},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastAccout)">
+            #{lastAccout},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            #{createName},
+        </if>
+        now(),
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            #{updateTime},
+        </if>
+        1,
+        0
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE system_message SET
+        <if test="@Ognl@isNotEmpty(sendAccount)">
+            send_account = #{sendAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveAccount)">
+            receive_account = #{receiveAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendTime)">
+            send_time = #{sendTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            read_time = #{readTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(messageType)">
+            message_type = #{messageType},
+        </if>
+        <if test="@Ognl@isNotEmpty(message)">
+            message = #{message},
+        </if>
+        <if test="@Ognl@isNotEmpty(contentType)">
+            content_type = #{contentType},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDelete)">
+            send_delete = #{sendDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDelete)">
+            receive_delete = #{receiveDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(detailCount)">
+            detail_count = #{detailCount},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDetailUnreadNum)">
+            receive_detail_unread_num = #{receiveDetailUnreadNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDetailUnreadNum)">
+            send_detail_unread_num = #{sendDetailUnreadNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            status = #{status},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastAccout)">
+            last_accout = #{lastAccout},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time = now(),
+        </if>
+        <if test="@Ognl@isNotEmpty(sysVersion)">
+            sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE system_message
+        SET
+        <if test="@Ognl@isNotEmpty(sendAccount)">
+            send_account = #{sendAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveAccount)">
+            receive_account = #{receiveAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendTime)">
+            send_time = #{sendTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            read_time = #{readTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(messageType)">
+            message_type = #{messageType},
+        </if>
+        <if test="@Ognl@isNotEmpty(message)">
+            message = #{message},
+        </if>
+        <if test="@Ognl@isNotEmpty(contentType)">
+            content_type = #{contentType},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDelete)">
+            send_delete = #{sendDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDelete)">
+            receive_delete = #{receiveDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(detailCount)">
+            detail_count = #{detailCount},
+        </if>
+        <if test="@Ognl@isNotEmpty(receiveDetailUnreadNum)">
+            receive_detail_unread_num = #{receiveDetailUnreadNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(sendDetailUnreadNum)">
+            send_detail_unread_num = #{sendDetailUnreadNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            status = #{status},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastAccout)">
+            last_accout = #{lastAccout},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_account =#{updateAccount} ,
+        update_name = #{updateName} ,
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE system_message
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM system_message
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getByKey" resultMap="SystemMessage">
+        SELECT <include refid="columns" />
+        FROM system_message
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findList" resultMap="SystemMessage">
+        SELECT <include refid="columns" />
+        FROM system_message
+        <include refid="findList_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+        SELECT count(1)
+        FROM system_message
+        <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(sendAccount)">
+                AND send_account = #{sendAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(receiveAccount)">
+                AND receive_account = #{receiveAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(sendTimeBegin)">
+                AND send_time &gt;= #{sendTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(sendTimeEnd)">
+                AND send_time &lt;= #{sendTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(readTimeBegin)">
+                AND read_time &gt;= #{readTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(readTimeEnd)">
+                AND read_time &lt;= #{readTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(messageType)">
+                AND message_type = #{messageType}
+            </if>
+            <if test="@Ognl@isNotEmpty(message)">
+                AND message = #{message}
+            </if>
+            <if test="@Ognl@isNotEmpty(contentType)">
+                AND content_type = #{contentType}
+            </if>
+            <if test="@Ognl@isNotEmpty(sendDelete)">
+                AND send_delete = #{sendDelete}
+            </if>
+            <if test="@Ognl@isNotEmpty(receiveDelete)">
+                AND receive_delete = #{receiveDelete}
+            </if>
+            <if test="@Ognl@isNotEmpty(detailCount)">
+                AND detail_count = #{detailCount}
+            </if>
+            <if test="@Ognl@isNotEmpty(receiveDetailUnreadNum)">
+                AND receive_detail_unread_num = #{receiveDetailUnreadNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(sendDetailUnreadNum)">
+                AND send_detail_unread_num = #{sendDetailUnreadNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(status)">
+                AND status = #{status}
+            </if>
+            <if test="@Ognl@isNotEmpty(lastAccout)">
+                AND last_accout = #{lastAccout}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="selectSystemMessage" resultMap="SystemMessage">
+        SELECT
+            id,
+            send_account,
+            receive_account,
+            send_time,
+            read_time,
+            message_type,
+            message,
+            detail_count,
+            content_type,
+            receive_detail_unread_num,
+            send_detail_unread_num,
+            `status`,
+            last_accout,
+            detail_count
+        FROM
+            system_message
+        WHERE
+            is_delete = 0
+            AND ((send_account = #{sendAccount} AND send_delete=0 ) OR  (receive_account = #{receiveAccount} AND receive_delete =0))
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectSystemMessageCount" resultType="long">
+        SELECT
+            COUNT(id)
+        FROM
+            system_message
+        WHERE
+            is_delete = 0
+             AND ((send_account = #{sendAccount} AND send_delete=0 ) OR  (receive_account = #{receiveAccount} AND receive_delete =0))
+    </select>
+
+    <select id="selectUnReadSum" resultType="int">
+        SELECT
+            SUM(IF(receive_account=#{receiveAccount},receive_detail_unread_num,send_detail_unread_num)) AS receive_detail_unread_num,
+        FROM
+            system_message
+        WHERE
+            is_delete = 0
+            AND ((send_account = #{sendAccount} AND send_delete=0 ) OR  (receive_account = #{receiveAccount} AND receive_delete =0))
+    </select>
+
+    <update id="updateReceiveHadRead">
+        UPDATE system_message
+        SET
+            receive_detail_unread_num = 0,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            id IN
+            <foreach collection="idList" open="(" separator="," close=")" item="idTemp">
+                #{idTemp}
+            </foreach>
+            AND  receive_account = #{receiveAccount}
+    </update>
+
+    <update id="updateSendHadRead">
+        UPDATE system_message
+        SET
+            send_detail_unread_num = 0,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            id IN
+            <foreach collection="idList" open="(" separator="," close=")" item="idTemp">
+                #{idTemp}
+            </foreach>
+            AND send_account = #{sendAccount}
+    </update>
+
+    <update id="deleteBySendAccount">
+        UPDATE  system_message
+        SET send_delete = 1,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND send_account = #{sendAccount}
+            <choose>
+                <when test="@Ognl@isNotEmpty(id)">
+                    AND id  = #{id}
+                </when>
+                <otherwise>
+                    AND id IN
+                    <foreach collection="idList" item="idTemp" open="(" separator="," close=")">
+                        #{idTemp}
+                    </foreach>
+                </otherwise>
+            </choose>
+    </update>
+
+    <update id="deleteByReceiveAccount">
+        UPDATE  system_message
+        SET receive_delete = 1,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND receive_account = #{receiveAccount}
+            <choose>
+                <when test="@Ognl@isNotEmpty(id)">
+                    AND id  = #{id}
+                </when>
+                <otherwise>
+                    AND id IN
+                    <foreach collection="idList" item="idTemp" open="(" separator="," close=")">
+                        #{idTemp}
+                    </foreach>
+                </otherwise>
+            </choose>
+    </update>
+
+    <select id="selectMessageByIds" resultMap="SystemMessage">
+        SELECT
+            id,
+            send_account,
+            receive_account,
+            message_type
+        FROM
+            system_message
+        WHERE
+            is_delete = 0
+            AND id IN
+            <foreach collection="idList" item="idTemp" open="(" separator="," close=")">
+                #{idTemp}
+            </foreach>
+    </select>
+
+</mapper>

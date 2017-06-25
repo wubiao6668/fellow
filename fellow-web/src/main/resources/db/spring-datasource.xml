@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+    <!--H2内存数据库配置-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${datasource.jdbc.driver}"/>
+        <property name="url" value="${datasource.jdbc.url}"/>
+        <property name="username" value="${datasource.jdbc.username}"/>
+        <property name="password" value="${datasource.jdbc.password}"/>
+        <!-- 初始化连接数量 -->
+        <property name="initialSize" value="5"/>
+        <!-- 最大活动连接数量 -->
+        <property name="maxActive" value="100"/>
+        <!-- 最大空闲连接数量 -->
+        <property name="maxIdle" value="5"/>
+        <!-- 最小空闲连接数量 -->
+        <property name="minIdle" value="2"/>
+        <!-- 是否自动提交 -->
+        <property name="defaultAutoCommit" value="false"/>
+        <!-- 空闲连接被回收时间，回收空闲连接至minIdle指定数量，单位毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+        <!-- 检查空闲连接是否可被回收，如果小于等于0，不会启动检查线程，默认-1，单位毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="120000"/>
+        <!-- 在每次空闲连接回收器线程(如果有)运行时检查的连接数量 -->
+        <property name="numTestsPerEvictionRun" value="3"/>
+        <!-- SQL查询,用来验证从连接池取出的连接 -->
+        <property name="validationQuery" value="select 1"/>
+        <!-- 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除 -->
+        <property name="testWhileIdle" value="true"/>
+        <!-- 指明是否在从池中取出连接前进行检验,如果检验失败, -->
+        <property name="testOnBorrow" value="false"/>
+        <!-- 指明是否在归还到池中前进行检验 -->
+        <property name="testOnReturn" value="false"/>
+        <!-- 标记是否删除泄露的连接，设置为true可以为写法糟糕的没有关闭连接的程序修复数据库连接. -->
+        <property name="removeAbandoned" value="true"/>
+        <!-- 泄露的连接可以被删除的超时值, 单位秒 -->
+        <property name="removeAbandonedTimeout" value="1800"/>
+        <!-- 将会在回收事件后，在log中打印出回收Connection的错误信息，在调试的时候很有用。 -->
+        <property name="logAbandoned" value="true"/>
+        <!-- 获取连接时等待时间，超出将抛异常，单位毫秒 -->
+        <property name="maxWait" value="10000"/>
+        <property name="filters" value="stat" />
+    </bean>
+
+
+
+</beans>

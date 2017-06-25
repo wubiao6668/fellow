@@ -1,0 +1,526 @@
+#set($layout="/layout/empty.vm")
+<style type="text/css">
+    /*body{margin-top:20px;*/
+    /*background:#eee;*/
+    /*}*/
+
+    .btn-compose-email {
+        padding: 10px 0px;
+        margin-bottom: 20px;
+    }
+
+    .btn-danger {
+        background-color: #E9573F;
+        border-color: #E9573F;
+        color: white;
+    }
+
+    .panel-teal .panel-heading {
+        background-color: #37BC9B;
+        border: 1px solid #36b898;
+        color: white;
+    }
+
+    .panel .panel-heading {
+        padding: 5px;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+        border-bottom: 1px solid #DDD;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+    }
+
+    .panel .panel-heading .panel-title {
+        padding: 10px;
+        font-size: 17px;
+    }
+
+    form .form-group {
+        position: relative;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    .inner-all {
+        padding: 10px;
+    }
+
+    /* ========================================================================
+     * MAIL
+     * ======================================================================== */
+    .nav-email > li:first-child + li:active {
+        margin-top: 0px;
+    }
+
+    .nav-email > li + li {
+        margin-top: 1px;
+    }
+
+    .nav-email li {
+        background-color: white;
+    }
+
+    .nav-email li.active {
+        background-color: transparent;
+    }
+
+    .nav-email li.active .label {
+        background-color: white;
+        color: black;
+    }
+
+    .nav-email li a {
+        color: black;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+    }
+
+    .nav-email li a:hover {
+        background-color: rgba(238, 53, 114, 0.44);
+    }
+
+    .nav-email li a i {
+        margin-right: 5px;
+    }
+
+    .nav-email li a .label {
+        margin-top: -1px;
+    }
+
+    .table-email tr:first-child td {
+        border-top: none;
+    }
+
+    .table-email tr td {
+        vertical-align: top !important;
+    }
+
+    .table-email tr td:first-child, .table-email tr td:nth-child(2) {
+        text-align: center;
+        width: 35px;
+    }
+
+    .table-email tr.unread, .table-email tr.selected {
+        background-color: #EEEEEE;
+    }
+    .table-email  tr {
+        background-color: #EEEEEE;
+    }
+
+    .table-email tr:nth-child(2n) {
+        background: rgba(189, 255, 168, 0.19);
+    }
+
+    .table-email .media {
+        margin: 0px;
+        padding: 0px;
+        position: relative;
+    }
+
+    .table-email .media h4 {
+        margin: 0px;
+        font-size: 14px;
+        line-height: normal;
+    }
+
+    .table-email .media-object {
+        width: 35px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+    }
+
+    .table-email .media-meta, .table-email .media-attach {
+        font-size: 11px;
+        color: #999;
+        position: absolute;
+        right: 10px;
+    }
+
+    .table-email .media-meta {
+        top: 0px;
+    }
+
+    .table-email .media-attach {
+        bottom: 0px;
+    }
+
+    .table-email .media-attach i {
+        margin-right: 10px;
+    }
+
+    .table-email .media-attach i:last-child {
+        margin-right: 0px;
+    }
+
+    .table-email .email-summary {
+        margin: 0px 110px 0px 0px;
+    }
+
+    .table-email .email-summary strong {
+        color: #333;
+    }
+
+    .table-email .email-summary span {
+        line-height: 1;
+    }
+
+    .table-email .email-summary span.label {
+        padding: 1px 5px 2px;
+    }
+
+    .table-email .ckbox {
+        line-height: 0px;
+        margin-left: 8px;
+    }
+
+    .table-email .star {
+        margin-left: 6px;
+    }
+
+    .table-email .star.star-checked i {
+        color: goldenrod;
+    }
+
+    .nav-email-subtitle {
+        font-size: 15px;
+        text-transform: uppercase;
+        color: #333;
+        margin-bottom: 15px;
+        margin-top: 30px;
+    }
+
+    .compose-mail {
+        position: relative;
+        padding: 15px;
+    }
+
+    .compose-mail textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #DDD;
+    }
+
+    .view-mail {
+        padding: 10px;
+        font-weight: 300;
+    }
+
+    .attachment-mail {
+        padding: 10px;
+        width: 100%;
+        display: inline-block;
+        margin: 20px 0px;
+        border-top: 1px solid #EFF2F7;
+    }
+
+    .attachment-mail p {
+        margin-bottom: 0px;
+    }
+
+    .attachment-mail a {
+        color: #32323A;
+    }
+
+    .attachment-mail ul {
+        padding: 0px;
+    }
+
+    .attachment-mail ul li {
+        float: left;
+        width: 200px;
+        margin-right: 15px;
+        margin-top: 15px;
+        list-style: none;
+    }
+
+    .attachment-mail ul li a.atch-thumb img {
+        width: 200px;
+        margin-bottom: 10px;
+    }
+
+    .attachment-mail ul li a.name span {
+        float: right;
+        color: #767676;
+    }
+
+    @media (max-width: 640px) {
+        .compose-mail-wrapper .compose-mail {
+            padding: 0px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .mail-wrapper .panel-sub-heading {
+            text-align: center;
+        }
+
+        .mail-wrapper .panel-sub-heading .pull-left, .mail-wrapper .panel-sub-heading .pull-right {
+            float: none !important;
+            display: block;
+        }
+
+        .mail-wrapper .panel-sub-heading .pull-right {
+            margin-top: 10px;
+        }
+
+        .mail-wrapper .panel-sub-heading img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+        }
+
+        .mail-wrapper .panel-footer {
+            text-align: center;
+        }
+
+        .mail-wrapper .panel-footer .pull-right {
+            float: none !important;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mail-wrapper .attachment-mail ul {
+            padding: 0px;
+        }
+
+        .mail-wrapper .attachment-mail ul li {
+            width: 100%;
+        }
+
+        .mail-wrapper .attachment-mail ul li a.atch-thumb img {
+            width: 100% !important;
+        }
+
+        .mail-wrapper .attachment-mail ul li .links {
+            margin-bottom: 20px;
+        }
+
+        .compose-mail-wrapper .search-mail input {
+            width: 130px;
+        }
+
+        .compose-mail-wrapper .panel-sub-heading {
+            padding: 10px 7px;
+        }
+    }
+
+    .media-body .email-summary {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 660px;
+    }
+
+    /*.table-email  tr {*/
+        /*background-color: expression((this.sectionRowIndex % 2 == 0) "#FF3" :"#6F9" );*/
+    /*}*/
+</style>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel rounded shadow panel-teal">
+##            <div class="panel-heading">
+##                <div class="pull-left">
+##                    <h3 class="panel-title"><i class="ace-icon fa fa-envelope"></i>未读（<span id="nuReadNum">11</span>）
+##                    </h3>
+##                </div>
+##                <div class="pull-right">
+##                </div>
+##                <div class="clearfix"></div>
+##            </div><!-- /.panel-heading -->
+            <div class="panel-sub-heading inner-all">
+                <div class="pull-left">
+                    <ul class="list-inline no-margin">
+                        <li>
+                            <div class="ckbox ckbox-theme">
+                                <input id="checkbox-group" type="checkbox" class="mail-group-checkbox">
+                                <label for="checkbox-group"></label>
+                            </div>
+                        </li>
+##                        <li>
+##                            <div class="btn-group">
+##                                <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+##                                        data-toggle="dropdown">
+##                                    全部 <span class="caret"></span>
+##                                </button>
+##                                <ul class="dropdown-menu" role="menu">
+##                                    <li><a href="#">全部</a></li>
+##                                    <li><a href="#">未读</a></li>
+##                                ##                                        <li><a href="#">已读</a></li>
+##                                </ul>
+##                            </div>
+##                        </li>
+                        <li>
+                            <div class="btn-group">
+                                <button class="btn btn-info btn-sm tooltips" type="button"  onclick="setHadRead(this)">
+                                    <i class="fa fa-inbox"></i>标记为已读
+                                </button>
+                                <button class="btn btn-danger btn-sm tooltips" type="button" onclick="deleteMessage(this)">
+                                    <i class="fa fa-trash-o"></i>删除
+                                </button>
+                                <button class="btn btn-inverse  btn-sm tooltips" type="button" data-toggle="tooltip"
+                                        data-container="body" title="" data-original-title="Report Spam"><i
+                                        class="fa fa-eye-slash"></i>拉黑
+                                </button>
+                            </div>
+                        </li>
+                        <li class="hidden-xs">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    排序 <span class="caret"></span>
+                                </button>
+                                <input type="hidden" value="unRead" id="orderFieldId">
+                                <ul class="dropdown-menu pull-left" role="menu">
+                                    <li><a href="javascript:;" onclick="$('#orderFieldId').val('unRead'); loadPersonMessage(1, 10);">未读数</a></li>
+                                    <li><a href="javascript:;" onclick="$('#orderFieldId').val('updateTime');loadPersonMessage(1, 10);">时间</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- /.panel-sub-heading -->
+            <div class="panel-body no-padding" id="messageBody">
+
+            </div><!-- /.panel-body -->
+        </div><!-- /.panel -->
+    </div>
+
+</div>
+
+
+##</div>
+<script type="text/javascript">
+    $(function () {
+        ace.settingFunction.main_container_fixed(null, true);
+        $('.friend-scroll').ace_scroll({size: 600});
+        $('.message-scroll').ace_scroll({size: 400});
+        loadPersonMessage(1, 10);
+    })
+    function showMsgDetail(obj,sendAccount,unReadNum) {
+        if (!isNaN(unReadNum)){
+            $("#nuReadNum").html(parseInt($("#nuReadNum").html()) - parseInt(unReadNum));
+        }
+        $(obj).find("[name='nuReadNumDetailSpan']").remove();
+        $.get("/message/personal/showMessageDetail?sendAccount=" + sendAccount,function(messageHtml){
+            bootbox.dialog({
+//            title: '<h4 class="modal-title" ></h4>',
+                message: messageHtml,
+                size: "large"
+            });
+        });
+    }
+
+    function loadPersonMessage(page, pageSize) {
+        var param = {};
+        param.page = page;
+        param.pageSize = pageSize;
+        param.sortColumns = $("#orderFieldId").val();
+
+        $.ajax({
+            url: "/message/personal/findPersonMessage",
+            type: 'POST',
+            data: param,
+            dataType: "json",
+            success: function (result) {
+                $("#messageBody").html(result.body);
+                $("#nuReadNum").html(result.object);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+    }
+
+    function gotoMessagePage(obj) {
+        var gotoPageTextValue = $.trim($("#gotoPageText").val());
+        var page = gotoPageTextValue;
+        if ("" == gotoPageTextValue || isNaN(gotoPageTextValue) || 0 >= parseInt(gotoPageTextValue)) {
+            page = 1
+        } else if (parseInt($(obj).attr("totalPages")) < parseInt(gotoPageTextValue)) {
+            page = $(obj).attr("totalPages");
+        }
+        var limit = $(obj).attr("limit");
+        loadPersonMessage(page, limit);
+    }
+
+    function setHadRead(obj){
+        var chkObjects = $("input[name='messageChk']:checked");
+        if (chkObjects.length <= 0){
+            alert("请选择需要设置为已读的记录！");
+            return;
+        }
+        var accounts="";
+        $.each(chkObjects,function(){
+            accounts+= "&accounts=" +  $(this).attr("account") ;
+        });
+        $.ajax({
+            url: "/message/personal/setHadRead",
+            type: 'POST',
+            data: accounts,
+            dataType: "json",
+            success: function (result) {
+                //信息
+                var message = "";
+                if (result) {
+                    message = result.message;
+                    if (result.success) {
+                        $.each(chkObjects,function(){
+                            $(this).closest("tr").find("span[name='nuReadNumDetailSpan']").remove();
+                            $(this).prop("checked",false);
+                        });
+                        return false;
+                    }
+                }
+                message = ("" == $.trim(message) ? "设置记录为已读失败！" : message );
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+    }
+
+    function deleteMessage(obj){
+        var chkObjects = $("input[name='messageChk']:checked");
+        if (chkObjects.length <= 0){
+            alert("请选择需要删除的记录！");
+            return;
+        }
+        var accounts="";
+        $.each(chkObjects,function(){
+            accounts+= "&accounts=" +  $(this).attr("account") ;
+        });
+        $.ajax({
+            url: "/message/personal/deleteMessage",
+            type: 'POST',
+            data: accounts,
+            dataType: "json",
+            success: function (result) {
+                //信息
+                var message = "";
+                if (result) {
+                    message = result.message;
+                    if (result.success) {
+                        loadPersonMessage(1, 10);
+                        return false;
+                    }
+                }
+                message = ("" == $.trim(message) ? "删除记录失败！" : message );
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+    }
+
+
+    //    messageChk
+
+</script>

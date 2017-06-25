@@ -1,0 +1,20 @@
+<div>
+    <div style="padding-left:50px" name="commentReplyList">
+        #foreach($commentReply in $!{postReply.postCommentReplyList})
+           #parse("/post/post/commentReplyList.vm")
+        #end
+    </div>
+    #set($commentReplyListLength = ${postReply.postCommentReplyList.size()} - 1)
+    #set($maxId=$!{postReply.postCommentReplyList.get($commentReplyListLength).id})
+    <div class="center no-padding" style="clear:both#if(${postReply.replyNum}<= ${COMMENT_GROUP_NUM});display: none #end">
+        <a class="btn btn-link  btn-minier" href="javascript:;" maxId="$!{maxId}" limit="${COMMENT_GROUP_NUM}" postId="$!{postReply.postId}" replyId="$!{postReply.Id}" postType="$!{lostPostType}" onclick="loadCommentReply(this)">
+            <i class="ace-icon fa fa-comments-o fa-2x green middle" name="totalComment"></i> 共${postReply.replyNum}条评论
+            <i class="glyphicon glyphicon-arrow-down"></i>
+        </a>
+    </div>
+</div>
+<div style="clear: both" class="text-center">
+    <a class="btn btn-link  btn-minier" href="javascript:;"
+       onclick="showHideComment(this)"><i   class="ace-icon fa fa-angle-double-down icon-only bigger-110"></i>收起</>
+    </a>
+</div>

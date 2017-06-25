@@ -1,0 +1,136 @@
+#if(${collectionUtils.isNotEmpty(${dynamicsList})})
+    #foreach($dynamics in $dynamicsList)
+        #set($dynamicCount=$velocityCount)
+    <!-- Newsfeed Content -->
+    <!--===================================================-->
+    <div name="commentDiv" class="media-block pad-all">
+        <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${dynamics.accountUser.avatar}"></a>
+        <div class="media-body">
+            <div class="mar-btm">
+                <a href="#" class="btn-link text-semibold media-heading box-inline">${dynamics.accountUser.username}</a>
+                <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i>${dynamics.publishTimeString}</p>
+            </div>
+            <p>$!{dynamics.content}</p>
+            #if(${dynamics.imgNum} > 0 )
+                <ul class="ace-thumbnails clearfix" data-rel-name="colorbox_${dynamicCount}" style="padding-bottom:10px">
+                    #foreach($imageList in $dynamics.dynamicsImgList)
+                        <li>
+                            <div>
+                                <img width="140" height="140" alt="80x82" src="$!{imageList.imgRootPath}/$!{imageList.imgRelativePath}"/>
+                                <div class="text">
+                                    <div class="inner">
+                                        <a href="$!{imageList.imgRootPath}/$!{imageList.imgRelativePath}" data-rel="colorbox_${dynamicCount}">
+                                            <i class="ace-icon fa fa-search-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                #if($velocityCount == 1)
+                                    <div class="tags">
+                                        <!-- #section:pages/gallery.tags -->
+                                        <span class="label-holder">
+                                            <span class="label label-warning arrowed-in">共$!{dynamics.dynamicsImgList.size()}张</span>
+                                        </span>
+                                        <!-- /section:pages/gallery.tags -->
+                                    </div>
+                                #end
+                            </div>
+                        </li>
+                    #end
+                    <!-- #section:pages/gallery -->
+                </ul>
+            #end
+
+            <div  class="text-right">
+                <span class="text-left">
+                    #if(${dynamics.personalDynamicsUp.thumbsType} == ${ThumbsTypeEnumMap.UP.key})
+                        <button name="commentThumbsBtn"  thumbsType="${ThumbsTypeEnumMap.UP.key}" thumbsCancel="${ThumbsTypeEnumMap.CANCEL.key}"
+                                onclick="commentThumbs(this,'/dynamics/friend/thumbsDynamicsComment?personalId=$!{dynamics.id}')"  class="btn btn-link  btn-minier">
+                            <i name="num" class="glyphicon glyphicon-thumbs-up red">$!{dynamics.upNum}</i>
+                        </button>
+                    #else
+                        <button name="commentThumbsBtn" thumbsType="${ThumbsTypeEnumMap.UP.key}" thumbsCancel="${ThumbsTypeEnumMap.CANCEL.key}"
+                                onclick="commentThumbs(this,'/dynamics/friend/thumbsDynamicsComment?personalId=$!{dynamics.id}')"  class="btn btn-link  btn-minier">
+                            <i  name="num" class="glyphicon glyphicon-thumbs-up">$!{dynamics.upNum}</i>
+                        </button>
+                    #end
+                    #if(${dynamics.personalDynamicsUp.thumbsType} == ${ThumbsTypeEnumMap.LOVE.key})
+                        <button name="commentThumbsBtn" thumbsType="${ThumbsTypeEnumMap.LOVE.key}" thumbsCancel="${ThumbsTypeEnumMap.CANCEL.key}"
+                                onclick="commentThumbs(this,'/dynamics/friend/thumbsDynamicsComment?personalId=$!{dynamics.id}')"  class="btn btn-link btn-minier">
+                            <i name="num" class="ace-icon fa fa-heart red">$!{dynamics.loveNum}</i>
+                        </button>
+                    #else
+                        <button name="commentThumbsBtn" thumbsType="${ThumbsTypeEnumMap.LOVE.key}" thumbsCancel="${ThumbsTypeEnumMap.CANCEL.key}"
+                                onclick="commentThumbs(this,'/dynamics/friend/thumbsDynamicsComment?personalId=$!{dynamics.id}')"  class="btn btn-link btn-minier">
+                            <i  name="num" class="ace-icon fa fa-heart">$!{dynamics.loveNum}</i>
+                        </button>
+                    #end
+                    #mc_reply($dynamics.postId $dynamics.id $dynamics.account)
+                    <button  class="btn btn-link  btn-minier">
+                        <i class="glyphicon grey glyphicon-eye-close"></i>拉黑
+                    </button>
+                    <button  class="btn btn-link  btn-minier" onclick="deleteReplyByAccount(this,$!{dynamics.id},$!{dynamics.postId})" >
+                        <i class="ace-icon red fa fa-times bigger-125"></i>删除
+                    </button>
+                </span>
+                <span class="">
+                        <a href="javascript:;" personalId="$!{dynamics.id}" onclick="showUpUser(this)" class="right">查看所有点赞者</a>
+                </span>
+            </div>
+            <!-- Comments -->
+            #if(${collectionUtils.isNotEmpty(${dynamics.personalDynamicsCommentList})})
+                <div>
+                    #set($commentSize=${dynamics.personalDynamicsCommentList.size()} - 1)
+                    #set($maxCommentId = ${dynamics.personalDynamicsCommentList.get($commentSize).id})
+                    <div name="commentListDiv">
+                    #foreach($comment in ${dynamics.personalDynamicsCommentList})
+                        <hr>
+                        <div class="media-block">
+                            <a class="media-left" href="#"><img class="img-circle img-sm" alt="Profile Picture" src="${comment.fromUser.avatar}"></a>
+                            <div class="media-body">
+                                <div class="mar-btm">
+                                    <a href="#" class="btn-link text-semibold media-heading box-inline">${comment.fromAccount}</a>回复<a href="#" class="btn-link text-semibold media-heading box-inline">${comment.toAccount}</a>
+                                    <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - ${comment.replyTimeString}</p>
+                                </div>
+                                <p> ${comment.content}#mc_reply($comment.id $comment.personalId $comment.fromAccount) <button  class="btn btn-link  btn-minier"> <i class="glyphicon grey glyphicon-eye-close"></i>拉黑 </button>
+                                    <button  class="btn btn-link  btn-minier" onclick="deleteReplyByAccount(this,$!{postReply.id},$!{postReply.postId})" ><i class="ace-icon red fa fa-times bigger-125"></i>删除</button></p>
+                            </div>
+                        </div>
+                    #end
+                    </div>
+                    #if(${dynamics.replyNum} > ${COMMENT_GROUP_NUM})
+                        <div class="center no-padding" style="clear:both">
+                            <a class="btn btn-link  btn-minier" href="javascript:;" idLt="$!{maxCommentId}"  personalId="${dynamics.id}"  onclick="loadDynamicsReply(this)">
+                                <i class="ace-icon fa fa-comments-o fa-2x green middle" name="totalComment"></i> 共${dynamics.replyNum}条评论
+                                <i class="glyphicon glyphicon-arrow-down"></i>
+                            </a>
+                        </div>
+                    #end
+                </div>
+                <div style="clear: both" class="text-center">
+                    <a class="btn btn-link  btn-minier" href="javascript:;" onclick="showHideComment(this)"><i class="ace-icon fa fa-angle-double-down icon-only bigger-110"></i>收起评论</a>
+                </div>
+            #else
+                <div>
+                    <div name="commentListDiv">
+                    </div>
+                </div>
+            #end
+
+            <hr>
+        </div>
+    </div>
+    <!--===================================================-->
+    <!-- End Newsfeed Content -->
+    #end
+
+#else
+    #if($isFirst)
+          没有动态可显示，可以到其它地方看看哦
+    #end
+#end
+
+<script>
+    $(function(){
+        loadPopoverAndEmoji();
+    });
+</script>

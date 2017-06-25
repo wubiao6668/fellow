@@ -1,0 +1,337 @@
+#set($layout="/layout/empty.vm")
+<div class="row" name="baseInfoRow">
+    <div class="col-xs-12 col-sm-12">
+        <div class="widget-box transparent">
+            <div class="widget-header widget-header-small">
+                <h4 class="widget-title col-xs-4 smaller">
+                    <i class="ace-icon fa fa-check-square-o bigger-110"></i>
+                    基本信息
+                </h4>
+                <h4 class="widget-title col-xs-4 smaller pull-right">
+                    <button class="btn btn-link" onclick="baseInfoEditor(this)">
+                        <i class="ace-icon fa fa-pencil-square-o bigger-110"></i>
+                        编辑
+                    </button>
+                </h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+
+                        <div class="col-xs-12 col-sm-12">
+                            <form id="baseInfoFrom">
+                                <div class="profile-user-info">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 账号</div>
+                                        <div class="profile-info-value">
+                                            <span>$!{user.account}</span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">邮件</div>
+
+                                        <div class="profile-info-value">
+                                            <span >$!{user.email}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">昵称</div>
+
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="usernameText">$!{user.username}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <input class="col-xs-3" placeholder="昵称" value="$!{user.username}" id="username" name="username" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">性别</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="sexText">$!{userDetail.sexText}</span>
+                                            <div fieldVisible="field-editable">
+                                                <select id="sex" name="userDetail.sex">
+                                                    <option value="">请选择</option>
+                                                    #foreach($sexEnum in $!sexEnumMap.values())
+                                                        <option value="$sexEnum.key" #if($!{sexEnum.key} == $!{userDetail.sex}) selected  #end>$sexEnum.value</option>
+                                                    #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">学历</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="educationText"> $!{userDetail.educationText}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <select id="education" name="userDetail.education">
+                                                    <option value="">请选择</option>
+                                                    #foreach($educationEnum in $!educationEnumMap.values())
+                                                        <option value="$educationEnum.key" #if($educationEnum.key == $!{userDetail.education})selected #end>$educationEnum.value</option>
+                                                    #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">职业</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="professionText">$!{userDetail.professionText}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <select class="" id="profession" name="userDetail.profession">
+                                                    <option value="">请选择</option>
+                                                     #foreach($professionEnum in $professionEnums)
+                                                         <option value="$professionEnum.key" #if($professionEnum.key == $!{userDetail.profession})selected #end>$professionEnum.value</option>
+                                                     #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">情感状态</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="relationshipText">$!{userDetail.relationshipStatusText}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <select id="relationshipStatus" class="form-select" name="userDetail.relationshipStatus">
+                                                    #foreach($relationshipStatusEnum in $relationshipStatusEnums)
+                                                        <option value="$relationshipStatusEnum.key" #if($relationshipStatusEnum.key == $!{userDetail.relationshipStatus})selected #end>$relationshipStatusEnum.value</option>
+                                                    #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">现居</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="domicileText">$!{userDetail.domicileFirstText}$!{userDetail.domicileSecondText}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <select id="domicileFirst" name="userDetail.domicileFirst">
+                                                    <option value="">请选择</option>
+                                                    #foreach($cityKey in $firstCityMap.keySet())
+                                                        <option value="$!{cityKey}" #if($!{cityKey} == $!{userDetail.domicileFirst} )  selected  #end>$!{firstCityMap.get($cityKey)}</option>
+                                                    #end
+                                                </select>
+                                                <select id="domicileSecond" name="userDetail.domicileSecond">
+                                                    <option value="">请选择</option>
+                                                    #foreach($cityKey in $secondeCityMap.keySet())
+                                                        <option value="$!{cityKey}" #if($!{cityKey} == $!{userDetail.domicileSecond} )  selected  #end>$!{secondeCityMap.get($cityKey)}</option>
+                                                    #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">故乡</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="hometownText">$!{userDetail.hometownFirstText}$!{userDetail.hometownSecondText}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <select id="hometownFirst" name="userDetail.hometownFirst">
+                                                    <option value="">请选择</option>
+                                                    #foreach($cityKey in $firstCityMap.keySet())
+                                                        <option value="$!{cityKey}" #if($!{cityKey} == $!{userDetail.hometownFirst} )  selected  #end>$!{firstCityMap.get($cityKey)}</option>
+                                                    #end
+                                                </select>
+                                                <select id="hometownSecond" name="userDetail.hometownSecond">
+                                                    <option value="">请选择</option>
+                                                    #foreach($cityKey in $secondeCityMap.keySet())
+                                                        <option value="$!{cityKey}" #if($!{cityKey} == $!{userDetail.hometownSecond} )  selected  #end>$!{secondeCityMap.get($cityKey)}</option>
+                                                    #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">生日</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="birthdayText">$!{userDetail.birthdayString}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <div class="input-group  col-xs-2">
+                                                    <input class="form-control date-picker" id="birthday" name="userDetail.birthday" readonly value="$!{userDetail.birthdayString}"   data-date-format="yyyy-mm-dd" type="text">
+                                                                            <span class="input-group-addon">
+                                                                                <i class="fa fa-calendar bigger-110"></i>
+                                                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">身高</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="heightText">$!{userDetail.height}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <select id="height" name="userDetail.height" class="form-select js-height">
+                                                    <option value="150" selected="">150厘米</option>
+                                                    <option value="151">151厘米</option>
+                                                    <option value="152">152厘米</option>
+                                                    <option value="153">153厘米</option>
+                                                    <option value="154">154厘米</option>
+                                                    <option value="155">155厘米</option>
+                                                    <option value="156">156厘米</option>
+                                                    <option value="157">157厘米</option>
+                                                    <option value="158">158厘米</option>
+                                                    <option value="159">159厘米</option>
+                                                    <option value="160">160厘米</option>
+                                                    <option value="161">161厘米</option>
+                                                    <option value="162">162厘米</option>
+                                                    <option value="163">163厘米</option>
+                                                    <option value="164">164厘米</option>
+                                                    <option value="165">165厘米</option>
+                                                    <option value="166">166厘米</option>
+                                                    <option value="167">167厘米</option>
+                                                    <option value="168">168厘米</option>
+                                                    <option value="169">169厘米</option>
+                                                    <option value="170">170厘米</option>
+                                                    <option value="171">171厘米</option>
+                                                    <option value="172">172厘米</option>
+                                                    <option value="173">173厘米</option>
+                                                    <option value="174">174厘米</option>
+                                                    <option value="175">175厘米</option>
+                                                    <option value="176">176厘米</option>
+                                                    <option value="177">177厘米</option>
+                                                    <option value="178">178厘米</option>
+                                                    <option value="179">179厘米</option>
+                                                    <option value="180">180厘米</option>
+                                                    <option value="181">181厘米</option>
+                                                    <option value="182">182厘米</option>
+                                                    <option value="183">183厘米</option>
+                                                    <option value="184">184厘米</option>
+                                                    <option value="185">185厘米</option>
+                                                    <option value="186">186厘米</option>
+                                                    <option value="187">187厘米</option>
+                                                    <option value="188">188厘米</option>
+                                                    <option value="189">189厘米</option>
+                                                    <option value="190">190厘米</option>
+                                                    <option value="191">191厘米</option>
+                                                    <option value="192">192厘米</option>
+                                                    <option value="193">193厘米</option>
+                                                    <option value="194">194厘米</option>
+                                                    <option value="195">195厘米</option>
+                                                    <option value="196">196厘米</option>
+                                                    <option value="197">197厘米</option>
+                                                    <option value="198">198厘米</option>
+                                                    <option value="199">199厘米</option>
+                                                    <option value="200">200厘米</option>
+                                                    <option value="201">201厘米</option>
+                                                    <option value="202">202厘米</option>
+                                                    <option value="203">203厘米</option>
+                                                    <option value="204">204厘米</option>
+                                                    <option value="205">205厘米</option>
+                                                    <option value="206">206厘米</option>
+                                                    <option value="207">207厘米</option>
+                                                    <option value="208">208厘米</option>
+                                                    <option value="209">209厘米</option>
+                                                    <option value="210">210厘米</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">体重</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="weightText">$!{userDetail.weight}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <input class="col-xs-2" id="weight" name="userDetail.weight" value="$!{userDetail.weight}" placeholder="体重" type="text">
+
+                                                <div class="profile-info-name" style="width:47px">公斤</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">工作单位</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="workUnitText">$!{userDetail.workUnit}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <input class="col-xs-4" placeholder="工作单位" id="workUnit" name="userDetail.workUnit" value="$!{userDetail.workUnit}"  type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="profile-user-info">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">月收入</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="monthlyIncomeText">$!{userDetail.monthlyIncomeText}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <select class="form-select" id="monthlyIncome" name="userDetail.monthlyIncome">
+                                                    <option value="" >请选择</option>
+                                                        #foreach($monthlyIncomeEnum in $!monthlyIncomeEnums)
+                                                            <option value="$monthlyIncomeEnum.key" #if($monthlyIncomeEnum.key == $!{userDetail.monthlyIncome})selected #end>$monthlyIncomeEnum.value</option>
+                                                        #end
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">专修专业</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="majorTextSpanText">$!{userDetail.majorText}</span>
+                                            <div fieldVisible="field-editable">
+                                                <input class="col-xs-3"  id="majorText" placeholder="专修专业" readonly="" onclick="majorDialog(this)"  value="$!{userDetail.majorText}" type="text">
+                                                <button class="btn btn-link no-padding" onclick="deleteMajor(this)"><i class="ace-icon fa fa-times red2"></i></button>
+                                                <input id="majorId" value="$!{userDetail.majorId}" name="userDetail.majorId" type="hidden">
+                                                <input id="majorFirst" value="$!{userDetail.majorFirst}" name="userDetail.majorFirst" type="hidden">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">毕业院校</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="collegeSchoolIdSpanText">$!{userDetail.collegeSchoolIdText}</span>
+                                            <div fieldVisible="field-editable">
+                                                <input class="col-xs-" id="collegeSchoolIdText" placeholder="毕业院校" readonly   onclick="selectCollegeSchoolDialog(this)" value="$!{userDetail.collegeSchoolIdText}" type="text">
+                                                <button class="btn btn-link no-padding" onclick="deleteCollegeSchool(this)"><i class="ace-icon fa fa-times red2"></i></button>
+                                                <input type="hidden" id="collegeSchoolFirst" value="$!{userDetail.collegeSchoolFirst}" name="userDetail.collegeSchoolFirst">
+                                                <input type="hidden" id="collegeSchoolId" value="$!{userDetail.collegeSchoolId}" name="userDetail.collegeSchoolId">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name">毕业时间</div>
+                                        <div class="profile-info-value">
+                                            <span fieldVisible="field-editdisable" id="collegeYearText">$!{userDetail.collegeYear}</span>
+
+                                            <div fieldVisible="field-editable">
+                                                <div class="input-group  col-xs-2">
+                                                    <input class="form-control date-picker" id="collegeYear" value="$!{userDetail.collegeYear}" name="userDetail.collegeYear"
+                                                           readonly data-date-format="yyyy" type="text">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar bigger-110"></i>
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-xs-12 text-center">
+                                <button class="btn btn-success" id="baseInfoBtnId" style="display: none" onclick="return baseInfoEditorSave()">保存</button>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div><!-- /.row -->
+## <div class="space-20"></div>
+</div>
+    <script>
+        $(function () {
+            $("#height").val($!{userDetail.height});
+            $("[name='baseInfoRow']").find("[fieldVisible='field-editable']").hide();
+            $("[name='baseInfoRow']").find("[fieldVisible='field-editdisable']").show();
+            ace.settingFunction.main_container_fixed(null, true);
+        })
+    </script>
+    <script src="/static/js/app/baseHome.js"/>

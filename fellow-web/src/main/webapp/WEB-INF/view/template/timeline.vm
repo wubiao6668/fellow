@@ -1,0 +1,77 @@
+#if(${collectionUtils.isNotEmpty($dynamicsPageList)})
+    #foreach($dynamic in $dynamicsPageList )
+    <div>
+        <div class="timeline-label">
+            <!-- #section:pages/timeline.label -->
+                <span class="label label-primary arrowed-in-right label-lg">
+                    <b>$!{dynamic.publishDate}</b>
+                </span>
+            <!-- /section:pages/timeline.label -->
+        </div>
+        <div class="timeline-items">
+            <!-- #section:pages/timeline.item -->
+            <div class="timeline-item clearfix">
+                <div class="timeline-info">
+                    <img alt="$!{dynamic.accountUser.username}" src="$!{dynamic.accountUser.avatar}"/>
+                    <span class="label label-info label-sm">$!{dynamic.publishHours}</span>
+                </div>
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-small">
+                        <h5 class="widget-title smaller"></h5>
+                            <span class="widget-toolbar">
+                                <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                $!{dynamic.publishHours}
+                            </span>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div class="clearfix">
+                                <div>
+                                    $!{dynamic.content}
+                                </div>
+                                <div>
+                                    <div class="pull-left" style="width:80%">
+                                        #set($dynamicCount = $velocityCount)
+                                        #if(${collectionUtils.isNotEmpty($dynamic.dynamicsImgList)})
+                                            <ul class="ace-thumbnails clearfix" data-rel-name="colorbox_${dynamicCount}" style="">
+                                                #foreach($lostImg in ${dynamic.dynamicsImgList})
+                                                    <!-- #section:pages/gallery -->
+                                                    <li>
+                                                        <div>
+                                                            <img width="80" height="82" alt="80x82"  src="${lostImg.imgRootPath}${lostImg.imgRelativePath}"/>
+                                                            <div class="text">
+                                                                <div class="inner">
+                                                                    <a href="${lostImg.imgRootPath}${lostImg.imgRelativePath}" data-rel="colorbox_${dynamicCount}">
+                                                                        <i class="ace-icon fa fa-search-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            #if($velocityCount == 1)
+                                                                <div class="tags">
+                                                                    <!-- #section:pages/gallery.tags -->
+                                                                    <span class="label-holder">
+                                                                        <span class="label label-warning arrowed-in">共$!{post.lostImgList.size()}张</span>
+                                                                    </span>
+                                                                    <!-- /section:pages/gallery.tags -->
+                                                                </div>
+                                                            #end
+                                                        </div>
+                                                    </li>
+                                                #end
+                                            </ul>
+                                        #end
+                                    </div>
+                                    <div class="pull-right" style="padding:30px 10px">
+                                        <a href="#" class="btn btn-link  btn-minier"><i class="glyphicon glyphicon-thumbs-up"></i>$!{dynamic.upNum}</a>
+                                        <a href="#" class="btn btn-link  btn-minier"><i class="ace-icon fa fa-heart red"></i>$!{dynamic.loveNum}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.timeline-items -->
+    </div>
+    #end
+#end

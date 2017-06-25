@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.UserMapper">
+
+    <resultMap id="User" type="com.fellow.domain.model.User">
+        <result property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="avatar" column="avatar"/>
+        <result property="status" column="status"/>
+        <result property="randomSalt" column="random_salt"/>
+        <result property="lastIp" column="last_ip"/>
+        <result property="lastTime" column="last_time"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <resultMap id="UserAndDetail" type="com.fellow.domain.model.User" extends="User">
+        <result property="id" column="u_id"/>
+        <association property="userDetail"  resultMap="com.fellow.dao.UserDetailMapper.UserDetail"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,account,username,password,email,avatar,status,random_salt,last_ip,last_time,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (
+        account,
+        username,
+        password,
+        email,
+        avatar,
+        status,
+        random_salt,
+        last_ip,
+        last_time,
+        create_account,
+        create_name,
+        create_time,
+        update_account,
+        update_name,
+        update_time,
+        sys_version,
+        is_delete
+
+        ) VALUES (
+        #{account},
+        #{username},
+        #{password},
+        #{email},
+        #{avatar},
+        #{status},
+        #{randomSalt},
+        #{lastIp},
+        #{lastTime},
+        #{createAccount},
+        #{createName},
+        now(),
+        #{updateAccount},
+        #{updateName},
+        #{updateTime},
+        1,
+        0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (
+        <if test="@Ognl@isNotEmpty(account)">
+            account,
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            username,
+        </if>
+        <if test="@Ognl@isNotEmpty(password)">
+            password,
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            email,
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            avatar,
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            status,
+        </if>
+        <if test="@Ognl@isNotEmpty(randomSalt)">
+            random_salt,
+        </if>
+        <if test="@Ognl@isNotEmpty(lastIp)">
+            last_ip,
+        </if>
+        <if test="@Ognl@isNotEmpty(lastTime)">
+            last_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name,
+        </if>
+        create_time,
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time,
+        </if>
+        sys_version,
+        is_delete
+        ) VALUES (
+        <if test="@Ognl@isNotEmpty(account)">
+            #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            #{username},
+        </if>
+        <if test="@Ognl@isNotEmpty(password)">
+            #{password},
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            #{email},
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            #{avatar},
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            #{status},
+        </if>
+        <if test="@Ognl@isNotEmpty(randomSalt)">
+            #{randomSalt},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastIp)">
+            #{lastIp},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastTime)">
+            #{lastTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            #{createName},
+        </if>
+        now(),
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            #{updateTime},
+        </if>
+        1,
+        0
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE user SET
+        <if test="@Ognl@isNotEmpty(account)">
+            account = #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            username = #{username},
+        </if>
+        <if test="@Ognl@isNotEmpty(password)">
+            password = #{password},
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            email = #{email},
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            avatar = #{avatar},
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            status = #{status},
+        </if>
+        <if test="@Ognl@isNotEmpty(randomSalt)">
+            random_salt = #{randomSalt},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastIp)">
+            last_ip = #{lastIp},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastTime)">
+            last_time = #{lastTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time = now(),
+        </if>
+        <if test="@Ognl@isNotEmpty(sysVersion)">
+            sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE user
+        SET
+        <if test="@Ognl@isNotEmpty(account)">
+            account = #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(username)">
+            username = #{username},
+        </if>
+        <if test="@Ognl@isNotEmpty(password)">
+            password = #{password},
+        </if>
+        <if test="@Ognl@isNotEmpty(email)">
+            email = #{email},
+        </if>
+        <if test="@Ognl@isNotEmpty(avatar)">
+            avatar = #{avatar},
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            status = #{status},
+        </if>
+        <if test="@Ognl@isNotEmpty(randomSalt)">
+            random_salt = #{randomSalt},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastIp)">
+            last_ip = #{lastIp},
+        </if>
+        <if test="@Ognl@isNotEmpty(lastTime)">
+            last_time = #{lastTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account =#{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE user
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM user
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getByKey" resultMap="User">
+        SELECT <include refid="columns" />
+        FROM user
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findList" resultMap="User">
+        SELECT <include refid="columns" />
+        FROM user
+        <include refid="findList_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+        SELECT count(1)
+        FROM user
+        <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                AND account = #{account}
+            </if>
+            <if test="@Ognl@isNotEmpty(username)">
+                AND username = #{username}
+            </if>
+            <if test="@Ognl@isNotEmpty(password)">
+                AND password = #{password}
+            </if>
+            <if test="@Ognl@isNotEmpty(email)">
+                AND email = #{email}
+            </if>
+            <if test="@Ognl@isNotEmpty(avatar)">
+                AND avatar = #{avatar}
+            </if>
+            <if test="@Ognl@isNotEmpty(status)">
+                AND status = #{status}
+            </if>
+            <if test="@Ognl@isNotEmpty(randomSalt)">
+                AND random_salt = #{randomSalt}
+            </if>
+            <if test="@Ognl@isNotEmpty(lastIp)">
+                AND last_ip = #{lastIp}
+            </if>
+            <if test="@Ognl@isNotEmpty(lastTimeBegin)">
+                AND last_time &gt;= #{lastTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(lastTimeEnd)">
+                AND last_time &lt;= #{lastTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="queryByAccount" resultMap="User">
+        SELECT
+            id,
+            account,
+            username,
+            `password`,
+            email,
+            random_salt,
+            last_ip,
+            last_time
+        FROM
+            user
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+    </select>
+
+    <update id="updateBaseInfo">
+        UPDATE user
+        SET
+            username = #{username},
+            update_account = #{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+    </update>
+
+    <select id="selectBaseInfo" resultMap="UserAndDetail">
+        SELECT
+            ur.id AS u_id,
+            ur.account,
+            ur.email,
+            ur.username,
+            dt.id,
+            dt.sex,
+            dt.education,
+            dt.profession,
+            dt.relationship_status,
+            dt.domicile_path,
+            dt.hometown_path,
+            dt.birthday,
+            dt.height,
+            dt.weight,
+            dt.work_unit,
+            dt.monthly_income,
+            dt.major_id,
+            dt.major_path,
+            dt.college_school_id,
+            dt.college_school_path,
+            dt.college_year
+        FROM
+        `user` AS ur
+        LEFT JOIN user_detail AS dt ON dt.is_delete = 0 AND ur.id = dt.user_id AND ur.is_delete = 0
+        WHERE
+            ur.is_delete = 0
+            AND ur.account = #{account}
+
+    </select>
+
+    <select id="validateByEmail" resultMap="User">
+        SELECT
+        account,
+        email,
+        username
+        FROM
+        `user`
+        WHERE
+            is_delete = 0
+            AND email = #{email}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE user
+        SET
+            password = #{password},
+            random_salt = #{randomSalt},
+            update_account = #{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND email = #{email}
+    </update>
+
+    <select id="checkedAccount" resultMap="User">
+            SELECT
+                account,
+                email,
+                `status`
+            FROM
+                `user`
+            WHERE
+               account = #{account}
+    </select>
+
+    <select id="checkedEmail" resultMap="User">
+        SELECT
+            account,
+            email,
+            `status`
+        FROM
+            `user`
+        WHERE
+            email = #{email}
+    </select>
+</mapper>

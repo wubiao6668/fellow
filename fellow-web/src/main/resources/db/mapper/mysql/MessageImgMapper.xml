@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.MessageImgMapper">
+
+    <resultMap id="MessageImg" type="com.fellow.domain.model.MessageImg">
+        <result property="id" column="id"/>
+        <result property="messageDetailId" column="message_detail_id"/>
+        <result property="imgType" column="img_type"/>
+        <result property="account" column="account"/>
+        <result property="imgRootPath" column="img_root_path"/>
+        <result property="imgRelativePath" column="img_relative_path"/>
+        <result property="imgName" column="img_name"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,message_detail_id,img_type,account,img_root_path,img_relative_path,img_name,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO message_img (
+            message_detail_id,
+            img_type,
+            account,
+            img_root_path,
+            img_relative_path,
+            img_name,
+            create_account,
+            create_name,
+            create_time,
+            update_account,
+            update_name,
+            update_time,
+            sys_version,
+            is_delete
+            
+        ) VALUES (
+            #{messageDetailId},
+            #{imgType},
+            #{account},
+            #{imgRootPath},
+            #{imgRelativePath},
+            #{imgName},
+            #{createAccount},
+            #{createName},
+            now(),
+            #{updateAccount},
+            #{updateName},
+            #{updateTime},
+            1,
+            0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO message_img (
+            <if test="@Ognl@isNotEmpty(messageDetailId)">
+                message_detail_id,
+            </if>
+            <if test="@Ognl@isNotEmpty(imgType)">
+                img_type,
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                account,
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRootPath)">
+                img_root_path,
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRelativePath)">
+                img_relative_path,
+            </if>
+            <if test="@Ognl@isNotEmpty(imgName)">
+                img_name,
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account,
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name,
+            </if>
+                create_time,
+                                <if test="@Ognl@isNotEmpty(updateAccount)">
+                update_account,
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                update_name,
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                update_time,
+            </if>
+sys_version,
+is_delete
+                            ) VALUES (
+            <if test="@Ognl@isNotEmpty(messageDetailId)">
+                #{messageDetailId},
+           </if>
+            <if test="@Ognl@isNotEmpty(imgType)">
+                #{imgType},
+           </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                #{account},
+           </if>
+            <if test="@Ognl@isNotEmpty(imgRootPath)">
+                #{imgRootPath},
+           </if>
+            <if test="@Ognl@isNotEmpty(imgRelativePath)">
+                #{imgRelativePath},
+           </if>
+            <if test="@Ognl@isNotEmpty(imgName)">
+                #{imgName},
+           </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                #{createAccount},
+           </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                #{createName},
+           </if>
+            now(),
+                        <if test="@Ognl@isNotEmpty(updateAccount)">
+                #{updateAccount},
+           </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                #{updateName},
+           </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                #{updateTime},
+           </if>
+            1,
+            0
+            )
+    </insert>
+
+    <update id="update" >
+        UPDATE message_img SET
+            <if test="@Ognl@isNotEmpty(messageDetailId)">
+                message_detail_id = #{messageDetailId},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgType)">
+                img_type = #{imgType},
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                account = #{account},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRootPath)">
+                img_root_path = #{imgRootPath},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRelativePath)">
+                img_relative_path = #{imgRelativePath},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgName)">
+                img_name = #{imgName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account = #{createAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name = #{createName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createTime)">
+                create_time = #{createTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                update_account = #{updateAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                update_name = #{updateName},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                update_time = now(),
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+            </if>
+            <if test="@Ognl@isNotEmpty(isDelete)">
+                is_delete = #{isDelete}
+            </if>
+        WHERE
+            id = #{id} 
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE message_img
+        SET
+            <if test="@Ognl@isNotEmpty(messageDetailId)">
+                message_detail_id = #{messageDetailId},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgType)">
+                img_type = #{imgType},
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                account = #{account},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRootPath)">
+                img_root_path = #{imgRootPath},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRelativePath)">
+                img_relative_path = #{imgRelativePath},
+            </if>
+            <if test="@Ognl@isNotEmpty(imgName)">
+                img_name = #{imgName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account = #{createAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name = #{createName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createTime)">
+                create_time = #{createTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(isDelete)">
+                is_delete = #{isDelete},
+            </if>
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            sys_version = #{sysVersion, jdbcType=INTEGER}
+            AND id = #{id} 
+    </update>
+
+    <delete id="delete">
+        UPDATE message_img
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM message_img
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <select id="getByKey" resultMap="MessageImg">
+        SELECT <include refid="columns" />
+        FROM message_img
+        WHERE
+            id = #{id} 
+    </select>
+
+    <select id="findList" resultMap="MessageImg">
+    SELECT <include refid="columns" />
+    FROM message_img
+    <include refid="findList_where"/>
+    <if test="@Ognl@isNotEmpty(sortColumns)">
+        ORDER BY ${sortColumns}
+    </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+    SELECT count(1)
+    FROM message_img
+    <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(messageDetailId)">
+                AND message_detail_id = #{messageDetailId}
+            </if>
+            <if test="@Ognl@isNotEmpty(imgType)">
+                AND img_type = #{imgType}
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                AND account = #{account}
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRootPath)">
+                AND img_root_path = #{imgRootPath}
+            </if>
+            <if test="@Ognl@isNotEmpty(imgRelativePath)">
+                AND img_relative_path = #{imgRelativePath}
+            </if>
+            <if test="@Ognl@isNotEmpty(imgName)">
+                AND img_name = #{imgName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+    
+    <select id="selectImgByDetailIds" resultMap="MessageImg">
+        SELECT
+            id,
+            img_type,
+            account,
+            img_root_path,
+            img_relative_path,
+            img_name,
+            message_detail_id
+        FROM
+            message_img
+        WHERE
+            is_delete = 0
+            AND message_detail_id IN
+            <foreach collection="detailIdList" item="idTemp" open="(" separator="," close=")">
+                #{idTemp}
+            </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,38 @@
+#if($collectionUtils.isNotEmpty($dynamicsUpList))
+    #foreach($dynamicsUp in $dynamicsUpList)
+    <div class="itemdiv memberdiv">
+        <div class="inline pos-rel">
+            <div class="user">
+                <a href="#">
+                    <img src="${dynamicsUp.accountUser.avatar}" alt="Bob Doe's avatar"/>
+                </a>
+            </div>
+
+            <div class="body">
+                <div class="name">
+                    <a href="#">
+                        ${dynamicsUp.accountUser.username}
+                        #if(${ThumbsTypeEnum_UP} == ${dynamicsUp.thumbsType})
+                            <i class="glyphicon glyphicon-thumbs-up red"></i>
+                        #else
+                            <i class="ace-icon fa fa-heart red"></i>
+                        #end
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    #end
+#else
+    #if($page == 1)
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="ace-icon fa fa-times"></i>
+        </button>
+        没有点赞人
+        <br>
+    </div>
+
+    #end
+#end
+

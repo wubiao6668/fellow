@@ -1,0 +1,76 @@
+<pre>
+┌───┼┤┌┬┐┼─┐　┐┌─┬┐╭┬──┬╮┌──╭─┐
+├─┐　│　　│　│　│└┼　　│　　│　　│　┌─┬──┐
+│　│　│　　│　│　│　│　　│　　│　　│　┌─╯──┐
+│　│　││　│　│　│╭┼　　│　╭┼──┼╮├────┤
+│　│　├┘　│　│　│　│　　│　　│　　│　├────┤
+╯└╯└╰┘└┴╯╯─╯└╯　╰┘　╰┘　　┘　└────╯
+┌──┬─╮
+┌──╯─┐
+│　　│　│
+│　　│　│
+╰　　│　┘
+└──╯╰┘
+    </pre>
+<input type="button" onclick="fnName()">
+
+##<form id="ff" method="post">
+<span>
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" class="hide" accept=".BMP,.JPG,.JPEG,.PNG,.GIF"
+                           onchange="uploadFile(this)"/>
+                    <i class="ace-icon glyphicon glyphicon-picture purple  bigger-200" style="cursor: pointer"
+                       onclick="javascript: $(this).prev().click();;"> </i>
+                </form>
+            </span>
+<input value="<script>alert(1)</script>" id="xssId"/>
+##</form>
+<div style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+</div>
+<script>
+    //    function submitForm() {
+    //        $('#ff').form('submit');
+    //    }
+    //    function clearForm() {
+    //        $('#ff').form('clear');
+    //    }
+
+    function  fnName() {
+
+        $.ajax({
+            url: "/login?password=a5555555",
+            type:'POST',
+            data: JSON.stringify({account:$("#xssId").val() + "zhadddddddddddddddddddddddddddddddddddddddddddngsanzhadddddddddddddddddddddddddddddddd" +
+            "",email:$("#xssId").val() +  "323''3sesdsd" }),
+            contentType:"application/json",
+            success: function (result) {
+              alert(result);
+            },
+            error: function (a,b,c) {
+              alert(a)
+            }
+        });
+    }
+
+    function uploadFile(obj) {
+        $($(obj).parent()).form({
+            url: "/uploadImge",
+            onSubmit: function () {
+                alert(1);
+            },
+            success: function (data) {
+                alert(data)
+            }
+        }).submit();
+// submit the form
+//        $($(obj).parent()).submit();
+//        $(obj).parent().form({
+//            success:function(data){
+//
+//            }
+//        });
+
+    }
+</script>

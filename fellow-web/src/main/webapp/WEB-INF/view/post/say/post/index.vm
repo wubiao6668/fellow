@@ -1,0 +1,210 @@
+<div class="row">
+    <div class="col-xs-12 no-margin  well" style="padding:4px">
+        <button type="button" class="btn  btn-yellow  btn-sm">主题</button>
+        <button type="button" class="btn btn-white btn-yellow  btn-sm">不限</button>
+        #foreach($sayEnum in $sayPostTypeEnums )
+            #if($sayEnum.seconde)
+                <div class="btn-group">
+                    <button class="btn btn-white btn-yellow  btn-sm dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        $sayEnum.value
+                        <i class="ace-icon fa fa-angle-down icon-on-right"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-danger">
+                        #foreach($saySecond in $sayEnum.seconde)
+##                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:;">$saySecond.value</a>
+                            </li>
+                        #end
+                    </ul>
+                </div>
+            #else
+                <button type="button" class="btn btn-white btn-yellow  btn-sm">$sayEnum.value</button>
+            #end
+        #end
+    </div>
+    <div class="col-xs-12 no-margin  well" style="padding:4px">
+        <button type="button" class="btn  btn-yellow  btn-sm">哪里</button>
+        <button type="button" class="btn btn-white btn-yellow  btn-sm">全部</button>
+        #foreach($postPlaceTypeEnum in $postPlaceTypeEnums)
+            <button type="button" class="btn btn-white btn-yellow  btn-sm">$postPlaceTypeEnum.value</button>
+        #end
+    </div>
+    <div class="col-xs-12 no-margin  well" style="padding:4px">
+        <div class="col-xs-5 no-padding">
+            <div class="col-xs-1  no-margin  no-padding text-right">
+                <label class="smaller-90 label-warning ">地址</label>
+            </div>
+            <div class="col-xs-3 no-padding">
+                <input id="suggestId" class="form-control input-sm" style="height:25px" placeholder="输入地址查找"
+                       type="text">
+
+                <div id="searchResultPanel"
+                     style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+            </div>
+
+            <div class="col-xs-2  no-margin  no-padding text-right">
+                <label class="smaller-90 label-warning  no-padding">时间</label>
+            </div>
+            <div class="col-md-3  no-padding">
+                <input id="pickLostRandDateId" onclick="showUserOrgTree('college_school_panel_id'); return false;"
+                       style="height: 25px" readonly="" class="form-control" placeholder="时间" type="text">
+                <div id="college_school_panel_id" class="well  no-padding" name="downPanel"
+                     style="position: absolute; z-index: 10; margin-top: -2px; display: none;">
+                    <div style="display: block;min-width: 286px;padding:10px;">
+                        <span class="radio  pull-left">
+                        </span>
+                        <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" checked="" switchindex="1"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">日</span>
+                            </label>
+                        </span>
+                         <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" switchindex="2"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">月</span>
+                            </label>
+                         </span>
+                         <span class="radio  pull-left">
+                            <label>
+                                <input class="ace" name="pickLostDateRadio" value="" switchindex="3"
+                                       onclick="switchPickLostDate(this)" type="radio">
+                                <span class="lbl">年</span>
+                            </label>
+                         </span>
+                    </div>
+                    <div class="col-xs-12" name="pickLostDate1">
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control " style="height: 25px" onclick="WdatePicker()" type="text">
+                        </div>
+                        <div class="col-xs-2  no-margin  no-padding  text-center">
+                            <label class="smaller-90 label-warning ">至</label>
+                        </div>
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control" style="height: 25px" onclick="WdatePicker()" type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12" name="pickLostDate2" style="display: none">
+                        <div class="col-md-5 no-margin no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy-MM'})" type="text">
+                        </div>
+                        <div class="col-xs-2  no-margin  no-padding  text-center">
+                            <label class="smaller-90 label-warning ">至</label>
+                        </div>
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy-MM'})" type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12" name="pickLostDate3" style="display: none">
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy'})" type="text">
+                        </div>
+                        <div class="col-xs-2  no-margin  no-padding  text-center">
+                            <label class="smaller-90 label-warning ">至</label>
+                        </div>
+                        <div class="col-md-5 no-margin  no-padding">
+                            <input class="Wdate form-control  " style="height: 25px"
+                                   onclick="WdatePicker({ dateFmt: 'yyyy'})" type="text">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 text-center" style="padding:10px">
+                        <button class="btn btn-primary btn-minier" onclick="selectPickLostDate()" type="button">
+                            确定
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-1 no-padding">
+            <label>
+                <input name="form-field-checkbox" class="ace" checked type="checkbox">
+                &nbsp;&nbsp;
+                <span class="lbl"><span class="label-warning">移动搜索</span></span>
+            </label>
+
+        </div>
+
+        <div class="col-xs-1 no-padding">
+            <button class="btn btn-info btn-minier" type="button" onclick="setPlace()">
+                <i class="glyphicon glyphicon-search"></i>
+                查找
+            </button>
+        </div>
+    </div>
+##    <div class="col-xs-12">
+    <div id="mask_row_id" class="col-xs-8 no-padding no-margin">
+        <div id="allmap"></div>
+        <!-- /section:custom/widget-box -->
+    </div>
+    <div class="col-xs-4">
+        <div class="widget-box transparent">
+            <div class="widget-header widget-header-small">
+                <h4 class="widget-title blue smaller">
+                    <i class="ace-icon fa fa-rss orange"></i>
+                    寻物启事
+                </h4>
+
+                <div class="widget-toolbar action-buttons">
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+                            <i class="ace-icon glyphicon glyphicon-plus  bigger-110"></i>
+                            发帖
+                            <i class="ace-icon fa fa-angle-down icon-on-right"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-danger">
+                            <li>
+                                <a href="/post/lost/post/publishPost" target="_blank">丢失</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">招领</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main postList no-padding">
+                    <!-- #section:pages/profile.feed -->
+                    <div id="listHtmlId" class="profile-feed">
+
+                    </div>
+                    <!-- /section:pages/profile.feed -->
+                </div>
+                <div name="paginator" index="paginator_0">
+                    <ul name="paginationUl" class="pagination">
+                        <li>
+                            <a href="javascript:;" name="pagePre" index="pagePre_1" onclick="loadPostList(1)">
+                                上一页
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" name="pageNext" index="pageNext_1" onclick="loadPostList(2)">
+                                下一页
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        $('[data-rel=popover]').popover({
+            html: true,
+            trigger: 'focus'
+        });
+    })
+</script>

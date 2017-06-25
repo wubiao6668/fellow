@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.PostCommentReplyMapper">
+
+    <resultMap id="PostCommentReply" type="com.fellow.domain.model.PostCommentReply">
+        <result property="id" column="id"/>
+        <result property="postId" column="post_id"/>
+        <result property="replyId" column="reply_id"/>
+        <result property="title" column="title"/>
+        <result property="postType" column="post_type"/>
+        <result property="replyType" column="reply_type"/>
+        <result property="commentReplyId" column="comment_reply_id"/>
+        <result property="fromAccount" column="from_account"/>
+        <result property="toAccount" column="to_account"/>
+        <result property="content" column="content"/>
+        <result property="replyTime" column="reply_time"/>
+        <result property="postDelete" column="post_delete"/>
+        <result property="fromDelete" column="from_delete"/>
+        <result property="toDelete" column="to_delete"/>
+        <result property="isRead" column="is_read"/>
+        <result property="readTime" column="read_time"/>
+        <result property="upNum" column="up_num"/>
+        <result property="downNum" column="down_num"/>
+        <result property="loveNum" column="love_num"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <resultMap id="PostCommentReplyVo" type="com.fellow.domain.vo.PostCommentReplyVo" extends="PostCommentReply">
+
+    </resultMap>
+
+    <sql id="columns">
+        id,post_id,reply_id,title,post_type,comment_reply_id,reply_type,from_account,to_account,content,reply_time,post_delete,from_delete,to_delete,is_read,read_time,up_num,down_num,love_num,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post_comment_reply (
+        post_id,
+        reply_id,
+        title,
+        post_type,
+        comment_reply_id,
+        reply_type,
+        from_account,
+        to_account,
+        content,
+        reply_time,
+        post_delete,
+        from_delete,
+        to_delete,
+        is_read,
+        read_time,
+        up_num,
+        down_num,
+        love_num,
+        create_account,
+        create_name,
+        create_time,
+        update_account,
+        update_name,
+        update_time,
+        sys_version,
+        is_delete
+
+        ) VALUES (
+        #{postId},
+        #{replyId},
+        #{title},
+        #{postType},
+        #{commentReplyId},
+        #{replyType},
+        #{fromAccount},
+        #{toAccount},
+        #{content},
+        #{replyTime},
+        #{postDelete},
+        #{fromDelete},
+        #{toDelete},
+        #{isRead},
+        #{readTime},
+        #{upNum},
+        #{downNum},
+        #{loveNum},
+        #{createAccount},
+        #{createName},
+        now(),
+        #{updateAccount},
+        #{updateName},
+        #{updateTime},
+        1,
+        0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post_comment_reply (
+        <if test="@Ognl@isNotEmpty(postId)">
+            post_id,
+        </if>
+        <if test="@Ognl@isNotEmpty(replyId)">
+            reply_id,
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title,
+        </if>
+        <if test="@Ognl@isNotEmpty(postType)">
+            post_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(commentReplyId)">
+            comment_reply_id,
+        </if>
+        <if test="@Ognl@isNotEmpty(postType)">
+            reply_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(fromAccount)">
+            from_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(toAccount)">
+            to_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content,
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            reply_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(postDelete)">
+            post_delete,
+        </if>
+        <if test="@Ognl@isNotEmpty(fromDelete)">
+            from_delete,
+        </if>
+        <if test="@Ognl@isNotEmpty(toDelete)">
+            to_delete,
+        </if>
+        <if test="@Ognl@isNotEmpty(isRead)">
+            is_read,
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            read_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name,
+        </if>
+        create_time,
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time,
+        </if>
+        sys_version,
+        is_delete
+        ) VALUES (
+        <if test="@Ognl@isNotEmpty(postId)">
+            #{postId},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyId)">
+            #{replyId},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(postType)">
+            #{postType},
+        </if>
+        <if test="@Ognl@isNotEmpty(commentReplyId)">
+            #{commentReplyId},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyType)">
+            #{replyType},
+        </if>
+        <if test="@Ognl@isNotEmpty(fromAccount)">
+            #{fromAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(toAccount)">
+            #{toAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            #{replyTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(postDelete)">
+            #{postDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(fromDelete)">
+            #{fromDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(toDelete)">
+            #{toDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(isRead)">
+            #{isRead},
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            #{readTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            #{createName},
+        </if>
+        now(),
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            #{updateTime},
+        </if>
+        1,
+        0
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE post_comment_reply SET
+        <if test="@Ognl@isNotEmpty(postId)">
+            post_id = #{postId},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyId)">
+            reply_id = #{replyId},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title = #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(postType)">
+            post_type = #{postType},
+        </if>
+        <if test="@Ognl@isNotEmpty(fromAccount)">
+            from_account = #{fromAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(toAccount)">
+            to_account = #{toAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content = #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            reply_time = #{replyTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(postDelete)">
+            post_delete = #{postDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(fromDelete)">
+            from_delete = #{fromDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(toDelete)">
+            to_delete = #{toDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(isRead)">
+            is_read = #{isRead},
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            read_time = #{readTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num = #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time = now(),
+        </if>
+        <if test="@Ognl@isNotEmpty(sysVersion)">
+            sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE post_comment_reply
+        SET
+        <if test="@Ognl@isNotEmpty(postId)">
+            post_id = #{postId},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyId)">
+            reply_id = #{replyId},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title = #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(postType)">
+            post_type = #{postType},
+        </if>
+        <if test="@Ognl@isNotEmpty(fromAccount)">
+            from_account = #{fromAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(toAccount)">
+            to_account = #{toAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content = #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            reply_time = #{replyTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(postDelete)">
+            post_delete = #{postDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(fromDelete)">
+            from_delete = #{fromDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(toDelete)">
+            to_delete = #{toDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(isRead)">
+            is_read = #{isRead},
+        </if>
+        <if test="@Ognl@isNotEmpty(readTime)">
+            read_time = #{readTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num = #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_account =#{updateAccount} ,
+        update_name = #{updateName} ,
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE post_comment_reply
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM post_comment_reply
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getByKey" resultMap="PostCommentReply">
+        SELECT <include refid="columns" />
+        FROM post_comment_reply
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findList" resultMap="PostCommentReply">
+        SELECT <include refid="columns" />
+        FROM post_comment_reply
+        <include refid="findList_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+        SELECT count(1)
+        FROM post_comment_reply
+        <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(postId)">
+                AND post_id = #{postId}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyId)">
+                AND reply_id = #{replyId}
+            </if>
+            <if test="@Ognl@isNotEmpty(title)">
+                AND title = #{title}
+            </if>
+            <if test="@Ognl@isNotEmpty(postType)">
+                AND post_type = #{postType}
+            </if>
+            <if test="@Ognl@isNotEmpty(fromAccount)">
+                AND from_account = #{fromAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(toAccount)">
+                AND to_account = #{toAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(content)">
+                AND content = #{content}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyTimeBegin)">
+                AND reply_time &gt;= #{replyTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyTimeEnd)">
+                AND reply_time &lt;= #{replyTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(postDelete)">
+                AND post_delete = #{postDelete}
+            </if>
+            <if test="@Ognl@isNotEmpty(fromDelete)">
+                AND from_delete = #{fromDelete}
+            </if>
+            <if test="@Ognl@isNotEmpty(toDelete)">
+                AND to_delete = #{toDelete}
+            </if>
+            <if test="@Ognl@isNotEmpty(isRead)">
+                AND is_read = #{isRead}
+            </if>
+            <if test="@Ognl@isNotEmpty(readTimeBegin)">
+                AND read_time &gt;= #{readTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(readTimeEnd)">
+                AND read_time &lt;= #{readTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(upNum)">
+                AND up_num = #{upNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(downNum)">
+                AND down_num = #{downNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(loveNum)">
+                AND love_num = #{loveNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="selectByPostIdAndReplyId" resultMap="PostCommentReply">
+        SELECT
+            id,
+            title,
+            post_type,
+            from_account,
+            to_account,
+            content,
+            reply_time,
+            post_delete,
+            is_read,
+            read_time,
+            up_num,
+            down_num,
+            love_num,
+            reply_id,
+            post_id
+        FROM
+            post_comment_reply
+        WHERE
+            is_delete = 0
+            AND post_id = #{postId}
+            AND post_type = #{postType}
+            AND reply_id = #{replyId}
+            <if test="@Ognl@isNotEmpty(maxId)">
+                AND id &lt; #{maxId}
+            </if>
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectReplyMeComment" resultMap="PostCommentReplyVo">
+        SELECT
+            id,
+            comment_reply_id,
+            reply_type,
+            post_id,
+            reply_id,
+            title,
+            post_type,
+            from_account,
+            to_account,
+            content,
+            reply_time,
+            is_read,
+            read_time
+        FROM
+            post_comment_reply
+        WHERE
+            is_delete = 0
+            AND (to_account = #{toAccount} OR from_account = #{fromAccount})
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+    <update id="updateReadStatus">
+        UPDATE post_comment_reply
+        SET
+            is_read = #{isRead},
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            is_delete = 0
+            AND to_account = #{toAccount}
+            AND id IN
+            <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+                #{idTemp}
+            </foreach>
+    </update>
+
+    <update id="replyIncrement">
+        UPDATE post_comment_reply SET reply_num = reply_num+1 WHERE id = #{id}
+    </update>
+    <update id="upIncrement">
+        UPDATE post_comment_reply SET up_num = up_num+1 WHERE id = #{id}
+    </update>
+    <update id="downIncrement">
+        UPDATE post_comment_reply SET down_num = down_num+1 WHERE id = #{id}
+    </update>
+    <update id="viewIncrement">
+        UPDATE post_comment_reply SET view_num = view_num+1 WHERE id = #{id}
+    </update>
+    <update id="loveIncrement">
+        UPDATE post_comment_reply SET love_num = love_num+1 WHERE id = #{id}
+    </update>
+
+    <update id="deleteReplyByReplyId">
+        UPDATE post_comment_reply
+        SET
+            is_delete = 1,
+            sys_version = sys_version + 1,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName}
+        WHERE
+            post_id = #{postId}
+            AND  is_delete = 0
+            AND reply_id = #{replyId}
+        <if test="@Ognl@isNotEmpty(postType)">
+            AND post_type = #{postType}
+        </if>
+        <if test="@Ognl@isNotEmpty(fromAccount)">
+            AND from_account = #{fromAccount}
+        </if>
+    </update>
+
+    <update id="deleteReplyById">
+        UPDATE post_comment_reply
+        SET
+            is_delete = 1,
+            sys_version = sys_version + 1,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName}
+        WHERE
+            id = #{id}
+            AND  is_delete = 0
+            AND  post_id = #{postId}
+            AND reply_id = #{replyId}
+        <if test="@Ognl@isNotEmpty(fromAccount)">
+            AND from_account = #{fromAccount}
+        </if>
+    </update>
+
+    <select id="selectContentByIds" resultMap="PostCommentReply">
+        SELECT
+        id,
+        content,
+        reply_time
+        FROM
+            post_comment_reply
+        WHERE
+        id  IN
+        <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+            #{idTemp}
+        </foreach>
+    </select>
+
+    <update id="deleteById">
+        UPDATE post_comment_reply
+        SET
+            is_delete = 1,
+            sys_version = sys_version + 1,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName}
+        WHERE
+        id = #{id}
+        AND  is_delete = 0
+    </update>
+</mapper>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.CommonDistrictMapper">
+
+    <resultMap id="CommonDistrict" type="com.fellow.domain.model.CommonDistrict">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="level" column="level"/>
+        <result property="usetype" column="usetype"/>
+        <result property="upid" column="upid"/>
+        <result property="displayorder" column="displayorder"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,name,level,usetype,upid,displayorder
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO common_district (
+            name,
+            level,
+            usetype,
+            upid,
+            displayorder
+        ) VALUES (
+            #{name},
+            #{level},
+            #{usetype},
+            #{upid},
+            #{displayorder}
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO common_district (
+            <if test="@Ognl@isNotEmpty(name)">
+                name,
+            </if>
+            <if test="@Ognl@isNotEmpty(level)">
+                level,
+            </if>
+            <if test="@Ognl@isNotEmpty(usetype)">
+                usetype,
+            </if>
+            <if test="@Ognl@isNotEmpty(upid)">
+                upid,
+            </if>
+            <if test="@Ognl@isNotEmpty(displayorder)">
+                displayorder
+            </if>
+        ) VALUES (
+            <if test="@Ognl@isNotEmpty(name)">
+                #{name},
+           </if>
+            <if test="@Ognl@isNotEmpty(level)">
+                #{level},
+           </if>
+            <if test="@Ognl@isNotEmpty(usetype)">
+                #{usetype},
+           </if>
+            <if test="@Ognl@isNotEmpty(upid)">
+                #{upid},
+           </if>
+            <if test="@Ognl@isNotEmpty(displayorder)">
+                #{displayorder}
+           </if>
+)
+    </insert>
+
+    <update id="update" >
+        UPDATE common_district SET
+            <if test="@Ognl@isNotEmpty(name)">
+                name = #{name},
+            </if>
+            <if test="@Ognl@isNotEmpty(level)">
+                level = #{level},
+            </if>
+            <if test="@Ognl@isNotEmpty(usetype)">
+                usetype = #{usetype},
+            </if>
+            <if test="@Ognl@isNotEmpty(upid)">
+                upid = #{upid},
+            </if>
+            <if test="@Ognl@isNotEmpty(displayorder)">
+                displayorder = #{displayorder}
+            </if>
+        WHERE
+            id = #{id} 
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE common_district
+        SET
+            <if test="@Ognl@isNotEmpty(name)">
+                name = #{name},
+            </if>
+            <if test="@Ognl@isNotEmpty(level)">
+                level = #{level},
+            </if>
+            <if test="@Ognl@isNotEmpty(usetype)">
+                usetype = #{usetype},
+            </if>
+            <if test="@Ognl@isNotEmpty(upid)">
+                upid = #{upid},
+            </if>
+            <if test="@Ognl@isNotEmpty(displayorder)">
+                displayorder = #{displayorder},
+            </if>
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            sys_version = #{sysVersion, jdbcType=INTEGER}
+            AND id = #{id} 
+    </update>
+
+    <delete id="delete">
+        UPDATE common_district
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM common_district
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <select id="getByKey" resultMap="CommonDistrict">
+        SELECT <include refid="columns" />
+        FROM common_district
+        WHERE
+            id = #{id} 
+    </select>
+
+    <select id="findList" resultMap="CommonDistrict">
+    SELECT <include refid="columns" />
+    FROM common_district
+    <include refid="findList_where"/>
+    <if test="@Ognl@isNotEmpty(sortColumns)">
+        ORDER BY ${sortColumns}
+    </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+    SELECT count(1)
+    FROM common_district
+    <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(name)">
+                AND name = #{name}
+            </if>
+            <if test="@Ognl@isNotEmpty(level)">
+                AND level = #{level}
+            </if>
+            <if test="@Ognl@isNotEmpty(usetype)">
+                AND usetype = #{usetype}
+            </if>
+            <if test="@Ognl@isNotEmpty(upid)">
+                AND upid = #{upid}
+            </if>
+            <if test="@Ognl@isNotEmpty(displayorder)">
+                AND displayorder = #{displayorder}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByUpid" resultMap="CommonDistrict">
+            SELECT
+                id,
+                `name`,
+                `level`,
+                displayorder
+            FROM
+                common_district
+            WHERE
+                upid = #{upid}
+                AND displayorder = 0
+    </select>
+
+</mapper>

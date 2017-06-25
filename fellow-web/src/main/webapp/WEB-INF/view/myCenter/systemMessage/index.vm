@@ -1,0 +1,92 @@
+#set($layout="/layout/empty.vm")
+<style>
+    .media-list li.unread {
+        background-color: ButtonFace;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <label>
+            <input name="form-field-checkbox" class="ace" type="checkbox">
+            <span class="lbl">全选</span>
+        </label>
+        &nbsp; &nbsp; &nbsp; &nbsp;
+        <div class="btn-group">
+        ##            <button class="btn btn-info btn-sm tooltips" type="button" data-toggle="tooltip" data-container="body"
+        ##                    title="" data-original-title="Archive"><i class="fa fa-inbox"></i>全部标记为已读
+        ##            </button>
+            <button class="btn btn-danger btn-sm tooltips" type="button" onclick="deleteMultiMsg(this)"><i
+                    class="fa fa-trash-o"></i>删除选中
+            </button>
+        ##            <button class="btn btn-inverse  btn-sm tooltips" type="button" data-toggle="tooltip" data-container="body"
+        ##                    title="" data-original-title="Report Spam"><i class="fa fa-eye-slash"></i>拉黑权
+        ##            </button>
+        </div>
+    </div>
+</div>
+
+<hr>
+<div class="box-info full" style="padding:0px;margin:0px;" id="systemMessageListId">
+    #parse("/myCenter/systemMessage/systemMessageList.vm")
+</div>
+<script type="text/javascript" src="/static/js/app/myCenter/systemMessage.js"></script>
+
+<script>
+
+    function deleteMultiMsg(obj) {
+        var messageChkObjs = $("[name='messageChk']:checked");
+        if (messageChkObjs.length <= 0) {
+            alert("请选择需要删除的消息!");
+            return false;
+        }
+        var ids = "";
+        $.each(messageChkObjs, function () {
+            ids +="&ids=" + ($(this).attr("msgId"));
+        });
+        function deleteMultiMsgCall(){
+            loadSystemMessageList(1);
+        }
+        deleteMessage(ids,deleteMultiMsgCall);
+    }
+
+    function deleteSigleMsg(obj){
+        var msgId = $(obj).closest("[name='messageListLi']").attr("msgId");
+        function deleteSingleMsgCall(){
+            loadSystemMessageList(1);
+        }
+        deleteMessage("ids=" + msgId, deleteSingleMsgCall)
+    }
+
+    function deleteMessage(ids, deleteMsgCall) {
+        if ($.trim(ids).length <= 0) {
+            alert("请选择需要删除的数据！");
+            return false;
+        }
+        $.ajax({
+            url: "/myCenter/systemMessage/deleteMessage",
+            type: 'POST',
+            data: ids,
+            dataType: "json",
+            success: function (response) {
+                var message = "";
+                if (response) {
+                    message = response.message;
+                    if (response.success) {
+                        if ( deleteMsgCall instanceof Function){
+                            deleteMsgCall();
+                        }
+                        return false;
+                    }
+                }
+                message = ("" == $.trim(message) ? "删除失败！" : message);
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+
+    }
+
+</script>

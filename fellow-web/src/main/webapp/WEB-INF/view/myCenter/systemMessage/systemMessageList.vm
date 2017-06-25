@@ -1,0 +1,130 @@
+#set($layout="/layout/empty.vm")
+#if(${collectionUtils.isNotEmpty($messageList)})
+<ul class="media-list" style="padding:0px;margin:0px;">
+    #foreach($messageTemp in  $messageList)
+        <li  name="messageListLi" msgId="$!{messageTemp.id}" class="media #if(${messageTemp.receiveDetailUnreadNum} >= 1) unread #end">
+            <a class="pull-left" href="#fakelink">
+                <img class="media-object" src="$!{messageTemp.receiveUser.avatar}" alt="Avatar">
+                <label>
+                    <input name="messageChk" class="ace" msgId="$!{messageTemp.id}" type="checkbox">
+                    <span class="lbl">&nbsp;</span>
+                </label>
+            </a>
+
+            <div class="media-body">
+                <h4 class="media-heading" style="margin:0px;"><a
+                        href="#fakelink">$!{messageTemp.sendAccount}</a>
+                    <small class="text-muted" style="font-size: 11px;"><em>$!{messageTemp.sendTimeString}
+                                $!{messageTemp.titleTip}</em>#if(${messageTemp.receiveDetailUnreadNum} > 1) <span
+                            class="badge badge-success">${messageTemp.receiveDetailUnreadNum}</span> #end
+                    </small>
+                </h4>
+                <div name="moreDiv">
+                    <div name="listDiv">
+                        <p class="no-margin" name="messageTextP">
+                            $!{messageTemp.message}
+                        </p>
+                    </div>
+                    #if(${messageTemp.detailCount} > 1)
+                        <div class="" name="lookForMore">
+                            <a href="javascript:;" name="lookForMoreA" maxId="" messageId="$!{messageTemp.id}" onclick="loadMoreSystemMessage(this)">查看更多<i  class="glyphicon glyphicon-arrow-down"></i></a>
+                        </div>
+                    #end
+                </div>
+                <div style="display: none" name="messageDetailToggle">
+                    <a href="javascript:;"  onclick="showHideMessage(this)">收起<i class="ace-icon fa fa-angle-double-down icon-only bigger-110"></i></a>
+                </div>
+                <div>
+                    #if(${messageTemp.messageType} == ${sysMessTypeEnumMap.FRIEND_REQUEST_FROM.key})
+                        #if(${messageTemp.status} == ${sysMessStatusEnumMap.INIT.key})
+                            <button class="btn btn-info btn-minier  tooltips" type="button">
+                                <i class="ace-icon glyphicon glyphicon-plus"></i>同意
+                            </button>
+                            <button id="replyPopover_$!{messageTemp.id}" name="replyPopover" class="popover-info btn btn-default btn-minier"
+                                    data-rel="popover"
+                                    data-placement="bottom"
+                                    title='<span name="emojiReply"  class="emoji-container"><img class="emoji-tbtn" src="/plugins/emoji/emoji/unicode/1f604.png" alt="smile"></span>span><button type="button" class="bootbox-close-button close" onclick="closeRely($!{messageTemp.id})" style="margin-top: -10px;">×</button></span>'
+                                    data-content='<input type="hidden" class="form-field" name="messageId" value="$!{messageTemp.id}">
+                                        <textarea name="message" class="area form-field"></textarea>
+                                        <div class="text-right" style="padding:8px 1px 2px 3px"><button onclick="replySystemMessage(this,$!{messageTemp.id})" type="button" style="padding:3px 16px" class="btn  btn-success btn-xs ">发送</button></div>'>
+                                <i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
+                                回复
+                            </button>
+                            <button class="btn btn-inverse  btn-minier tooltips" type="button">
+                                <i class="fa fa-eye-slash"></i>拉黑
+                            </button>
+                        #end
+                    #elseif(${messageTemp.messageType} == ${sysMessTypeEnumMap.FRIEND_REQUEST_TO.key})
+                        #if(${messageTemp.status} == ${sysMessStatusEnumMap.INIT.key})
+                            <button id="replyPopover_$!{messageTemp.id}" name="replyPopover" class="popover-info btn btn-default btn-minier"
+                                    data-rel="popover"
+                                    data-placement="bottom"
+                                    title='<span name="emojiReply"  class="emoji-container"><img class="emoji-tbtn" src="/plugins/emoji/emoji/unicode/1f604.png" alt="smile"></span><span><button type="button" class="bootbox-close-button close" onclick="closeRely($!{messageTemp.id})" style="margin-top: -10px;">×</button></span>'
+                                    data-content='<input type="hidden" class="form-field" name="messageId" value="$!{messageTemp.id}">
+                                        <textarea name="message" class="area form-field"></textarea>
+                                        <div class="text-right" style="padding:8px 1px 2px 3px"><button onclick="replySystemMessage(this,$!{messageTemp.id})" type="button" style="padding:3px 16px" class="btn  btn-success btn-xs ">发送</button></div>'>
+                                <i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
+                                回复
+                            </button>
+                            <button class="btn btn-inverse  btn-minier tooltips" type="button">
+                                <i class="fa fa-eye-slash"></i>拉黑
+                            </button>
+                        #end
+                    #end
+
+                    <button onclick="deleteSigleMsg(this)" class="btn btn-danger btn-minier tooltips" type="button">
+                        <i class="fa fa-trash-o"></i>删除
+                    </button>
+                </div>
+            </div>
+        </li>
+    #end
+</ul>
+<div class="col-sm-12 text-right">
+    <ul class="pagination">
+        <li  #if(${paginator.isFirstPage()}) class="disabled"  #end>
+            <a href="javascript:;" onclick="loadSystemMessageList(${paginator.prePage})">
+                上一页
+            </a>
+        </li>
+        #set( $sliders = ${paginator.slider})
+        #foreach($pIndex in $sliders)
+            #if($velocityCount == 1 && $pIndex != 1)
+                <li>
+                    <a href="javascript:;" onclick="loadSystemMessageList(1)">1 #if($pIndex != 2) ...  #end</a>
+                </li>
+            #end
+            <li #if($pIndex == ${paginator.page}) class="active" #end>
+                <a href="javascript:;" onclick="loadSystemMessageList(${pIndex})">$pIndex</a>
+            </li>
+            #if($velocityCount == ${sliders.size()} && $pIndex < ${paginator.totalPages})
+                <li>
+                    #set($preLastPage = ${pIndex} + 1)
+                    <a href="javascript:;"
+                       onclick="loadSystemMessageList(${paginator.totalPages})"> #if(${preLastPage} != ${paginator.totalPages})...#end ${paginator.totalPages}</a>
+                </li>
+            #end
+        #end
+        <li  #if(${paginator.isLastPage()}) class="disabled"  #end>
+            <a  #if(!${paginator.isLastPage()}) href="javascript:;"  #end    onclick="loadSystemMessageList(${paginator.nextPage})">
+                下一页
+            </a>
+        </li>
+        <li>
+            <input type="number" placeholder="页码" style="width:50px;text-align:center;float:left" id="gotoPageText" value="">
+        </li>
+        <li>
+            <a href="javascript:;" onclick="gotoMessagePage(this)"   totalPages="${paginator.totalPages}" class="btn btn-mini btn-success">
+                跳转
+            </a>
+        </li>
+    </ul>
+</div>
+#else
+<div class="text-center">
+    <div class="alert alert-warning">
+        <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>没有消息！
+    </div>
+</div>
+#end
+

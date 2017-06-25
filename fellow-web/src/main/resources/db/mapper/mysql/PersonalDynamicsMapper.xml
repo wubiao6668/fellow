@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.PersonalDynamicsMapper">
+
+    <resultMap id="PersonalDynamics" type="com.fellow.domain.model.PersonalDynamics">
+        <result property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="content" column="content"/>
+        <result property="publishTime" column="publish_time"/>
+        <result property="publishType" column="publish_type"/>
+        <result property="title" column="title"/>
+        <result property="imgNum" column="img_num"/>
+        <result property="replyNum" column="reply_num"/>
+        <result property="loveNum" column="love_num"/>
+        <result property="upNum" column="up_num"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,account,content,publish_time,publish_type,title,img_num,reply_num,love_num,up_num,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO personal_dynamics (
+        account,
+        content,
+        publish_time,
+        publish_type,
+        title,
+        img_num,
+        reply_num,
+        love_num,
+        up_num,
+        create_account,
+        create_name,
+        create_time,
+        update_account,
+        update_name,
+        update_time,
+        sys_version,
+        is_delete
+
+        ) VALUES (
+        #{account},
+        #{content},
+        #{publishTime},
+        #{publishType},
+        #{title},
+        #{imgNum},
+        #{replyNum},
+        #{loveNum},
+        #{upNum},
+        #{createAccount},
+        #{createName},
+        now(),
+        #{updateAccount},
+        #{updateName},
+        #{updateTime},
+        1,
+        0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO personal_dynamics (
+        <if test="@Ognl@isNotEmpty(account)">
+            account,
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content,
+        </if>
+        <if test="@Ognl@isNotEmpty(publishTime)">
+            publish_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(publishType)">
+            publish_type,
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title,
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name,
+        </if>
+        create_time,
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time,
+        </if>
+        sys_version,
+        is_delete
+        ) VALUES (
+        <if test="@Ognl@isNotEmpty(account)">
+            #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(publishTime)">
+            #{publishTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(publishType)">
+            #{publishType},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            #{createName},
+        </if>
+        now(),
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            #{updateTime},
+        </if>
+        1,
+        0
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE personal_dynamics SET
+        <if test="@Ognl@isNotEmpty(account)">
+            account = #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content = #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(publishTime)">
+            publish_time = #{publishTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(publishType)">
+            publish_type = #{publishType},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title = #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num = #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num = #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time = now(),
+        </if>
+        <if test="@Ognl@isNotEmpty(sysVersion)">
+            sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE personal_dynamics
+        SET
+        <if test="@Ognl@isNotEmpty(account)">
+            account = #{account},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content = #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(publishTime)">
+            publish_time = #{publishTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(publishType)">
+            publish_type = #{publishType},
+        </if>
+        <if test="@Ognl@isNotEmpty(title)">
+            title = #{title},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num = #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num = #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account =#{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE personal_dynamics
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM personal_dynamics
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getByKey" resultMap="PersonalDynamics">
+        SELECT <include refid="columns" />
+        FROM personal_dynamics
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findList" resultMap="PersonalDynamics">
+        SELECT <include refid="columns" />
+        FROM personal_dynamics
+        <include refid="findList_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+        SELECT count(1)
+        FROM personal_dynamics
+        <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(idLt)">
+                AND id &lt; #{idLt}
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                AND account = #{account}
+            </if>
+            <if test="@Ognl@isNotEmpty(content)">
+                AND content = #{content}
+            </if>
+            <if test="@Ognl@isNotEmpty(publishTimeBegin)">
+                AND publish_time &gt;= #{publishTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(publishTimeEnd)">
+                AND publish_time &lt;= #{publishTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(publishType)">
+                AND publish_type = #{publishType}
+            </if>
+            <if test="@Ognl@isNotEmpty(title)">
+                AND title = #{title}
+            </if>
+            <if test="@Ognl@isNotEmpty(imgNum)">
+                AND img_num = #{imgNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyNum)">
+                AND reply_num = #{replyNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(loveNum)">
+                AND love_num = #{loveNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(upNum)">
+                AND up_num = #{upNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="selectDynamics" resultMap="PersonalDynamics">
+        SELECT
+            dyn.account,
+            dyn.content,
+            dyn.id,
+            dyn.publish_time,
+            dyn.publish_type,
+            dyn.title,
+            dyn.img_num,
+            dyn.reply_num,
+            dyn.love_num,
+            dyn.up_num
+        FROM
+            personal_dynamics AS dyn
+        LEFT JOIN
+            friend AS fd ON dyn.account = fd.friend_account
+        LEFT JOIN
+            system_base_set AS sbs ON fd.friend_account = sbs.account
+            <include refid="selectDynamicsWhere"/>
+            ORDER BY  dyn.id DESC
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectPersonalDynamics" resultMap="PersonalDynamics">
+        SELECT
+            account,
+            content,
+            id,
+            publish_time,
+            publish_type,
+            title,
+            img_num,
+            reply_num,
+            love_num,
+            up_num
+        FROM
+            personal_dynamics
+        WHERE
+            is_delete = 0
+            AND account = #{account}
+            <if test="@Ognl@isNotEmpty(idLt)">
+                AND id &lt; #{idLt}
+            </if>
+            ORDER BY id DESC
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectDynamicsCount" resultType="long">
+        SELECT
+          COUNT(1)
+        FROM
+            personal_dynamics AS dyn
+        LEFT JOIN
+            friend AS fd ON dyn.account = fd.friend_account
+        LEFT JOIN
+            system_base_set AS sbs ON fd.friend_account = sbs.account
+            <include refid="selectDynamicsWhere"/>
+    </select>
+
+    <sql id="selectDynamicsWhere">
+        <where>
+            dyn.is_delete = 0
+            AND fd.is_delete = 0
+            AND sbs.is_delete = 0
+            AND fd.friend_type = 100
+            AND (
+            (fd.account = #{account} AND fd.show_dynamics = 100)
+            OR (fd.friend_account = #{account} AND fd.restrict_dynamics = 100)
+            OR (dyn.account = #{account})
+            )
+            AND sbs.dyn_authority != 100
+            <if test="@Ognl@isNotEmpty(idLt)">
+                AND dyn.id &lt; #{idLt}
+            </if>
+        </where>
+    </sql>
+
+    <update id="replyIncrement">
+        UPDATE personal_dynamics SET reply_num = reply_num+1 WHERE id = #{id}
+    </update>
+    <update id="upIncrement">
+        UPDATE personal_dynamics SET up_num = up_num+1 WHERE id = #{id}
+    </update>
+    <update id="downIncrement">
+        UPDATE personal_dynamics SET down_num = down_num+1 WHERE id = #{id}
+    </update>
+    <update id="loveIncrement">
+        UPDATE personal_dynamics SET love_num = love_num+1 WHERE id = #{id}
+    </update>
+    <update id="replyDecrement">
+        UPDATE personal_dynamics SET reply_num = reply_num - 1 WHERE id = #{id}
+    </update>
+    <update id="upDecrement">
+        UPDATE personal_dynamics SET up_num = up_num - 1 WHERE id = #{id}
+    </update>
+    <update id="loveDecrement">
+        UPDATE personal_dynamics SET love_num = love_num - 1 WHERE id = #{id}
+    </update>
+
+    <update id="updateUpAndLove">
+        UPDATE personal_dynamics SET up_num= up_num + #{upNum},love_num = love_num + #{loveNum} WHERE id = #{id}
+    </update>
+
+    <select id="selectContentByIds" resultMap="PersonalDynamics">
+        SELECT
+            id,
+            content,
+            publish_time
+        FROM
+            personal_dynamics
+        WHERE
+            id  IN
+            <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+                #{idTemp}
+            </foreach>
+    </select>
+</mapper>

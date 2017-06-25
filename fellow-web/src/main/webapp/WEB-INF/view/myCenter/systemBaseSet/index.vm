@@ -1,0 +1,133 @@
+#set($layout="/layout/empty.vm")
+
+##<div class="space-24"></div>
+<form id="systemBaseSetFormId">
+    <h3 class="header smaller lighter blue">
+        <b>消息提醒</b>
+    </h3>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <label class="control-label bolder blue">私信设置</label>
+
+            <div class="control-group">
+                <!-- #section:custom/checkbox -->
+                <div class="checkbox">
+                    <label>
+                        <input name="strangerMessage" #if($baseSetInfo.strangerMessage == $strangerReceiveValue) checked   #end type="checkbox" value="$!{strangerReceiveValue}" class="ace"/>
+                        <span class="lbl">接收陌生人私信</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="header smaller lighter blue">
+        <b>个人主页</b><em>
+        <small>针对个人设置请到好友管理</small>
+    </em>
+    </h3>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="control-group">
+                <label class="control-label bolder blue">个人动态</label>
+                #foreach($dynAuthorityEnum in $dynAuthorityEnums)
+                    <div class="radio">
+                        <label>
+                            <input name="dynAuthority" #if($dynAuthorityEnum.key == $baseSetInfo.dynAuthority)
+                                   checked #end type="radio" value="$!{dynAuthorityEnum.key}" class="ace"/>
+                            <span class="lbl">$dynAuthorityEnum.value</span>
+                        </label>
+                    </div>
+                #end
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="control-group">
+                <label class="control-label bolder blue">关于我</label>
+                #foreach($meAuthorityEnum in $meAuthorityEnums)
+                    <div class="radio">
+                        <label>
+                            <input name="meAuthority" #if($meAuthorityEnum.key == $baseSetInfo.meAuthority) checked #end
+                                   type="radio" value="$!{meAuthorityEnum.key}" class="ace"/>
+                            <span class="lbl">$meAuthorityEnum.value</span>
+                        </label>
+                    </div>
+                #end
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="control-group">
+                <label class="control-label bolder blue">个人信息</label>
+                #foreach($infoAuthorityEnum in $infoAuthorityEnums)
+                    <div class="radio">
+                        <label>
+                            <input name="infoAuthority" #if($infoAuthorityEnum.key == $baseSetInfo.infoAuthority)
+                                   checked #end type="radio" value="$!{infoAuthorityEnum.key}" class="ace"/>
+                            <span class="lbl">$infoAuthorityEnum.value</span>
+                        </label>
+                    </div>
+                #end
+            </div>
+        </div>
+    </div>
+    <h3 class="header smaller lighter blue">
+        <b>动态</b><em>
+    </em>
+    </h3>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="control-group">
+                <label class="control-label bolder blue">个人动态</label>
+                #foreach($showDynEnum in $showDynEnums)
+                    <div class="radio">
+                        <label>
+                            <input name="showDyn" #if($showDynEnum.key == $baseSetInfo.showDyn) checked #end type="radio" value="$!{showDynEnum.key}" class="ace"/>
+                            <span class="lbl">$showDynEnum.value</span>
+                        </label>
+                    </div>
+                #end
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <button class="btn btn-sm btn-info dropdown-toggle" onclick="return updateSystemBaseSet(this);">
+                <i class="ace-icon glyphicon glyphicon-check   bigger-110"></i>
+                保存
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+
+    function updateSystemBaseSet(obj) {
+        var formParam = $("#systemBaseSetFormId").serializeJSON();
+        $.ajax({
+            url: "/myCenter/systemBaseSet/updateSystemBaseSet",
+            type: 'POST',
+            data: formParam,
+            dataType: "json",
+            success: function (result) {
+                //信息
+                var message = "";
+                if (result) {
+                    message = $.trim(result.message);
+                    if (result.success) {
+                        message = ("" == $.trim(message) ? "信息修改成功！" : message);
+                        alert(message);
+                        return false;
+                    }
+                }
+                message =("" ==$.trim(message)?"信息修改失败！":message);
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+        return false;
+    }
+
+</script>

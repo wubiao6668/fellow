@@ -1,0 +1,263 @@
+<style type="text/css">
+    .nav-tabs .glyphicon:not(.no-margin) {
+        margin-right: 10px;
+    }
+
+    .tab-pane .list-group-item:first-child {
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+
+    .tab-pane .list-group-item:last-child {
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .tab-pane .list-group .checkbox {
+        display: inline-block;
+        margin: 0px;
+    }
+
+    .tab-pane .list-group input[type="checkbox"] {
+        margin-top: 2px;
+    }
+
+    .tab-pane .list-group .glyphicon {
+        margin-right: 5px;
+    }
+
+    .tab-pane .list-group .glyphicon:hover {
+        color: #FFBC00;
+    }
+
+    div.list-group-item.read {
+        color: #222;
+        background-color: #F3F3F3;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
+    .nav-pills > li > a {
+        padding: 5px 10px;
+    }
+
+    .ad {
+        padding: 5px;
+        background: #F5F5F5;
+        color: #222;
+        font-size: 80%;
+        border: 1px solid #E5E5E5;
+    }
+
+    .ad a.title {
+        color: #15C;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 110%;
+    }
+
+    .ad a.url {
+        color: #093;
+        text-decoration: none;
+    }
+</style>
+
+<style type="text/css">
+    body {
+        background: #EEEEEE;
+    }
+
+    .box-info.full {
+        padding: 0px;
+    }
+
+    .box-info:hover {
+        color: #393E48;
+    }
+
+    .box-info {
+        position: relative;
+        padding: 15px;
+        background: #fff;
+        color: #5b5b5b;
+        margin-bottom: 20px;
+        -webkit-transition: All 0.4s ease;
+        -moz-transition: All 0.4s ease;
+        -o-transition: All 0.4s ease;
+        background: #FFFFFF;
+        margin-top: 20px;
+    }
+
+    .box-info .nav-tabs {
+        background: #1B1E24;
+    }
+
+    .box-info .nav-tabs li.active a, .box-info .nav-tabs li.active a:hover, .box-info .nav-tabs li.active a:focus {
+        cursor: default;
+        border-top: none;
+        border-right: none;
+        border-left: none;
+        border-bottom: none;
+        background-color: #ffffff;
+        color: #1B1E24;
+    }
+
+    .box-info .nav-tabs li.active a i, .box-info .nav-tabs li.active a:hover i, .box-info .nav-tabs li.active a:focus i {
+        color: #212121;
+    }
+
+    .box-info .nav-tabs li a i {
+        color: #fff;
+    }
+
+    .box-info.full .box-footer {
+        padding: 20px 20px 15px 20px;
+    }
+
+    .box-info .media-list {
+        margin-top: 30px;
+    }
+
+    .box-info .media-list .media {
+        padding: 5px 20px;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    .box-info .media-list .media .media-object {
+        width: 50px;
+    }
+
+    .scroll-widget {
+        overflow: hidden;
+        width: auto;
+        height: 325px;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-sm-3 col-md-2 well" style="background:white;padding:5px 10px;margin:0px;">
+        <ul class="nav nav-pills nav-stacked" style="padding:0px;margin:0px;">
+##            <li class="active">
+##                <a href="javascript:;" onclick="loadTab(this,'systemMessageTab')">
+##                    <span class="badge pull-right">32</span>系统消息
+##                </a>
+##            </li>
+            <li class="">
+                <a href="javascript:;" onclick="loadTab(this,'userMessageTab')">
+                    <span class="badge pull-right"><span id="nuReadNum">11</span></span>消息
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadTab(this,'myPostReplyTab')">
+                    <span class="badge pull-right">3</span>我的帖子评论
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadTab(this,'postCommentTab')">
+                    <span class="badge pull-right">3</span>评论回复
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadTab(this,'myDynamicsTab')">
+                    <span class="badge pull-right">3</span>动态评论
+                </a>
+            </li>
+##            <li class="">
+##                <a href="javascript:;" onclick="loadTab(this,'friendManagerTab')">
+##                    好友
+##                </a>
+##            </li>
+            <li class="">
+                <a href="javascript:;" onclick="loadTab(this,'meFellowTab')">
+                    我关注
+                </a>
+            </li>
+            <li class="">
+                <a href="javascript:;" onclick="loadTab(this,'friendManagerTab')">
+                    关注我
+                </a>
+            </li>
+            <li class="">
+                <a href="javascript:;" onclick="loadTab(this,'friendManagerTab')">
+                    黑名单管理
+                </a>
+            </li>
+            <li class="">
+                <a href="javascript:;" onclick="loadTab(this,'myPostTab')">
+                    我发布的帖子
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadTab(this,'passwordTab')">
+                    修改密码
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadTab(this,'systemBaseSetTab')">
+                    基础设置
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-9 col-md-10">
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div id="systemMessageTab" name="centerTab" action="/myCenter/systemMessage/index" class="tab-pane fade in">
+
+            </div>
+
+            <div id="userMessageTab" name="centerTab" action="/message/personal/index" class="tab-pane fade in">
+
+            </div>
+
+            <div id="meFellowTab" name="centerTab" action="/friend/friendManager/index" class="tab-pane fade in">
+
+            </div>
+
+            <div id="myPostTab" name="centerTab" action="/myCenter/postManger/index" class="tab-pane fade in">
+
+            </div>
+
+            <div id="postCommentTab" name="centerTab" action="/myCenter/commentReply/index" class="tab-pane fade in">
+                <!-- Begin tab comment and popular posts -->
+
+                <!-- End tab comment and popular posts -->
+            </div>
+
+            <div id="passwordTab" name="centerTab" action="/myCenter/passwordSet/index" class="tab-pane fade in active">
+
+            </div>
+            <div id="systemBaseSetTab" name="centerTab" action="/myCenter/systemBaseSet/index" class="tab-pane fade in active">
+
+            </div>
+            <div id="myPostReplyTab" name="centerTab" action="/myCenter/myPostReply/index" class="tab-pane fade in">
+
+            </div>
+            <div id="myDynamicsTab" name="centerTab" action="/myCenter/myDynamics/index" class="tab-pane fade in">
+
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            ace.settingFunction.main_container_fixed(null, true);
+        })
+
+        function loadTab(obj, id) {
+            $("[name='centerTab']").removeClass("active");
+            $(obj).parent().parent().find("li").removeClass("active");
+            $(obj).parent().addClass("active");
+            var tabObj = $("#" + id);
+            tabObj.addClass("active");
+            $.get(tabObj.attr("action"), function (html) {
+                tabObj.html(html);
+            })
+        }
+    </script>
+
+
+

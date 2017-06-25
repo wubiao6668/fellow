@@ -1,0 +1,55 @@
+#if(${collectionUtils.isNotEmpty($dynCommentList)})
+    <div class="box-info full" style="padding:0px;margin:0px;">
+        <ul class="media-list" style="padding:0px;margin:0px;">
+        #foreach($dynComment in $dynCommentList)
+            <li class="media">
+                <a class="pull-left" href="#fakelink">
+                    <img class="media-object" src="$!{dynComment.fromUser.avatar}" alt="Avatar">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="#fakelink">#if($!{dynComment.fromAccount} == ${account}) 我 #else  $!{dynComment.fromAccount}  #end</a>
+                        <small class="text-muted" style="font-size: 11px;">
+                            <em>$!{dynComment.replyTimeString}&nbsp;
+                                #if($!{dynComment.commentType} == 100)
+                                        评论了#if($!{dynComment.toAccount} == ${account}) 我 #else <a href="#fakelink"> $!{dynComment.toAccount} </a> #end 的动态
+                                    #else
+                                        回复了#if($!{dynComment.toAccount} == ${account}) 我 #else <a href="#fakelink"> $!{dynComment.toAccount} </a> #end 的评论
+                                #end
+                            </em>
+                        </small>
+                        <button class="btn btn-link" commentId="$!{dynComment.id}" onclick="deleteDynCommentById(this)">
+                            <i class="ace-icon fa fa-trash-o red">删除</i>
+                        </button>
+                    </h4>
+                    <p #if(${account}==${dynComment.toAccount} && ${dynComment.isRead} == 100)  class="alert-info" #end>$!{dynComment.content}</p>
+
+                    <p>
+                        <i class="ace-icon fa fa-quote-left grey"></i>
+                        <em>$!{dynComment.originalContent}</em>
+                        <i class="ace-icon fa fa-quote-right grey"></i></p>
+                </div>
+            </li>
+        #end
+        </ul>
+    </div><!-- End div .box-info .full -->
+    <div class="text-right no-padding">
+        <ul class="pagination">
+            <li #if(!${isHadPrePage}) class="disabled" #end>
+                <a href="javascript:;" #if(${isHadPrePage}) onclick="searchMyDynComment($!{prePage})"  #end>
+                    上一页
+                </a>
+            </li>
+            <li #if(!${isHadNextPage}) class="disabled" #end>
+                <a href="javascript:;" #if(${isHadNextPage}) onclick="searchMyDynComment($!{nextPage})" #end>
+                    下一页
+                </a>
+            </li>
+        </ul>
+    </div>
+#else
+    <div class="text-center">
+        <div class="alert alert-warning">
+            <i class="ace-icon glyphicon glyphicon-user"></i>暂时没有与我相关的动态评论！
+        </div>
+    </div>
+#end

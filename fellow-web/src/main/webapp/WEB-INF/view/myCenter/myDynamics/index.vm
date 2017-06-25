@@ -1,0 +1,58 @@
+#set($layout="/layout/empty.vm")
+<div id="myDyCommentListId">
+    #parse("/myCenter/myDynamics/dyCommentList.vm")
+</div>
+
+<script>
+    function searchMyDynComment(page) {
+        var param ={};
+        param.page = page;
+        $.ajax({
+            url: "/myCenter/myDynamics/queryDynCommentToMe",
+            type: 'POST',
+            data: param,
+            dataType: "json",
+            success: function (response) {
+                var message = "";
+                if (response) {
+                    message = response.message;
+                    if (response.success) {
+                        $("#myDyCommentListId").html(response.body);
+                        return false;
+                    }
+                }
+                message = "" == $.trim(message) ? "评论回复查询失败！" : message;
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+        return false;
+    }
+
+    function deleteDynCommentById(obj){
+        var commentId = $(obj).attr("commentId");
+        $.ajax({
+            url: "/myCenter/myDynamics/deleteDynCommentById",
+            type: 'POST',
+            data: "id=" + commentId,
+            dataType: "json",
+            success: function (response) {
+                var message = "";
+                if (response) {
+                    message = response.message;
+                    if (response.success) {
+                        $(obj).closest(".media").remove();
+                        return false;
+                    }
+                }
+                message = "" == $.trim(message) ? "删除评论失败！" : message;
+                alert(message);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                alert("系统或网络异常！");
+            }
+        });
+    }
+</script>

@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.LostPostReplyMapper">
+
+    <resultMap id="LostPostReply" type="com.fellow.domain.model.LostPostReply">
+        <result property="id" column="id"/>
+        <result property="postId" column="post_id"/>
+        <result property="content" column="content"/>
+        <result property="replyTime" column="reply_time"/>
+        <result property="replyAccount" column="reply_account"/>
+        <result property="upNum" column="up_num"/>
+        <result property="downNum" column="down_num"/>
+        <result property="replyNum" column="reply_num"/>
+        <result property="loveNum" column="love_num"/>
+        <result property="imgNum" column="img_num"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <resultMap id="LostPostReplyVo" type="com.fellow.domain.vo.LostPostReplyVo" extends="LostPostReply">
+
+    </resultMap>
+
+    <sql id="columns">
+        id,post_id,content,reply_time,reply_account,up_num,down_num,reply_num,love_num,img_num,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO lost_post_reply (
+        post_id,
+        content,
+        reply_time,
+        reply_account,
+        up_num,
+        down_num,
+        reply_num,
+        love_num,
+        img_num,
+        create_account,
+        create_name,
+        create_time,
+        update_account,
+        update_name,
+        update_time,
+        sys_version,
+        is_delete
+
+        ) VALUES (
+        #{postId},
+        #{content},
+        #{replyTime},
+        #{replyAccount},
+        #{upNum},
+        #{downNum},
+        #{replyNum},
+        #{loveNum},
+        #{imgNum},
+        #{createAccount},
+        #{createName},
+        now(),
+        #{updateAccount},
+        #{updateName},
+        #{updateTime},
+        1,
+        0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO lost_post_reply (
+        <if test="@Ognl@isNotEmpty(postId)">
+            post_id,
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content,
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            reply_time,
+        </if>
+        <if test="@Ognl@isNotEmpty(replyAccount)">
+            reply_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num,
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name,
+        </if>
+        create_time,
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time,
+        </if>
+        sys_version,
+        is_delete
+        ) VALUES (
+        <if test="@Ognl@isNotEmpty(postId)">
+            #{postId},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            #{replyTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyAccount)">
+            #{replyAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            #{createName},
+        </if>
+        now(),
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            #{updateTime},
+        </if>
+        1,
+        0
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE lost_post_reply SET
+        <if test="@Ognl@isNotEmpty(postId)">
+            post_id = #{postId},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content = #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            reply_time = #{replyTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyAccount)">
+            reply_account = #{replyAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num = #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num = #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num = #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateTime)">
+            update_time = now(),
+        </if>
+        <if test="@Ognl@isNotEmpty(sysVersion)">
+            sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete}
+        </if>
+        WHERE
+        id = #{id}
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE lost_post_reply
+        SET
+        <if test="@Ognl@isNotEmpty(postId)">
+            post_id = #{postId},
+        </if>
+        <if test="@Ognl@isNotEmpty(content)">
+            content = #{content},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyTime)">
+            reply_time = #{replyTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyAccount)">
+            reply_account = #{replyAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(upNum)">
+            up_num = #{upNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(downNum)">
+            down_num = #{downNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(replyNum)">
+            reply_num = #{replyNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(loveNum)">
+            love_num = #{loveNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(imgNum)">
+            img_num = #{imgNum},
+        </if>
+        <if test="@Ognl@isNotEmpty(createAccount)">
+            create_account = #{createAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(createName)">
+            create_name = #{createName},
+        </if>
+        <if test="@Ognl@isNotEmpty(createTime)">
+            create_time = #{createTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount},
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE lost_post_reply
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id = #{id}
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM lost_post_reply
+        WHERE
+        id = #{id}
+    </delete>
+
+    <select id="getByKey" resultMap="LostPostReply">
+        SELECT <include refid="columns" />
+        FROM lost_post_reply
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findList" resultMap="LostPostReply">
+        SELECT <include refid="columns" />
+        FROM lost_post_reply
+        <include refid="findList_where"/>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+        SELECT count(1)
+        FROM lost_post_reply
+        <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(postId)">
+                AND post_id = #{postId}
+            </if>
+            <if test="@Ognl@isNotEmpty(content)">
+                AND content = #{content}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyTimeBegin)">
+                AND reply_time &gt;= #{replyTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyTimeEnd)">
+                AND reply_time &lt;= #{replyTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyAccount)">
+                AND reply_account = #{replyAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(upNum)">
+                AND up_num = #{upNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(downNum)">
+                AND down_num = #{downNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(replyNum)">
+                AND reply_num = #{replyNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(loveNum)">
+                AND love_num = #{loveNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(imgNum)">
+                AND img_num = #{imgNum}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+    <select id="queryReply" resultMap="LostPostReply">
+        SELECT
+            id,
+            post_id,
+            content,
+            reply_time,
+            reply_account,
+            up_num,
+            down_num,
+            reply_num,
+            love_num,
+            img_num
+        FROM
+            lost_post_reply
+        WHERE
+            is_delete = 0
+            AND post_id = #{postId}
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+    <select id="queryReplyCount" resultType="long">
+        SELECT
+            COUNT(id)
+        FROM
+            lost_post_reply
+        WHERE
+            is_delete = 0
+            AND post_id = #{postId}
+    </select>
+
+    <update id="replyIncrement">
+        UPDATE lost_post_reply SET reply_num = reply_num+1 WHERE id = #{id}
+    </update>
+    <update id="upIncrement">
+        UPDATE lost_post_reply SET up_num = up_num+1 WHERE id = #{id}
+    </update>
+    <update id="downIncrement">
+        UPDATE lost_post_reply SET down_num = down_num+1 WHERE id = #{id}
+    </update>
+    <update id="viewIncrement">
+        UPDATE lost_post_reply SET view_num = view_num+1 WHERE id = #{id}
+    </update>
+    <update id="loveIncrement">
+        UPDATE lost_post_reply SET love_num = love_num+1 WHERE id = #{id}
+    </update>
+
+    <update id="replyDecrement">
+        UPDATE lost_post_reply SET reply_num = reply_num - 1 WHERE id = #{id}
+    </update>
+
+    <update id="deleteReplyByAccount">
+        UPDATE lost_post_reply
+        SET
+            is_delete = 1,
+            sys_version = sys_version + 1,
+            update_account =#{updateAccount} ,
+            update_name = #{updateName}
+        WHERE
+            id = #{id}
+            AND is_delete = 0
+            AND post_id = #{postId}
+            AND reply_account = #{replyAccount}
+    </update>
+
+    <select id="selectReplyAccount" resultMap="LostPostReplyVo">
+        SELECT
+            id,
+            post_id,
+            content,
+            reply_time,
+            up_num,
+            down_num,
+            reply_num,
+            love_num,
+            img_num,
+            reply_account
+        FROM
+            lost_post_reply
+        WHERE
+            is_delete = 0
+            AND reply_account = #{replyAccount}
+            <if test="@Ognl@isNotEmpty(sortColumns)">
+                ORDER BY ${sortColumns}
+            </if>
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectReplyAccountCount" resultType="long">
+        SELECT
+            COUNT(1)
+        FROM
+            lost_post_reply
+        WHERE
+            is_delete = 0
+            AND reply_account = #{replyAccount}
+    </select>
+
+    <select id="selectContentByIds" resultMap="LostPostReply">
+        SELECT
+            id,
+            content,
+            reply_time,
+            img_num
+        FROM
+            lost_post_reply
+        WHERE
+            id  IN
+            <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+                #{idTemp}
+            </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,61 @@
+<div class="col-sm-12">
+    #if($collectionUtils.isNotEmpty($userDetailList))
+        #foreach($userDetail in $userDetailList)
+            <div class="col-sm-4 user-look-div">
+                <div class="well user-look">
+                    <div class="col-xs-4 no-padding-top no-padding-right no-padding-bottom">
+                        <img class="img-rounded img-responsive" alt="150x150"
+                             src="$!{userDetail.avatar}"/>
+                    </div>
+                    <div class="col-xs-8">
+                        <div>
+                            <i class="ace-icon glyphicon glyphicon-user"></i>
+                            <a href="#" class="btn-link"><strong class="text-info">$!{userDetail.username}</strong></a>
+                        </div>
+                        <div class="small">
+                            <span class="vr vr-3"></span><span class="text-muted">年龄：</span>$!{userDetail.age}
+                        </div>
+                        <div class="small">
+                            <span class="text-muted">现居：</span>$!{userDetail.domicileName}
+                            #if($stringUtils.isNotBlank($!{userDetail.hometownName}))
+                                <span class="vr vr-3"></span><span class="text-muted">故乡：</span>$!{userDetail.hometownName}
+                              #end
+                        </div>
+                        <div class="small"><span class="text-muted">职业：</span>$!{userDetail.professionText}</div>
+                        <div class="small"><span class="text-muted">专业：</span>$!{userDetail.majorText}</div>
+                        <button class="btn btn-pink btn-xs">
+                            <i class="ace-icon fa fa-envelope"></i>
+                            发消息
+                        </button>
+                        <!--<span class="vr vr-3 pull-right"></span>-->
+                        <button class="btn btn-primary btn-xs">
+                            <i class="ace-icon glyphicon glyphicon-plus"></i>
+                            加为好友
+                        </button>
+                    </div>
+                </div>
+            </div>
+        #end
+    #else
+      <div class="text-center">
+          <div class="alert alert-warning">
+              <i class="ace-icon glyphicon glyphicon-user"></i>没有找到符合条件的用户！
+          </div>
+      </div>
+    #end
+       <!-- /.widget-main -->
+</div>
+<div class="right">
+    <ul class="pagination">
+        <li #if(!${isHadPrePage}) class="disabled" #end>
+            <a href="javascript:;" #if(${isHadPrePage}) onclick="searchUser($!{prePage})"  #end >
+                上一页
+            </a>
+        </li>
+        <li #if(!${isHadNextPage}) class="disabled" #end>
+            <a href="javascript:;" #if(${isHadNextPage}) onclick="searchUser($!{nextPage})" #end >
+                下一页
+            </a>
+        </li>
+    </ul>
+</div>

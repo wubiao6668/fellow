@@ -1,0 +1,24 @@
+<div style="clear:both;" name="commentReplyDiv">
+    <div class="col-xs-1 no-padding" style="width:11px">
+        <img class="" alt="${commentReply.fromUser.username}" style="max-width: 20px"  src="${commentReply.fromUser.avatar}"/>
+    </div>
+    <div class="col-xs-11">
+        <a class="user" href="#">${commentReply.fromUser.username}</a> 回复 <a href="#">${commentReply.fromUser.username}</a>
+        <div>
+            ${commentReply.content}
+        </div>
+        <div class="time">
+            <span class="text-left">
+            <i class="ace-icon fa fa-clock-o bigger-110"></i>${commentReply.replyTimeString}
+            </span>
+            <span style="display: block;float:right;width: 600px" class="text-right">
+                <button onclick="upIncrement(this,'/post/postCommentReply/upIncrement?id=$!{commentReply.id}')" class="btn btn-link  btn-minier"><i class="glyphicon glyphicon-thumbs-up"></i><span name="num">${commentReply.upNum}</span> </button>
+                <button onclick="downIncrement(this,'/post/postCommentReply/downIncrement?id=$!{commentReply.id}')" class="btn btn-link  btn-minier"><i class="glyphicon glyphicon-thumbs-down"></i><span name="num">${commentReply.downNum}</span> </button>
+                <button onclick="loveIncrement(this,'/post/postCommentReply/loveIncrement?id=$!{commentReply.id}')" class="btn btn-link  btn-minier"><i class="ace-icon fa fa-heart red"></i><span name="num"> ${commentReply.loveNum} </span></button>
+                 #mc_reply($commentReply.postId $commentReply.replyId $commentReply.fromAccount ${replyTypeEnumMap.COMMENT_REPLY.key} $commentReply.id)
+##                <button class="btn btn-link  btn-minier"> <i class="glyphicon grey glyphicon-eye-close"></i>拉黑 </button>
+                <button class="btn btn-link  btn-minier" onclick="deleteReplyById(this,$!{commentReply.id},$!{commentReply.postId},$!{commentReply.replyId})"><i class="ace-icon red fa fa-times bigger-125"></i>删除</button>
+            </span>
+        </div>
+    </div>
+</div>
