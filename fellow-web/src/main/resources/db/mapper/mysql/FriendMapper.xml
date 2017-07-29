@@ -464,4 +464,16 @@
             </if>
     </update>
 
+    <select id="selectFollowMe" resultMap="FriendMeFellowVo">
+    SELECT
+        account,
+        friend_alias,
+        friend_account,
+        friend_type
+    FROM friend
+    WHERE
+        is_delete = 0
+        AND friend_account = #{friendAccount}
+    </select>
+
 </mapper>

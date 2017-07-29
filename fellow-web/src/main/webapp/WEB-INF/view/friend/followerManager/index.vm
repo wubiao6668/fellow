@@ -1,0 +1,206 @@
+#set($layout="/layout/empty.vm")
+<style type="text/css">
+    .profile-users .user img {
+        padding: 3px;
+        border-radius: 100%;
+        border: 1px solid #AAA;
+        max-width: none;
+        width: 101px;
+        -webkit-transition: all 0.1s;
+        -o-transition: all 0.1s;
+        transition: all 0.1s;
+    }
+    .profile-users .memberdiv {
+        background-color: #FFF;
+        width: 150px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: none;
+        text-align: center;
+        margin: 0 8px 24px;
+    }
+    .popover-content {
+        padding: 9px 14px;
+        min-width: 300px;
+    }
+</style>
+<div class="bootstrap snippets">
+    <div class="x_panel">
+        <div class="x_content">
+            <div class="row">
+                <div class="col-xs-3 col-sm-3 col-md-3 "></div>
+                <div class="col-xs-4 col-sm-4 col-md-4 ">
+                    <div class="input-group">
+                        <input type="text"  class="form-control" name="keywords" id="keywords" placeholder="账号、邮箱、昵称">
+                        <input type="hidden" name="fuzzyField" id="fuzzyField">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default no-border btn-sm" onclick="searcherMeFellow(this)">
+                                <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+##                <div class="clearfix"></div>
+                <div class="col-md-12  col-sm-12 col-xs-12 text-center">
+                    <strong><i class="ace-icon glyphicon glyphicon-user"></i>共<span id="meFellowFriendSpanId">$!{friendCount}</span>位好友</strong>
+                </div>
+                <br>
+                <br>
+                <div class="col-md-12  col-sm-12 col-xs-12 text-center profile-users clearfix" id="friendListId">
+                    #parse("/friend/followerManager/friend_div.vm")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        ace.settingFunction.main_container_fixed(null, true);
+    });
+    function searcherMeFellow(obj){
+        $("#fuzzyField").val($("#keywords").val());
+        $("#friendListId").html("");
+        loadMoreFriend(1);
+    }
+    function loadMoreFriend(page, pageSize) {
+        var param = {};
+        param.fuzzyField = $.trim($("#fuzzyField").val());
+        param.page = page;
+        param.pageSize = pageSize;
+        param.aliasShort = $("#aliasShort").val();
+        $.ajax({
+            url: "/friend/followerManager/loadMoreFriend",
+            type: 'POST',
+            data: param,
+            dataType: "html",
+            success: function (messageDetailHtml) {
+                $("#loadMoreFriendId").parent().remove();
+                $("#friendListId").append(messageDetailHtml);
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                //alert("系统或网络异常！");
+            }
+        });
+    }
+
+    function queryByShort(obj, short) {
+        $(obj).closest("ul").find("li").removeClass("active");
+        $(obj).closest("li").addClass("active");
+        $("#aliasShort").val(short);
+        $("#friendListId").html("");
+        loadMoreFriend(1, 4);
+    }
+
+    function showMsgDetail(obj, sendAccount) {
+        $(".popover ").hide();
+        setTimeout(function(){
+            $(".popover ").show();
+        },2000);
+        $.get("/message/personal/showMessageDetail?sendAccount=" + sendAccount, function (messageHtml) {
+            bootbox.dialog({
+//            title: '<h4 class="modal-title" ></h4>',
+                message: messageHtml,
+                size: "large"
+            });
+        });
+    }
+    function showUpdateAlias(obj,friendAccount,username) {
+        var nameTextObj = $(obj).closest("[name='nameInfoDiv']").find("[name='nameTextSpan']");
+        var nameAliasObj = $(obj).closest("[name='nameInfoDiv']").find("[name='nameAliasSpan']");
+        if ($(nameAliasObj).is(":hidden")){
+            $(nameTextObj).hide();
+            $(nameAliasObj).show();
+            $(obj).find("[name='optText']").html("保存");
+            $(obj).html('<i class="ace-icon fa  fa-pencil-square-o bigger-110"></i>保存');
+        }else{
+            var friendAlias = $.trim($(nameAliasObj).val());
+            $.ajax({
+                url: "/friend/followerManager/updateFriendAlias",
+                type: 'POST',
+                data: {friendAlias: friendAlias, friendAccount: friendAccount},
+                dataType: "json",
+                success: function (response) {
+                    if (response && response.success) {
+                        if (friendAlias == "") {
+                            friendAlias = username;
+                        }
+                        $(nameTextObj).show();
+                        $(nameTextObj).html(friendAlias);
+                        $(nameAliasObj).hide();
+                        $(nameAliasObj).val(friendAlias);
+                        $("#"+friendAccount+"_friendAlias").html(friendAlias);
+                        $(obj).html('<i class="ace-icon fa  fa-pencil-square-o bigger-110"></i>');
+                    } else {
+                        alert("修改备注失败！");
+                    }
+                },
+                error: function (request, ajaxOptions, thrownError) {
+                    //alert("系统或网络异常！");
+                }
+            });
+        }
+    }
+    function updateAlias(obj,friendAlias,friendAccount,username) {
+        var nameTextObj = $(obj).closest("[name='nameInfoDiv']").find("[name='nameTextSpan']");
+        var nameAliasObj = $(obj).closest("[name='nameInfoDiv']").find("[name='nameAliasSpan']");
+
+    }
+
+    function updateShowDynamics(obj, friendAccount) {
+        $.ajax({
+            url: "/friend/followerManager/updateShowDynamics",
+            type: 'POST',
+            data: {dynShow: obj.checked, friendAccount: friendAccount},
+            dataType: "json",
+            success: function (response) {
+                if (!response || !response.success) {
+                   alert("设置失败！");
+                }
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                //alert("系统或网络异常！");
+            }
+        });
+    }
+
+    function updateRestrictDynamics(obj,friendAccount){
+        $.ajax({
+            url: "/friend/followerManager/updateRestrictDynamics",
+            type: 'POST',
+            data: {dynRestrict: obj.checked, friendAccount: friendAccount},
+            dataType: "json",
+            success: function (response) {
+                if (!response || !response.success) {
+                    alert("设置失败！");
+                }
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                //alert("系统或网络异常！");
+            }
+        });
+    }
+
+    function cancelMeFollowFn(obj, friendAccount) {
+        $.ajax({
+            url: "/fellowInfo/cancelFollow",
+            type: 'POST',
+            data: {friendAccount: friendAccount},
+            dataType: "json",
+            success: function (response) {
+                if (response && response.success) {
+                      $(obj).closest(".itemdiv").remove();
+                } else {
+                    alert("取消关注失败！请稍后再试！");
+                }
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                //alert("系统或网络异常！");
+            }
+        });
+    }
+</script>

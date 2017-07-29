@@ -19,6 +19,8 @@ public interface FriendService extends DeleteAble, DeletePhysicalAble, FindListA
 
     List<FriendMeFellowVo> selectPersonalFriend(FriendQuery friendQuery);
 
+    List<FriendMeFellowVo> selectFollowMe(FriendQuery friendQuery);
+
     long selectPersonalFriendCount(FriendQuery friendQuery);
 
     int updateFriendAlias(Friend friend);

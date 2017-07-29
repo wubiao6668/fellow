@@ -17,11 +17,14 @@ import com.fellow.domain.model.Friend;
 import com.fellow.domain.query.FriendQuery;
 import com.fellow.domain.vo.FriendMeFellowVo;
 import com.fellow.service.FriendService;
+import com.fellow.service.UserDetailService;
 import com.fellow.service.base.ServiceAbstract;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,11 +34,26 @@ public class FriendServiceImpl extends ServiceAbstract<FriendMapper> implements 
     private FriendBlackListMapper friendBlackListMapper;
     @Resource
     private FollowInfoMapper followInfoMapper;
+    @Resource
+    private UserDetailService userDetailService;
 
     @Transactional(readOnly = true)
     @Override
     public List<FriendMeFellowVo> selectPersonalFriend(FriendQuery friendQuery) {
         return repository.selectPersonalFriend(friendQuery);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<FriendMeFellowVo> selectFollowMe(FriendQuery friendQuery) {
+        List<FriendMeFellowVo> friendMeFellowVoList = repository.selectFollowMe(friendQuery);
+        List<String> followMeAccountList = new ArrayList<String>();
+        if (CollectionUtils.isNotEmpty(friendMeFellowVoList)){
+            for (FriendMeFellowVo fellowVoTemp : friendMeFellowVoList){
+
+            }
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)
