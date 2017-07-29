@@ -136,49 +136,35 @@
 
     }
 
-    function updateShowDynamics(obj, friendAccount) {
-        $.ajax({
-            url: "/friend/blackListManager/updateShowDynamics",
-            type: 'POST',
-            data: {dynShow: obj.checked, friendAccount: friendAccount},
-            dataType: "json",
-            success: function (response) {
-                if (!response || !response.success) {
-                   alert("设置失败！");
-                }
-            },
-            error: function (request, ajaxOptions, thrownError) {
-                //alert("系统或网络异常！");
-            }
-        });
-    }
 
-    function updateRestrictDynamics(obj,friendAccount){
+    function delFromBackList (obj, friendAccount) {
         $.ajax({
-            url: "/friend/blackListManager/updateRestrictDynamics",
-            type: 'POST',
-            data: {dynRestrict: obj.checked, friendAccount: friendAccount},
-            dataType: "json",
-            success: function (response) {
-                if (!response || !response.success) {
-                    alert("设置失败！");
-                }
-            },
-            error: function (request, ajaxOptions, thrownError) {
-                //alert("系统或网络异常！");
-            }
-        });
-    }
-
-    function cancelMeFollowFn(obj, friendAccount) {
-        $.ajax({
-            url: "/fellowInfo/cancelFollow",
+            url: "/friend/blackListManager/delFromBlackList",
             type: 'POST',
             data: {friendAccount: friendAccount},
             dataType: "json",
             success: function (response) {
                 if (response && response.success) {
-                      $(obj).closest(".itemdiv").remove();
+                    $(obj).closest(".itemdiv").remove();
+                } else {
+                    alert("移除黑名单失败！请稍后再试！");
+                }
+            },
+            error: function (request, ajaxOptions, thrownError) {
+                //alert("系统或网络异常！");
+            }
+        });
+    }
+
+    function addToFollow (obj, friendAccount) {
+        $.ajax({
+            url: "/fellowInfo/addFollow",
+            type: 'POST',
+            data: {friendAccount: friendAccount},
+            dataType: "json",
+            success: function (response) {
+                if (response && response.success) {
+                    $(obj).closest(".itemdiv").remove();
                 } else {
                     alert("取消关注失败！请稍后再试！");
                 }

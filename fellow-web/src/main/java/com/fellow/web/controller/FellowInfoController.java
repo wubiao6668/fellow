@@ -1,5 +1,6 @@
 package com.fellow.web.controller;
 
+import com.fellow.domain.enums.FriendTypeEnum;
 import com.fellow.domain.model.Friend;
 import com.fellow.domain.web.Response;
 import com.fellow.service.FollowInfoService;
@@ -29,6 +30,19 @@ public class FellowInfoController extends WebAbstract<FollowInfoService> {
         friend.setUpdateAccount(super.getAccount());
         friend.setUpdateName(super.getUserName());
         friendService.cancelMeFollow(friend);
+        response.setSuccess(true);
+        return response;
+    }
+
+    @RequestMapping("/addFollow")
+    @ResponseBody
+    public Response addFollow(Friend friend) {
+        Response response = Response.newResponse();
+        friend.setAccount(super.getAccount());
+        friend.setUpdateAccount(super.getAccount());
+        friend.setUpdateName(super.getUserName());
+        friend.setFriendType(FriendTypeEnum.GOOD_FRIEND.getKey());
+        friendService.updateFriendType(friend);
         response.setSuccess(true);
         return response;
     }

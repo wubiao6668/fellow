@@ -56,11 +56,11 @@
                     <div>现居：<em>$!{friend.domicileText}</em></div>
                     <div class="hr dotted hr-8"></div>
                     <div class="tools action-buttons">
-                        <button type="button" class="btn btn-success btn-xs" onclick="showMsgDetail(this,'${friend.friendAccount}')">
+                        <button type="button" class="btn btn-success btn-xs" onclick="delFromBackList(this,'${friend.friendAccount}')">
                             <i class="fa fa-comments-o"></i>移除黑名单
                         </button>
                         &nbsp;&nbsp;
-                        <button type="button" class="btn btn-warning btn-xs" onclick="cancelMeFollowFn(this,'${friend.friendAccount}')">
+                        <button type="button" class="btn btn-warning btn-xs" onclick="addToFollow(this,'${friend.friendAccount}')">
                             <i class="ace-icon fa fa-undo"></i>关注
                         </button>
                     </div>

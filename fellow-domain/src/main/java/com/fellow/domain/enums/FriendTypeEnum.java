@@ -5,7 +5,9 @@ package com.fellow.domain.enums;
  */
 public enum FriendTypeEnum {
     GOOD_FRIEND(100, "好友"),
-    BLACK_LIST(200, "黑名单"),;
+    BLACK_LIST(200, "黑名单"),
+    STRANGER(300, "陌生人"),
+    ;
     public int key;
     public String value;
 

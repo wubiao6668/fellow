@@ -119,4 +119,45 @@ public class FriendServiceImpl extends ServiceAbstract<FriendMapper> implements 
         }
         return row;
     }
+
+    @Transactional
+    @Override
+    public int updateFriendType(Friend friend) {
+        return repository.updateFriendType(friend);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

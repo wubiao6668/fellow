@@ -46,8 +46,8 @@ public class BlackManagerController extends WebAbstract<FriendService> {
     }
 
     private void loadMeFellow(FriendQuery friendQuery, Model model) {
-        friendQuery.setPageSize(SystemConstant.DEFAULT_PAGESIZE);
-        friendQuery.setFriendType(FriendTypeEnum.GOOD_FRIEND.getKey());
+        friendQuery.setPageSize(1);
+        friendQuery.setFriendType(FriendTypeEnum.BLACK_LIST.getKey());
         friendQuery.setAccount(super.getAccount());
         friendQuery.initMysqlLimit();
         List<FriendMeFellowVo> friendList = service.selectPersonalFriend(friendQuery);
@@ -99,40 +99,19 @@ public class BlackManagerController extends WebAbstract<FriendService> {
         return response;
     }
 
-    @RequestMapping("/updateShowDynamics")
+    @RequestMapping("/delFromBlackList")
     @ResponseBody
-    public Response updateShowDynamics(Friend friend,boolean dynShow) {
+    public Response delFromBlackList(Friend friend) {
         Response response = Response.newResponse();
-        if (dynShow) {
-           friend.setShowDynamics(ShowDynamicsEnum.LOOK.getKey());
-        }else{
-            friend.setShowDynamics(ShowDynamicsEnum.NOT_LOOK.getKey());
-        }
         friend.setAccount(super.getAccount());
         friend.setUpdateAccount(super.getAccount());
         friend.setUpdateName(super.getUserName());
-        service.updateShowDynamics(friend);
+        friend.setFriendType(FriendTypeEnum.STRANGER.getKey());
+        service.updateFriendType(friend);
         response.setSuccess(true);
         return response;
     }
 
-    @RequestMapping("/updateRestrictDynamics")
-    @ResponseBody
-    public Response updateRestrictDynamics(Friend friend,boolean dynRestrict) {
-        Response response = Response.newResponse();
-        if (dynRestrict) {
-            friend.setRestrictDynamics(RestrictDynamicsEnum.ALLOW.getKey());
-        }else{
-            friend.setRestrictDynamics(RestrictDynamicsEnum.REFUSE.getKey());
-        }
-        friend.setAliasShort(PinyinHelperUtil.shortFirst(friend.getFriendAlias()));
-        friend.setAccount(super.getAccount());
-        friend.setUpdateAccount(super.getAccount());
-        friend.setUpdateName(super.getUserName());
-        service.updateRestrictDynamics(friend);
-        response.setSuccess(true);
-        return response;
-    }
 
 }
 
