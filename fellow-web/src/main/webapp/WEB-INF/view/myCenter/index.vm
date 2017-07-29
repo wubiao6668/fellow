@@ -182,7 +182,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="javascript:;" onclick="loadTab(this,'friendManagerTab')">
+                <a href="javascript:;" onclick="loadTab(this,'blackListTab')">
                     黑名单管理
                 </a>
             </li>
@@ -219,6 +219,10 @@
             </div>
 
             <div id="followMeTab" name="centerTab" action="/friend/followerManager/index" class="tab-pane fade in">
+
+            </div>
+
+            <div id="blackListTab" name="centerTab" action="/friend/blackListManager/index" class="tab-pane fade in">
 
             </div>
 
