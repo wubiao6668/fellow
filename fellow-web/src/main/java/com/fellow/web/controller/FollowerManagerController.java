@@ -47,7 +47,7 @@ public class FollowerManagerController extends WebAbstract<FriendService> {
 
     private void loadMeFellow(FriendQuery friendQuery, Model model) {
         friendQuery.setPageSize(SystemConstant.DEFAULT_PAGESIZE);
-        friendQuery.setFriendType(FriendTypeEnum.GOOD_FRIEND.getKey());
+        friendQuery.setFriendType(FriendTypeEnum.FOLLOW.getKey());
         friendQuery.setAccount(super.getAccount());
         friendQuery.initMysqlLimit();
         List<FriendMeFellowVo> friendList = service.selectPersonalFriend(friendQuery);

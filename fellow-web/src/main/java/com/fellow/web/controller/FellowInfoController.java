@@ -26,9 +26,6 @@ public class FellowInfoController extends WebAbstract<FollowInfoService> {
     @ResponseBody
     public Response cancelFollow(Friend friend) {
         Response response = Response.newResponse();
-        friend.setAccount(super.getAccount());
-        friend.setUpdateAccount(super.getAccount());
-        friend.setUpdateName(super.getUserName());
         friendService.cancelMeFollow(friend);
         response.setSuccess(true);
         return response;
@@ -41,8 +38,8 @@ public class FellowInfoController extends WebAbstract<FollowInfoService> {
         friend.setAccount(super.getAccount());
         friend.setUpdateAccount(super.getAccount());
         friend.setUpdateName(super.getUserName());
-        friend.setFriendType(FriendTypeEnum.GOOD_FRIEND.getKey());
-        friendService.updateFriendType(friend);
+        friend.setFriendType(FriendTypeEnum.FOLLOW.getKey());
+        friendService.addFollow(friend);
         response.setSuccess(true);
         return response;
     }

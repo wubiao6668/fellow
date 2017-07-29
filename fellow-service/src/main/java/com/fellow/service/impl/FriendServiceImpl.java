@@ -108,11 +108,23 @@ public class FriendServiceImpl extends ServiceAbstract<FriendMapper> implements 
 
     @Override
     public int cancelMeFollow(Friend friend) {
-        int row = repository.deleteFriendByAccount(friend);
+        Friend cancelFollow = new Friend();
+        cancelFollow.setAccount(session.getUserAccount());
+        cancelFollow.setFriendAccount(friend.getFriendAccount());
+        cancelFollow.setFriendType(FriendTypeEnum.STRANGER.getKey());
+        cancelFollow.setUpdateAccount(session.getUserAccount());
+        cancelFollow.setUpdateName(session.getUserName());
+        int row = repository.updateFriendType(cancelFollow);
         if (row > 0){
             FollowInfo followInfo = new FollowInfo();
             followInfo.setAccount(session.getUserAccount());
             followInfo.setMeFellow(-row);
+            followInfo.setUpdateAccount(session.getUserAccount());
+            followInfo.setUpdateName(session.getUserName());
+            row = followInfoMapper.updateFollowInfo(followInfo);
+            followInfo = new FollowInfo();
+            followInfo.setAccount(friend.getFriendAccount());
+            followInfo.setFellowMe(-row);
             followInfo.setUpdateAccount(session.getUserAccount());
             followInfo.setUpdateName(session.getUserName());
             row = followInfoMapper.updateFollowInfo(followInfo);
@@ -122,8 +134,44 @@ public class FriendServiceImpl extends ServiceAbstract<FriendMapper> implements 
 
     @Transactional
     @Override
-    public int updateFriendType(Friend friend) {
-        return repository.updateFriendType(friend);
+    public int addFollow(Friend friend) {
+        FriendQuery friendQuery = new FriendQuery();
+        friendQuery.setAccount(session.getUserAccount());
+        friendQuery.setFriendAccount(friend.getFriendAccount());
+        Friend friendDb = repository.selectByFriendAccount(friendQuery);
+        int rowNum = 0;
+        if (null == friendDb){
+            Friend addFollow = new Friend();
+            addFollow.setAccount(session.getUserAccount());
+            addFollow.setFriendAccount(friend.getFriendAccount());
+            addFollow.setFriendType(FriendTypeEnum.FOLLOW.getKey());
+            addFollow.setCreateAccount(session.getUserAccount());
+            addFollow.setCreateName(session.getUserName());
+            rowNum = repository.insertSelective(addFollow);
+        }else {
+            Friend addFollow = new Friend();
+            addFollow.setAccount(session.getUserAccount());
+            addFollow.setFriendAccount(friend.getFriendAccount());
+            addFollow.setFriendType(FriendTypeEnum.FOLLOW.getKey());
+            addFollow.setUpdateAccount(session.getUserAccount());
+            addFollow.setUpdateName(session.getUserName());
+            rowNum = repository.updateFriendType(addFollow);
+        }
+        if (rowNum > 0){
+            FollowInfo followInfo = new FollowInfo();
+            followInfo.setAccount(session.getUserAccount());
+            followInfo.setMeFellow(rowNum);
+            followInfo.setUpdateAccount(session.getUserAccount());
+            followInfo.setUpdateName(session.getUserName());
+            rowNum = followInfoMapper.updateFollowInfo(followInfo);
+            followInfo = new FollowInfo();
+            followInfo.setAccount(session.getUserAccount());
+            followInfo.setFellowMe(rowNum);
+            followInfo.setUpdateAccount(session.getUserAccount());
+            followInfo.setUpdateName(session.getUserName());
+            rowNum = followInfoMapper.updateFollowInfo(followInfo);
+        }
+        return rowNum;
     }
 }
 

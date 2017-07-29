@@ -35,4 +35,7 @@ public interface FriendMapper extends DeleteAble, DeletePhysicalAble, FindListAb
 
     int updateFriendType(Friend friend);
 
+    Friend selectByFriendAccount(FriendQuery friendQuery);
+
+
 }

@@ -4,9 +4,9 @@ package com.fellow.domain.enums;
  * Created by wubiao on 2017/3/24.
  */
 public enum FriendTypeEnum {
-    GOOD_FRIEND(100, "好友"),
-    BLACK_LIST(200, "黑名单"),
-    STRANGER(300, "陌生人"),
+    FOLLOW(100, "关注"),
+    STRANGER(200, "陌生人"),
+    BLACK_LIST(300, "黑名单"),
     ;
     public int key;
     public String value;

@@ -4,7 +4,6 @@ import com.fellow.common.constant.SystemConstant;
 import com.fellow.common.util.PinyinHelperUtil;
 import com.fellow.domain.enums.*;
 import com.fellow.domain.model.Friend;
-import com.fellow.domain.model.FriendBlackList;
 import com.fellow.domain.query.FriendQuery;
 import com.fellow.domain.vo.FriendMeFellowVo;
 import com.fellow.domain.web.Response;
@@ -13,7 +12,6 @@ import com.fellow.web.base.WebAbstract;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +44,7 @@ public class FriendManagerController extends WebAbstract<FriendService> {
 
     private void loadMeFellow(FriendQuery friendQuery, Model model) {
         friendQuery.setPageSize(SystemConstant.DEFAULT_PAGESIZE);
-        friendQuery.setFriendType(FriendTypeEnum.GOOD_FRIEND.getKey());
+        friendQuery.setFriendType(FriendTypeEnum.FOLLOW.getKey());
         friendQuery.setAccount(super.getAccount());
         friendQuery.initMysqlLimit();
         List<FriendMeFellowVo> friendList = service.selectPersonalFriend(friendQuery);

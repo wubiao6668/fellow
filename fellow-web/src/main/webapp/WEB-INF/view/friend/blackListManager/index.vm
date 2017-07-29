@@ -166,7 +166,7 @@
                 if (response && response.success) {
                     $(obj).closest(".itemdiv").remove();
                 } else {
-                    alert("取消关注失败！请稍后再试！");
+                    alert("添加关注失败！请稍后再试！");
                 }
             },
             error: function (request, ajaxOptions, thrownError) {

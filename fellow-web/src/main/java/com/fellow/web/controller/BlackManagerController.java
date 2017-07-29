@@ -1,7 +1,5 @@
 package com.fellow.web.controller;
 
-import com.fellow.common.constant.SystemConstant;
-import com.fellow.common.util.PinyinHelperUtil;
 import com.fellow.domain.enums.FriendTypeEnum;
 import com.fellow.domain.enums.RestrictDynamicsEnum;
 import com.fellow.domain.enums.SexEnum;
@@ -107,7 +105,7 @@ public class BlackManagerController extends WebAbstract<FriendService> {
         friend.setUpdateAccount(super.getAccount());
         friend.setUpdateName(super.getUserName());
         friend.setFriendType(FriendTypeEnum.STRANGER.getKey());
-        service.updateFriendType(friend);
+        service.addFollow(friend);
         response.setSuccess(true);
         return response;
     }

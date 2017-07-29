@@ -35,7 +35,7 @@ public interface FriendService extends DeleteAble, DeletePhysicalAble, FindListA
 
     int cancelMeFollow(Friend friend);
 
-    int updateFriendType(Friend friend);
+    int addFollow(Friend friend);
 
 
 

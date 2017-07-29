@@ -282,7 +282,7 @@
 
     <update id="updateFollowInfo">
         UPDATE follow_info
-        SET is_delete = 1,
+        SET
         <if test="@Ognl@isNotEmpty(fellowMe)">
             fellow_me = fellow_me + #{fellowMe} ,
         </if>

@@ -421,7 +421,7 @@
             AND friend_account = #{friendAccount}
     </update>
 
-    <delete id="selectByFriendAccount">
+    <select id="selectByFriendAccount" resultMap="Friend">
         SELECT
             account,
             friend_account,
@@ -430,10 +430,12 @@
             show_dynamics,
             restrict_dynamics
         FROM
+        friend
         WHERE
             account = #{account}
             AND  friend_account = #{friendAccount}
-    </delete>
+            LIMIT 1
+    </select>
     
     <delete id="deleteFriendByAccount">
         DELETE
@@ -475,5 +477,4 @@
         is_delete = 0
         AND friend_account = #{friendAccount}
     </select>
-
 </mapper>
