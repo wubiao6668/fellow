@@ -29,21 +29,6 @@
     <div class="x_panel">
         <div class="x_content">
             <div class="row">
-                <div class="col-xs-3 col-sm-3 col-md-3 "></div>
-                <div class="col-xs-4 col-sm-4 col-md-4 ">
-                    <div class="input-group">
-                        <input type="text"  class="form-control" name="keywords" id="keywords" placeholder="账号、邮箱、昵称">
-                        <input type="hidden" name="fuzzyField" id="fuzzyField">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default no-border btn-sm" onclick="searcherMeFellow(this)">
-                                <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
 ##                <div class="clearfix"></div>
                 <div class="col-md-12  col-sm-12 col-xs-12 text-center">
                     <strong><i class="ace-icon glyphicon glyphicon-user"></i>共<span id="meFellowFriendSpanId">$!{friendCount}</span>位好友</strong>
@@ -51,7 +36,7 @@
                 <br>
                 <br>
                 <div class="col-md-12  col-sm-12 col-xs-12 text-center profile-users clearfix" id="friendListId">
-                    #parse("/friend/followerManager/friend_div.vm")
+                    #parse("/friend/blackListManager/friend_div.vm")
                 </div>
             </div>
         </div>
@@ -74,7 +59,7 @@
         param.pageSize = pageSize;
         param.aliasShort = $("#aliasShort").val();
         $.ajax({
-            url: "/friend/followerManager/loadMoreFriend",
+            url: "/friend/blackListManager/loadMoreFriend",
             type: 'POST',
             data: param,
             dataType: "html",
@@ -120,7 +105,7 @@
         }else{
             var friendAlias = $.trim($(nameAliasObj).val());
             $.ajax({
-                url: "/friend/followerManager/updateFriendAlias",
+                url: "/friend/blackListManager/updateFriendAlias",
                 type: 'POST',
                 data: {friendAlias: friendAlias, friendAccount: friendAccount},
                 dataType: "json",
@@ -153,7 +138,7 @@
 
     function updateShowDynamics(obj, friendAccount) {
         $.ajax({
-            url: "/friend/followerManager/updateShowDynamics",
+            url: "/friend/blackListManager/updateShowDynamics",
             type: 'POST',
             data: {dynShow: obj.checked, friendAccount: friendAccount},
             dataType: "json",
@@ -170,7 +155,7 @@
 
     function updateRestrictDynamics(obj,friendAccount){
         $.ajax({
-            url: "/friend/followerManager/updateRestrictDynamics",
+            url: "/friend/blackListManager/updateRestrictDynamics",
             type: 'POST',
             data: {dynRestrict: obj.checked, friendAccount: friendAccount},
             dataType: "json",

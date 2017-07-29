@@ -55,33 +55,14 @@
                     <div>年龄：<em>$!{friend.age}</em></div>
                     <div>现居：<em>$!{friend.domicileText}</em></div>
                     <div class="hr dotted hr-8"></div>
-                    <div>
-                        <label>
-                            <input #if($!{friend.showDynamics}==$!{ShowDynamicsEnumLook}) checked #end  onclick="updateShowDynamics(this,'${friend.friendAccount}')" type="checkbox" class="ace">
-                            <span class="lbl">不让ta看我的动态</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label>
-                            <input #if($!{friend.restrictDynamics} == $!{RestrictDynamicsEnumAllow}) checked #end onclick="updateRestrictDynamics(this,'${friend.friendAccount}')" type="checkbox" class="ace">
-                            <span class="lbl">我不看ta的动态</span>
-                        </label>
-                    </div>
-                    <div class="hr dotted hr-8"></div>
                     <div class="tools action-buttons">
                         <button type="button" class="btn btn-success btn-xs" onclick="showMsgDetail(this,'${friend.friendAccount}')">
-                            <i class="fa fa-comments-o"></i>发送消息
+                            <i class="fa fa-comments-o"></i>移除黑名单
                         </button>
                         &nbsp;&nbsp;
                         <button type="button" class="btn btn-warning btn-xs" onclick="cancelMeFollowFn(this,'${friend.friendAccount}')">
-                            <i class="ace-icon fa fa-undo"></i>取消关注
+                            <i class="ace-icon fa fa-undo"></i>关注
                         </button>
-                        &nbsp;&nbsp;
-                        <a href="#" class="tooltip-error" data-rel="tooltip" onclick="removeToBacklist('${friend.friendAlias}','${friend.friendAccount}')">
-                            <span class="black">
-                            <i class="ace-icon fa fa-eye-slash bigger-110"></i>拉黑
-                            </span>
-                        </a>
                     </div>
                 </div>
             </div>
