@@ -48,10 +48,10 @@ public class FollowerManagerController extends WebAbstract<FriendService> {
     private void loadMeFellow(FriendQuery friendQuery, Model model) {
         friendQuery.setPageSize(SystemConstant.DEFAULT_PAGESIZE);
         friendQuery.setFriendType(FriendTypeEnum.FOLLOW.getKey());
-        friendQuery.setAccount(super.getAccount());
+        friendQuery.setFriendAccount(super.getAccount());
         friendQuery.initMysqlLimit();
-        List<FriendMeFellowVo> friendList = service.selectPersonalFriend(friendQuery);
-        long friendCount =service.selectPersonalFriendCount(friendQuery);
+        List<FriendMeFellowVo> friendList = service.selectFollowMe(friendQuery);
+        long friendCount =service.selectFollowMeCount(friendQuery);
         if (CollectionUtils.isNotEmpty(friendList)) {
             for (FriendMeFellowVo friendTemp : friendList) {
                 //计算年龄

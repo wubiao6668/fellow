@@ -53,13 +53,18 @@ public class FriendServiceImpl extends ServiceAbstract<FriendMapper> implements 
 
             }
         }
-        return null;
+        return friendMeFellowVoList;
     }
 
     @Transactional(readOnly = true)
     @Override
     public long selectPersonalFriendCount(FriendQuery friendQuery) {
         return repository.selectPersonalFriendCount(friendQuery);
+    }
+
+    @Override
+    public long selectFollowMeCount(FriendQuery friendQuery) {
+        return repository.selectFollowMeCount(friendQuery);
     }
 
     @Transactional

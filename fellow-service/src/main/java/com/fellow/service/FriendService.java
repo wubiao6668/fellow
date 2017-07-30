@@ -23,6 +23,8 @@ public interface FriendService extends DeleteAble, DeletePhysicalAble, FindListA
 
     long selectPersonalFriendCount(FriendQuery friendQuery);
 
+    long selectFollowMeCount(FriendQuery friendQuery);
+
     int updateFriendAlias(Friend friend);
 
     int updateRestrictDynamics(Friend friend);

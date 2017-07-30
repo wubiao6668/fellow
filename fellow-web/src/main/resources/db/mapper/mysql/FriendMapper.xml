@@ -476,5 +476,16 @@
     WHERE
         is_delete = 0
         AND friend_account = #{friendAccount}
+        AND friend_type = #{friendType}
+    </select>
+
+    <select id="selectFollowMeCount" resultType="long">
+        SELECT
+            COUNT(1)
+        FROM friend
+        WHERE
+        is_delete = 0
+        AND friend_account = #{friendAccount}
+        AND friend_type = #{friendType}
     </select>
 </mapper>

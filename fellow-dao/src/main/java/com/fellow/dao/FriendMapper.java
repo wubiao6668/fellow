@@ -25,6 +25,8 @@ public interface FriendMapper extends DeleteAble, DeletePhysicalAble, FindListAb
 
     long selectPersonalFriendCount(FriendQuery friendQuery);
 
+    long selectFollowMeCount(FriendQuery friendQuery);
+
     int updateFriendAlias(Friend friend);
 
     int updateRestrictDynamics(Friend friend);
