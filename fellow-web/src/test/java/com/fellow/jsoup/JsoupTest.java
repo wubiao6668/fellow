@@ -36,6 +36,15 @@ public class JsoupTest {
     }
 
     @Test
+    public void testXss2() {
+        long startTime = System.currentTimeMillis();
+        Whitelist whitelist = Whitelist.relaxed();
+        String untrust = "'";
+        Jsoup.clean(untrust,whitelist);
+        System.out.print(untrust);
+    }
+
+    @Test
     public void testOwasp() {
         Map<String, String> map = new HashMap<String, String>();
         map.put("ddd", "'''");
