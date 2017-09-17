@@ -14,7 +14,19 @@ import com.fellow.service.AttitudeInfoService;
 import com.fellow.service.base.ServiceAbstract;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AttitudeInfoServiceImpl extends ServiceAbstract<AttitudeInfoMapper> implements AttitudeInfoService{
 
+
+    @Override
+    public List<AttitudeInfo> selectByToAccount(AttitudeInfoQuery attitudeInfoQuery) {
+        return null;
+    }
+
+    @Override
+    public List<AttitudeInfo> selectByFromAccount(AttitudeInfoQuery attitudeInfoQuery) {
+        return null;
+    }
 }

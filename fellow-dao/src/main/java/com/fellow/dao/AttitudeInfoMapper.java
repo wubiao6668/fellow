@@ -6,14 +6,19 @@
  */
 
 package com.fellow.dao;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+
 import com.fellow.common.db.able.*;
 import com.fellow.domain.model.AttitudeInfo;
 import com.fellow.domain.query.AttitudeInfoQuery;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface  AttitudeInfoMapper extends DeleteAble, DeletePhysicalAble, FindListAble,
+public interface AttitudeInfoMapper extends DeleteAble, DeletePhysicalAble, FindListAble,
         GetByKeyAble, InsertAble, InsertSelectiveAble, UpdateAble, UpdateByOptimisticLockAble {
 
+    List<AttitudeInfo> selectByToAccount(AttitudeInfoQuery attitudeInfoQuery);
+
+    List<AttitudeInfo> selectByFromAccount(AttitudeInfoQuery attitudeInfoQuery);
 }

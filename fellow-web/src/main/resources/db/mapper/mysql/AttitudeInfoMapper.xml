@@ -351,4 +351,44 @@
         </where>
     </sql>
 
+    <select id="selectByToAccount" resultMap="AttitudeInfo">
+        SELECT
+            id,
+            type,
+            bus_id,
+            from_account,
+            to_account,
+            `status`,
+            attitude_time
+        FROM
+            attitude_info
+        WHERE
+            to_account = #{toAccount}
+            AND is_delete = 0
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        LIMIT ${limit}
+    </select>
+
+    <select id="selectByFromAccount" resultMap="AttitudeInfo">
+        SELECT
+        id,
+        type,
+        bus_id,
+        from_account,
+        to_account,
+        `status`,
+        attitude_time
+        FROM
+        attitude_info
+        WHERE
+        from_account = #{fromAccount}
+        AND is_delete = 0
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+        LIMIT ${limit}
+    </select>
+
 </mapper>
