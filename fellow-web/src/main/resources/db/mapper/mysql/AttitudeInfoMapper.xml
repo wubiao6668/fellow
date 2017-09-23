@@ -375,7 +375,7 @@
         <if test="@Ognl@isNotEmpty(attitudeTimeEnd)">
             AND attitude_time &lt; #{attitudeTimeEnd}
         </if>
-        <if test="@Ognl@isNotEmpty(type)">
+        <if test="@Ognl@isNotEmpty(status)">
             AND status = #{status}
         </if>
         <if test="@Ognl@isNotEmpty(sortColumns)">
@@ -405,7 +405,7 @@
             AND attitude_time &gt; #{attitudeTimeBegin}
         </if>
         <if test="@Ognl@isNotEmpty(attitudeTimeEnd)">
-            AND attitude_time &lt; #{attitudeTimeEnd}
+            AND attitude_time  &lt; #{attitudeTimeEnd}
         </if>
         <if test="@Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}

@@ -5,9 +5,9 @@
 
 
 <script>
-    $("#load_rev_up_more").attr("queryTime","$!{attitudeEndTime}");
+    $("#load_rev_love_more").attr("queryTime","$!{attitudeEndTime}");
     //没有下一页隐藏加载更多按钮
         #if(!${hasNextPage})
-        $("#load_rev_up_more").hide();
+        $("#load_rev_love_more").hide();
         #end
 </script>

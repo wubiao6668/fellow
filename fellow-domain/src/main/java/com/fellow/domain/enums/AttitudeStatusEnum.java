@@ -7,9 +7,10 @@ import java.util.Map;
  */
 public enum AttitudeStatusEnum {
     CANCEL(100, "取消"),
-    UP(200, "点赞"),
+    UP(200, "支持"),
     LOVE(300, "爱心"),
-    DOWN(400, "踩"), ;
+    DOWN(400, "不支持"),
+    ;
 
     public int key;
     public String value;

@@ -167,7 +167,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="javascript:;" onclick="loadTab(this,'myPostTab')">
+                <a href="javascript:;" onclick="loadTab(this,'receivedLoveTab')">
                     收到的爱心
                 </a>
             </li>
@@ -255,6 +255,9 @@
             </div>
 
             <div id="receivedUpTab" name="centerTab" action="/myCenter/receivedUp/index" class="tab-pane fade in">
+
+            </div>
+            <div id="receivedLoveTab" name="centerTab" action="/myCenter/receivedLove/index" class="tab-pane fade in">
 
             </div>
 

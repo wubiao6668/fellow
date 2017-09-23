@@ -1,0 +1,44 @@
+<li class="media">
+    <div class="media-body">
+        <div class="media">
+            <a class="pull-left" href="#">
+                <img class="media-object img-circle "
+                     src="${attitudeInfoTemp.fromUser.avatar}">
+            </a>
+            <div class="media-body">
+                <div>
+                    #if(${attitudeInfoTemp.type}==100)
+                        <h4>感谢了你的帖子</h4>
+                    #elseif(${attitudeInfoTemp.type}==200)
+                        <h4>感谢了你的评论</h4>
+                    #else
+                        <h4>感谢了你的回复</h4>
+                    #end
+
+                </div>
+                <a href="" class="text-muted">
+                    #if($stringUtils.isNotEmpty(${attitudeInfoTemp.attitudeEntity.title}))
+                        <h6>$!{attitudeInfoTemp.attitudeEntity.title}</h6>
+                    #end
+                    <em>
+                        $!{attitudeInfoTemp.attitudeEntity.content}
+                    </em>
+                    #if($collectionUtils.isNotEmpty(${attitudeInfoTemp.attitudeEntity.imgList}))
+                    <div class="row">
+                        #foreach($imgDomainTemp in ${attitudeInfoTemp.attitudeEntity.imgList})
+                            <div class="col-sm-6 col-md-3">
+                                <a href="#" class="thumbnail">
+                                    <img src="${lostImg.imgRootPath}/${lostImg.imgRelativePath}">
+                                </a>
+                            </div>
+                        #end
+                    #end
+                </a>
+                <br>
+                <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
+                <hr>
+            </div>
+        </div>
+
+    </div>
+</li>

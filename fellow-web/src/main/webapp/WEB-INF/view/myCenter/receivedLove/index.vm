@@ -69,14 +69,14 @@
                         #parse("/myCenter/receivedUp/li_list.vm")
                     #end
                 #else
-                    <div class="text-center"><em>暂时没有收到任何赞</em></div>
+                    <div class="text-center"><em>暂时没有收到任何评论</em></div>
                 #end
             </ul>
         </div>
     </div>
 </div>
 <div class="col-sm-12 text-center">
-    <a id="load_rev_up_more" href="javascript:;" onclick="loadMore()"  class="btn btn-sm btn-white btn-info" queryTime="$!{attitudeEndTime}">
+    <a id="load_rev_love_more" href="javascript:;" onclick="loadMore()"  class="btn btn-sm btn-white btn-info" queryTime="$!{attitudeEndTime}">
         加载更多 &nbsp;
         <i class="ace-icon fa fa-arrow-down"></i>
     </a>
@@ -86,12 +86,12 @@
     $(function () {
         //没有下一页隐藏加载更多按钮
         #if(!${hasNextPage})
-            $("#load_rev_up_more").hide();
+            $("#load_rev_love_more").hide();
         #end
     })
     function loadMore() {
         var param = {};
-        param.queryTime=$("#load_rev_up_more").attr("queryTime");
+        param.queryTime=$("#load_rev_love_more").attr("queryTime");
         $.ajax({
             url: '/myCenter/receivedUp/more',
             data: param,
