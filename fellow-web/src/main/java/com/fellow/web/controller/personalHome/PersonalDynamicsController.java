@@ -2,16 +2,14 @@ package com.fellow.web.controller.personalHome;
 
 import com.fellow.common.constant.SystemConstant;
 import com.fellow.common.util.VelocityUtil;
-import com.fellow.domain.base.BaseDomain;
+import com.fellow.domain.enums.AttitudeStatusEnum;
 import com.fellow.domain.enums.DynamicsPropertyEnum;
 import com.fellow.domain.enums.DynamicsTypeEnum;
 import com.fellow.domain.enums.PostImgTypeEnum;
-import com.fellow.domain.enums.ThumbsTypeEnum;
 import com.fellow.domain.model.DynamicsImg;
 import com.fellow.domain.model.PersonalDynamics;
 import com.fellow.domain.model.PersonalDynamicsComment;
 import com.fellow.domain.model.PersonalDynamicsUp;
-import com.fellow.domain.mybatis.PageListImpl;
 import com.fellow.domain.query.PersonalDynamicsCommentQuery;
 import com.fellow.domain.query.PersonalDynamicsQuery;
 import com.fellow.domain.query.PersonalDynamicsUpQuery;
@@ -20,8 +18,6 @@ import com.fellow.service.PersonalDynamicsCommentService;
 import com.fellow.service.PersonalDynamicsService;
 import com.fellow.service.PersonalDynamicsUpService;
 import com.fellow.web.base.WebAbstract;
-import com.github.miemiedev.mybatis.paginator.domain.Order;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.velocity.VelocityContext;
@@ -34,8 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 
 import javax.annotation.Resource;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.*;
 
 /**
@@ -123,12 +117,12 @@ public class PersonalDynamicsController extends WebAbstract<PersonalDynamicsServ
         Response response = Response.newResponse();
         upQuery.setPageSize(SystemConstant.DEFAULT_PAGESIZE);
         upQuery.initMysqlLimit();
-        upQuery.setThumbsTypeNoEq(ThumbsTypeEnum.CANCEL.getKey());
+        upQuery.setThumbsTypeNoEq(AttitudeStatusEnum.CANCEL.getKey());
         List<PersonalDynamicsUp> dynamicsUpList = personalDynamicsUpService.selectUpByPersonalId(upQuery);
         Context context = new VelocityContext();
         context.put("dynamicsUpList", dynamicsUpList);
         context.put("collectionUtils", new CollectionUtils());
-        context.put("ThumbsTypeEnum_UP", ThumbsTypeEnum.UP.getKey());
+        context.put("ThumbsTypeEnum_UP", AttitudeStatusEnum.UP.getKey());
         context.put("page", upQuery.getPage());
         String dynamicsTemplate = VelocityUtil.mergeTemplate(context, velocityConfig.getVelocityEngine(), "/dynamics/friend/upUser.vm");
         response.setBody(dynamicsTemplate);
@@ -165,7 +159,7 @@ public class PersonalDynamicsController extends WebAbstract<PersonalDynamicsServ
         context.put("collectionUtils", new CollectionUtils());
         context.put("isFirst", dynamicsQuery.getCount() <= 1);
         context.put("COMMENT_GROUP_NUM", SystemConstant.COMMENT_GROUP_NUM);
-        context.put("ThumbsTypeEnumMap", ThumbsTypeEnum.getMap());
+        context.put("ThumbsTypeEnumMap", AttitudeStatusEnum.getMap());
         response.setBody(VelocityUtil.mergeTemplate(context, velocityConfig.getVelocityEngine(), VIEW_PATH + "/dynamics_list.vm"));
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("isHadNext", dynamicsQuery.getPageSize() == dynamicsList.size());

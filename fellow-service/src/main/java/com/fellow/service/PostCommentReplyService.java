@@ -14,6 +14,7 @@ import com.fellow.domain.query.PostCommentReplyQuery;
 import com.fellow.domain.vo.PostCommentReplyVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PostCommentReplyService extends DeleteAble, DeletePhysicalAble, FindListAble,
         GetByKeyAble, InsertAble, InsertSelectiveAble, UpdateAble, UpdateByOptimisticLockAble, IncrementAble,CommentReplyAble {
@@ -29,4 +30,6 @@ public interface PostCommentReplyService extends DeleteAble, DeletePhysicalAble,
     List<PostCommentReply> selectByPostIdAndReplyIds(PostCommentReplyQuery postCommentReplyQuery);
 
      int deleteCommentById(PostCommentReply postCommentReply);
+
+    Map<Long,PostCommentReply> selectByIds(PostCommentReplyQuery postCommentReplyQuery);
 }

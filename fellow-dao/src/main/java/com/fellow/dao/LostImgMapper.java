@@ -9,6 +9,7 @@ package com.fellow.dao;
 
 import com.fellow.common.db.able.*;
 import com.fellow.common.db.able.post.PostImgAble;
+import org.apache.ibatis.annotations.MapKey;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,6 +19,5 @@ public interface LostImgMapper extends DeleteAble, DeletePhysicalAble, FindListA
 //    List<LostImg> selectByPostIds(@Param("postIdList") List<Long> postIdList, @Param("imgType") Integer imgType);
 
 //    List<LostImg> selectImgByPostId();
-
 
 }

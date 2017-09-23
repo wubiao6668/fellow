@@ -1,0 +1,13 @@
+#set($layout="/layout/empty.vm")
+#foreach($attitudeInfoTemp in $attitudeInfoVoList)
+    #parse("/myCenter/receivedUp/li_list.vm")
+#end
+
+
+<script>
+    $("#load_more").attr("queryTime","$!{attitudeEndTime}");
+    //没有下一页隐藏加载更多按钮
+        #if(!${hasNextPage})
+        $("#load_more").hide();
+        #end
+</script>

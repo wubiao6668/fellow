@@ -14,6 +14,7 @@ public class QueryDomain extends BaseDomain {
     private String sortColumns;
     private String limit;
     private int count = 1;
+    private long queryTime;
 
     public String getSortColumns() {
         return sortColumns;
@@ -61,5 +62,13 @@ public class QueryDomain extends BaseDomain {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public long getQueryTime() {
+        return queryTime;
+    }
+
+    public void setQueryTime(long queryTime) {
+        this.queryTime = queryTime;
     }
 }

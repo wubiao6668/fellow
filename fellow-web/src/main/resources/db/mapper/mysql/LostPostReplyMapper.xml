@@ -513,4 +513,16 @@
                 #{idTemp}
             </foreach>
     </select>
+
+    <select id="selectByIds" resultMap="LostPostReply">
+        SELECT
+       <include refid="columns"/>
+        FROM
+        lost_post_reply
+        WHERE
+        id  IN
+        <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+            #{idTemp}
+        </foreach>
+    </select>
 </mapper>

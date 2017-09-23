@@ -5,16 +5,16 @@ import java.util.Map;
 /**
  * Created by wubiao on 2017/3/9.
  */
-public enum ThumbsTypeEnum {
-    CANCEL(100, "点取消"),
+public enum AttitudeStatusEnum {
+    CANCEL(100, "取消"),
     UP(200, "点赞"),
-    LOVE(300, "送爱心"),
-    DOWN(400, "点踩"), ;
+    LOVE(300, "爱心"),
+    DOWN(400, "踩"), ;
 
     public int key;
     public String value;
 
-    ThumbsTypeEnum(int key, String value) {
+    AttitudeStatusEnum(int key, String value) {
         this.key = key;
         this.value = value;
     }
@@ -37,7 +37,7 @@ public enum ThumbsTypeEnum {
 
     public static String getValueByKey(Integer key) {
         if (null != key) {
-            for (ThumbsTypeEnum enumTemp : ThumbsTypeEnum.values()) {
+            for (AttitudeStatusEnum enumTemp : AttitudeStatusEnum.values()) {
                 if (key.intValue() == enumTemp.getKey()) {
                     return enumTemp.getValue();
                 }
@@ -47,8 +47,8 @@ public enum ThumbsTypeEnum {
     }
 
     public static Map getMap() {
-        Map<String, ThumbsTypeEnum> thumbsTypeEnumMap = new LinkedHashMap();
-        for (ThumbsTypeEnum enumTemp : ThumbsTypeEnum.values()) {
+        Map<String, AttitudeStatusEnum> thumbsTypeEnumMap = new LinkedHashMap();
+        for (AttitudeStatusEnum enumTemp : AttitudeStatusEnum.values()) {
             thumbsTypeEnumMap.put(enumTemp.name(), enumTemp);
         }
         return thumbsTypeEnumMap;

@@ -12,21 +12,22 @@ import com.fellow.dao.LostImgMapper;
 import com.fellow.dao.LostPostDetailMapper;
 import com.fellow.dao.LostPostMapper;
 import com.fellow.dao.LostPostReplyMapper;
+import com.fellow.domain.enums.PostImgTypeEnum;
 import com.fellow.domain.model.LostPost;
+import com.fellow.domain.model.LostPostReply;
 import com.fellow.domain.model.post.ImgDomain;
 import com.fellow.domain.query.LostPostReplyQuery;
 import com.fellow.domain.vo.LostPostReplyVo;
 import com.fellow.service.LostPostReplyService;
 import com.fellow.service.base.PostServiceAbstract;
+import javafx.print.PageOrientation;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class LostPostReplyServiceImpl extends PostServiceAbstract<LostPostReplyMapper, LostPostMapper, LostPostDetailMapper, LostPostReplyMapper, LostImgMapper> implements LostPostReplyService {
@@ -89,6 +90,22 @@ public class LostPostReplyServiceImpl extends PostServiceAbstract<LostPostReplyM
     @Override
     public long selectReplyAccountCount(LostPostReplyQuery replyQuery) {
         return repository.selectReplyAccountCount(replyQuery);
+    }
+
+
+    @Override
+    public Map<Long, LostPostReply> selectByIds(LostPostReplyQuery replyQuery) {
+        Map<Long,LostPostReply>  postReplyMap =  repository.selectByIds(replyQuery);
+        if (MapUtils.isNotEmpty(postReplyMap)){
+            for (LostPostReply lostPostReplyTemp :  postReplyMap.values()){
+                if (lostPostReplyTemp.getImgNum() > 0) {
+                    List<ImgDomain> imgDomainList = imgRepository.selectImgByPostId(lostPostReplyTemp.getId(), PostImgTypeEnum.POST.getKey());
+                    lostPostReplyTemp.setImgList(imgDomainList);
+                }
+                lostPostReplyTemp.setContent(VelocityUtil.mergeEmoticon(lostPostReplyTemp.getContent()));
+            }
+        }
+        return postReplyMap;
     }
 }
 

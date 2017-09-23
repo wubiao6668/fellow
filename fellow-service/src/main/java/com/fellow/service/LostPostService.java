@@ -15,6 +15,7 @@ import com.fellow.domain.query.LostPostQuery;
 import com.fellow.domain.query.PostQuery;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LostPostService extends DeleteAble, DeletePhysicalAble, FindListAble,
         GetByKeyAble, InsertAble, InsertSelectiveAble, UpdateAble, UpdateByOptimisticLockAble, IncrementAble, DecrementAble, PostAble {
@@ -24,5 +25,7 @@ public interface LostPostService extends DeleteAble, DeletePhysicalAble, FindLis
 
     //    List<LostPost> findPubishList(LostPostQuery lostPostQuery);
     List<LostPost> selectMyPost(LostPostQuery query);
+
+    Map<Long,LostPost> selectByIds(LostPostQuery query);
 
 }

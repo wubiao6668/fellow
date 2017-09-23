@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class PostCommentReplyQuery extends QueryDomain implements Serializable {
     private static final long serialVersionUID = 3148176768559230877L;
@@ -737,6 +738,7 @@ public class PostCommentReplyQuery extends QueryDomain implements Serializable {
     private List<Long> replyIdList;
     private int commontGroupNum;
     private Long maxId;
+    private Set<Long> idSet;
 
     public List<Long> getReplyIdList() {
         return replyIdList;
@@ -760,6 +762,14 @@ public class PostCommentReplyQuery extends QueryDomain implements Serializable {
 
     public void setMaxId(Long maxId) {
         this.maxId = maxId;
+    }
+
+    public Set<Long> getIdSet() {
+        return idSet;
+    }
+
+    public void setIdSet(Set<Long> idSet) {
+        this.idSet = idSet;
     }
 }
 

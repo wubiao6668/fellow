@@ -655,4 +655,32 @@
         LIMIT ${limit}
     </select>
 
+    <select id="selectByIds"  resultMap="LostPost">
+            SELECT
+            id,
+            post_type,
+            good_type,
+            place_type,
+            title,
+            brief,
+            post_account,
+            happened_date,
+            post_time,
+            up_num,
+            down_num,
+            view_num,
+            reply_num,
+            love_num,
+            img_num,
+            post_lng,
+            post_lat
+            FROM
+            lost_post
+            WHERE
+            id IN
+            <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+                #{idTemp}
+            </foreach>
+    </select>
+
 </mapper>

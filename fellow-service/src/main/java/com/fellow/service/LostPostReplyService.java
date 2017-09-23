@@ -12,8 +12,10 @@ import com.fellow.common.db.able.post.PostReplyAble;
 import com.fellow.domain.model.LostPostReply;
 import com.fellow.domain.query.LostPostReplyQuery;
 import com.fellow.domain.vo.LostPostReplyVo;
+import org.apache.ibatis.annotations.MapKey;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LostPostReplyService extends DeleteAble, DeletePhysicalAble, FindListAble,
         GetByKeyAble, InsertAble, InsertSelectiveAble, UpdateAble, UpdateByOptimisticLockAble, IncrementAble,DecrementAble,PostReplyAble {
@@ -23,4 +25,6 @@ public interface LostPostReplyService extends DeleteAble, DeletePhysicalAble, Fi
     List<LostPostReplyVo> selectReplyAccount(LostPostReplyQuery replyQuery);
 
     long selectReplyAccountCount(LostPostReplyQuery replyQuery);
+
+    Map<Long,LostPostReply>  selectByIds(LostPostReplyQuery replyQuery);
 }

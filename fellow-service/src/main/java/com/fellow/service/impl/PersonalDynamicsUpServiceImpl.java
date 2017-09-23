@@ -9,7 +9,7 @@ package com.fellow.service.impl;
 
 import com.fellow.dao.PersonalDynamicsMapper;
 import com.fellow.dao.PersonalDynamicsUpMapper;
-import com.fellow.domain.enums.ThumbsTypeEnum;
+import com.fellow.domain.enums.AttitudeStatusEnum;
 import com.fellow.domain.model.PersonalDynamics;
 import com.fellow.domain.model.PersonalDynamicsUp;
 import com.fellow.domain.query.PersonalDynamicsUpQuery;
@@ -43,14 +43,14 @@ public class PersonalDynamicsUpServiceImpl extends ServiceAbstract<PersonalDynam
         int rows = 0;
         int upNum = 0;
         int loveNum = 0;
-        if (dynamicsUpDto.getThumbsType().intValue() == ThumbsTypeEnum.UP.getKey()) {
+        if (dynamicsUpDto.getThumbsType().intValue() == AttitudeStatusEnum.UP.getKey()) {
             upNum = 1;
         }
-        if (dynamicsUpDto.getThumbsType().intValue() == ThumbsTypeEnum.LOVE.getKey()) {
+        if (dynamicsUpDto.getThumbsType().intValue() == AttitudeStatusEnum.LOVE.getKey()) {
             loveNum = 1;
         }
         if (null == dynamicsUpDb) {
-            if (dynamicsUpDto.getThumbsType().intValue() == ThumbsTypeEnum.CANCEL.getKey()) {
+            if (dynamicsUpDto.getThumbsType().intValue() == AttitudeStatusEnum.CANCEL.getKey()) {
 //                throw new BusinessException("请选择点赞或者送爱心！");
                 return;
             }
@@ -58,13 +58,13 @@ public class PersonalDynamicsUpServiceImpl extends ServiceAbstract<PersonalDynam
         } else {
             //重复操作
             if (dynamicsUpDto.getThumbsType().intValue() == dynamicsUpDb.getThumbsType().intValue()) {
-//                throw new BusinessException("您已经" + ThumbsTypeEnum.getValueByKey(dynamicsUpDto.getThumbsType()) + "过了！");
+//                throw new BusinessException("您已经" + AttitudeStatusEnum.getValueByKey(dynamicsUpDto.getThumbsType()) + "过了！");
                 return;
             }
-            if (dynamicsUpDb.getThumbsType().intValue() == ThumbsTypeEnum.UP.getKey()) {
+            if (dynamicsUpDb.getThumbsType().intValue() == AttitudeStatusEnum.UP.getKey()) {
                 upNum = -1;
             }
-            if (dynamicsUpDb.getThumbsType().intValue() == ThumbsTypeEnum.LOVE.getKey()) {
+            if (dynamicsUpDb.getThumbsType().intValue() == AttitudeStatusEnum.LOVE.getKey()) {
                 loveNum = -1;
             }
             //修改

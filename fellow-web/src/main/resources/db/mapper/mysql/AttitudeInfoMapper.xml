@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fellow.dao.AttitudeInfoDao">
+<mapper namespace="com.fellow.dao.AttitudeInfoMapper">
 
     <resultMap id="AttitudeInfo" type="com.fellow.domain.model.AttitudeInfo">
         <result property="id" column="id"/>
@@ -19,6 +19,10 @@
         <result property="sysVersion" column="sys_version"/>
         <result property="isDelete" column="is_delete"/>
         <result property="ts" column="ts"/>
+    </resultMap>
+
+    <resultMap id="AttitudeInfoVo" type="com.fellow.domain.vo.AttitudeInfoVo" extends="AttitudeInfo">
+
     </resultMap>
 
     <sql id="columns">
@@ -351,7 +355,7 @@
         </where>
     </sql>
 
-    <select id="selectByToAccount" resultMap="AttitudeInfo">
+    <select id="selectByToAccount" resultMap="AttitudeInfoVo">
         SELECT
             id,
             type,
@@ -365,13 +369,22 @@
         WHERE
             to_account = #{toAccount}
             AND is_delete = 0
+        <if test="@Ognl@isNotEmpty(attitudeTimeBegin)">
+            AND attitude_time &gt; #{attitudeTimeBegin}
+        </if>
+        <if test="@Ognl@isNotEmpty(attitudeTimeEnd)">
+            AND attitude_time &lt; #{attitudeTimeEnd}
+        </if>
+        <if test="@Ognl@isNotEmpty(type)">
+            AND status = #{status}
+        </if>
         <if test="@Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
         </if>
         LIMIT ${limit}
     </select>
 
-    <select id="selectByFromAccount" resultMap="AttitudeInfo">
+    <select id="selectByFromAccount" resultMap="AttitudeInfoVo">
         SELECT
         id,
         type,
@@ -385,6 +398,15 @@
         WHERE
         from_account = #{fromAccount}
         AND is_delete = 0
+        <if test="@Ognl@isNotEmpty(status)">
+            AND status = #{status}
+        </if>
+        <if test="@Ognl@isNotEmpty(attitudeTimeBegin)">
+            AND attitude_time &gt; #{attitudeTimeBegin}
+        </if>
+        <if test="@Ognl@isNotEmpty(attitudeTimeEnd)">
+            AND attitude_time &lt; #{attitudeTimeEnd}
+        </if>
         <if test="@Ognl@isNotEmpty(sortColumns)">
             ORDER BY ${sortColumns}
         </if>

@@ -2,8 +2,8 @@ package com.fellow.web.controller.dynamics;
 
 import com.fellow.common.constant.SystemConstant;
 import com.fellow.common.util.VelocityUtil;
+import com.fellow.domain.enums.AttitudeStatusEnum;
 import com.fellow.domain.enums.DynamicsPropertyEnum;
-import com.fellow.domain.enums.ThumbsTypeEnum;
 import com.fellow.domain.model.PersonalDynamics;
 import com.fellow.domain.model.PersonalDynamicsComment;
 import com.fellow.domain.model.PersonalDynamicsUp;
@@ -62,12 +62,12 @@ public class FriendDynamicsController extends WebAbstract<PersonalDynamicsServic
         Response response = Response.newResponse();
         upQuery.setPageSize(SystemConstant.DEFAULT_PAGESIZE);
         upQuery.initMysqlLimit();
-        upQuery.setThumbsTypeNoEq(ThumbsTypeEnum.CANCEL.getKey());
+        upQuery.setThumbsTypeNoEq(AttitudeStatusEnum.CANCEL.getKey());
         List<PersonalDynamicsUp> dynamicsUpList = personalDynamicsUpService.selectUpByPersonalId(upQuery);
         Context context = new VelocityContext();
         context.put("dynamicsUpList", dynamicsUpList);
         context.put("collectionUtils", new CollectionUtils());
-        context.put("ThumbsTypeEnum_UP", ThumbsTypeEnum.UP.getKey());
+        context.put("ThumbsTypeEnum_UP", AttitudeStatusEnum.UP.getKey());
         context.put("page", upQuery.getPage());
         String dynamicsTemplate = VelocityUtil.mergeTemplate(context, velocityConfig.getVelocityEngine(), "/dynamics/friend/upUser.vm");
         response.setBody(dynamicsTemplate);
@@ -104,7 +104,7 @@ public class FriendDynamicsController extends WebAbstract<PersonalDynamicsServic
         context.put("collectionUtils", new CollectionUtils());
         context.put("isFirst", dynamicsQuery.getCount() <= 1);
         context.put("COMMENT_GROUP_NUM", SystemConstant.COMMENT_GROUP_NUM);
-        context.put("ThumbsTypeEnumMap", ThumbsTypeEnum.getMap());
+        context.put("ThumbsTypeEnumMap", AttitudeStatusEnum.getMap());
         response.setBody(VelocityUtil.mergeTemplate(context, velocityConfig.getVelocityEngine(), VIEW_PATH + "/dynamics_list.vm"));
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("isHadNext", dynamicsQuery.getPageSize() == dynamicsList.size());

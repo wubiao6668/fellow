@@ -695,4 +695,16 @@
         id = #{id}
         AND  is_delete = 0
     </update>
+
+    <select id="selectByIds" resultMap="PostCommentReply">
+        SELECT
+        <include refid="columns"/>
+        FROM
+        post_comment_reply
+        WHERE
+        id  IN
+        <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+            #{idTemp}
+        </foreach>
+    </select>
 </mapper>

@@ -12,10 +12,12 @@ import com.fellow.common.db.able.post.PostReplyAble;
 import com.fellow.domain.model.LostPostReply;
 import com.fellow.domain.query.LostPostReplyQuery;
 import com.fellow.domain.vo.LostPostReplyVo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Repository
@@ -31,4 +33,7 @@ public interface LostPostReplyMapper extends DeleteAble, DeletePhysicalAble, Fin
     long selectReplyAccountCount(LostPostReplyQuery replyQuery);
 
     List<LostPostReply> selectContentByIds(@Param("idSet") Set<Long> idSet);
+
+    @MapKey("id")
+    Map<Long,LostPostReply> selectByIds(LostPostReplyQuery lostPostReplyQuery);
 }

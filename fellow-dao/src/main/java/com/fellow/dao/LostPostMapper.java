@@ -11,11 +11,13 @@ import com.fellow.common.db.able.*;
 import com.fellow.common.db.able.post.PostAble;
 import com.fellow.domain.model.LostPost;
 import com.fellow.domain.query.LostPostQuery;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Repository
@@ -29,5 +31,8 @@ public interface LostPostMapper extends DeleteAble, DeletePhysicalAble, FindList
     List<LostPost> selectPostTitleByIds(@Param("idList")Set<Long> idList);
 
     List<LostPost> selectMyPost(LostPostQuery query);
+
+    @MapKey("id")
+    Map<Long,LostPost> selectByIds(LostPostQuery query);
 
 }

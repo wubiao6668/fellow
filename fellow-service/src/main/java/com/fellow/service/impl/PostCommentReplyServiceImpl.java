@@ -22,6 +22,7 @@ import com.fellow.domain.vo.PostCommentReplyVo;
 import com.fellow.service.PostCommentReplyService;
 import com.fellow.service.base.PostServiceAbstract;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -181,6 +182,17 @@ public class PostCommentReplyServiceImpl extends PostServiceAbstract<PostComment
         return rows;
     }
 
+
+    @Override
+    public Map<Long, PostCommentReply> selectByIds(PostCommentReplyQuery postCommentReplyQuery) {
+        Map<Long, PostCommentReply> postCommentReplyMap = repository.selectByIds(postCommentReplyQuery);
+        if (MapUtils.isNotEmpty(postCommentReplyMap)){
+            for (PostCommentReply replyTemp : postCommentReplyMap.values()){
+                replyTemp.setContent(VelocityUtil.mergeEmoticon(replyTemp.getContent()));
+            }
+        }
+        return postCommentReplyMap;
+    }
 }
 
 

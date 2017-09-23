@@ -12,10 +12,12 @@ import com.fellow.common.db.able.post.CommentReplyAble;
 import com.fellow.domain.model.PostCommentReply;
 import com.fellow.domain.query.PostCommentReplyQuery;
 import com.fellow.domain.vo.PostCommentReplyVo;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Repository
@@ -30,5 +32,10 @@ public interface PostCommentReplyMapper extends DeleteAble, DeletePhysicalAble, 
 
     List<PostCommentReply> selectContentByIds(@Param("idSet")Set<Long> idSet);
 
+    @MapKey("id")
+    Map<Long,PostCommentReply> selectByIds(PostCommentReplyQuery postCommentReplyQuery);
+
     int deleteById(PostCommentReply postCommentReply);
+
+
 }
