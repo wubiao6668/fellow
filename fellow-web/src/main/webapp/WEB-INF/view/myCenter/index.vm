@@ -187,18 +187,8 @@
                 </a>
             </li>
             <li class="">
-                <a href="javascript:;" onclick="loadTab(this,'myPostTab')">
-                    我的赞
-                </a>
-            </li>
-            <li class="">
-                <a href="javascript:;" onclick="loadTab(this,'myPostTab')">
-                    我的踩
-                </a>
-            </li>
-            <li class="">
-                <a href="javascript:;" onclick="loadTab(this,'myPostTab')">
-                    我的爱心
+                <a href="javascript:;" onclick="loadTab(this,'myAttitudeInfoTab')">
+                    我的观点
                 </a>
             </li>
             <li class="">
@@ -278,6 +268,11 @@
             </div>
 
             <div id="postCommentTab" name="centerTab" action="/myCenter/commentReply/index" class="tab-pane fade in">
+                <!-- Begin tab comment and popular posts -->
+
+                <!-- End tab comment and popular posts -->
+            </div>
+            <div id="myAttitudeInfoTab" name="centerTab" action="/myCenter/myAttitudeInfo/index" class="tab-pane fade in">
                 <!-- Begin tab comment and popular posts -->
 
                 <!-- End tab comment and popular posts -->
