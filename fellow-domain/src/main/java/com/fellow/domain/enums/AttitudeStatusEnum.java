@@ -54,4 +54,15 @@ public enum AttitudeStatusEnum {
         }
         return thumbsTypeEnumMap;
     }
+
+    public static boolean containsStatus(Integer status){
+        if (null != status){
+            for (AttitudeStatusEnum enumTemp : AttitudeStatusEnum.values()) {
+                if (status == enumTemp.getKey()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -11,6 +11,7 @@ import com.fellow.common.db.able.*;
 import com.fellow.common.db.able.post.PostAble;
 import com.fellow.domain.model.LostPost;
 import com.fellow.domain.model.Post;
+import com.fellow.domain.model.PostCommentReply;
 import com.fellow.domain.query.LostPostQuery;
 import com.fellow.domain.query.PostQuery;
 
@@ -27,5 +28,7 @@ public interface LostPostService extends DeleteAble, DeletePhysicalAble, FindLis
     List<LostPost> selectMyPost(LostPostQuery query);
 
     Map<Long,LostPost> selectByIds(LostPostQuery query);
+
+    int updateAttitudeInfo(LostPost lostPost);
 
 }

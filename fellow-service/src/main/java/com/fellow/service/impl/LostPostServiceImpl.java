@@ -88,6 +88,11 @@ public class LostPostServiceImpl extends PostServiceAbstract<LostPostMapper, Los
 //        return postPageList;
 //    }
 
+
+    @Override
+    public int updateAttitudeInfo(LostPost lostPost) {
+        return repository.updateAttitudeInfo(lostPost);
+    }
 }
 
 

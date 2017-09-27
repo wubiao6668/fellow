@@ -35,4 +35,6 @@ public interface LostPostMapper extends DeleteAble, DeletePhysicalAble, FindList
     @MapKey("id")
     Map<Long,LostPost> selectByIds(LostPostQuery query);
 
+    int updateAttitudeInfo(LostPost lostPost);
+
 }

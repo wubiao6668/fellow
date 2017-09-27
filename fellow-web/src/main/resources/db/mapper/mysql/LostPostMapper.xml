@@ -682,5 +682,22 @@
                 #{idTemp}
             </foreach>
     </select>
+    
+    <update id="updateAttitudeInfo">
+        UPDATE lost_post SET
+            <if test="@Ognl@isNotEmpty(upNum)">
+                up_num = up_num + #{upNum},
+            </if>
+            <if test="@Ognl@isNotEmpty(downNum)">
+                down_num = down_num + #{downNum},
+            </if>
+            <if test="@Ognl@isNotEmpty(loveNum)">
+                love_num = love_num + #{loveNum},
+            </if>
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            id = #{id}
+    </update>
 
 </mapper>

@@ -420,4 +420,42 @@
         LIMIT ${limit}
     </select>
 
+    <select id="selectByFromAccountAndBusIdAndType" resultMap="AttitudeInfo">
+        SELECT
+            id,
+            type,
+            bus_id,
+            from_account,
+            to_account,
+            `status`,
+            attitude_time
+        FROM
+            attitude_info
+        WHERE
+            is_delete = 0
+            AND bus_id = #{busId}
+            AND type = #{type}
+    </select>
+
+    <update id="updateStatusById">
+        UPDATE attitude_info
+        status = #{status},
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account =#{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(attitudeTime)">
+            attitude_time = #{attitudeTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        sys_version = #{sysVersion, jdbcType=INTEGER}
+        AND id = #{id}
+    </update>
 </mapper>

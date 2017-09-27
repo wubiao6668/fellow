@@ -107,6 +107,11 @@ public class LostPostReplyServiceImpl extends PostServiceAbstract<LostPostReplyM
         }
         return postReplyMap;
     }
+
+    @Override
+    public int updateAttitudeInfo(LostPostReply lostPostReply) {
+        return repository.updateAttitudeInfo(lostPostReply);
+    }
 }
 
 

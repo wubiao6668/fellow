@@ -32,4 +32,6 @@ public interface PostCommentReplyService extends DeleteAble, DeletePhysicalAble,
      int deleteCommentById(PostCommentReply postCommentReply);
 
     Map<Long,PostCommentReply> selectByIds(PostCommentReplyQuery postCommentReplyQuery);
+
+    int updateAttitudeInfo(PostCommentReply postCommentReply);
 }

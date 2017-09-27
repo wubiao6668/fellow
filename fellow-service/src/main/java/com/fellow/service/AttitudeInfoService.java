@@ -21,4 +21,6 @@ public interface AttitudeInfoService extends DeleteAble, DeletePhysicalAble, Fin
 
     List<AttitudeInfoVo> selectByFromAccount(AttitudeInfoQuery attitudeInfoQuery);
 
+    boolean myAttitude(AttitudeInfo attitudeInfo);
+
 }

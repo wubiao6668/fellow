@@ -10,6 +10,7 @@ package com.fellow.service;
 import com.fellow.common.db.able.*;
 import com.fellow.common.db.able.post.PostReplyAble;
 import com.fellow.domain.model.LostPostReply;
+import com.fellow.domain.model.PostCommentReply;
 import com.fellow.domain.query.LostPostReplyQuery;
 import com.fellow.domain.vo.LostPostReplyVo;
 import org.apache.ibatis.annotations.MapKey;
@@ -27,4 +28,6 @@ public interface LostPostReplyService extends DeleteAble, DeletePhysicalAble, Fi
     long selectReplyAccountCount(LostPostReplyQuery replyQuery);
 
     Map<Long,LostPostReply>  selectByIds(LostPostReplyQuery replyQuery);
+
+    int updateAttitudeInfo(LostPostReply lostPostReply);
 }

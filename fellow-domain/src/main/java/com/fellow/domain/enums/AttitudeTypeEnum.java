@@ -33,4 +33,15 @@ public enum AttitudeTypeEnum {
         this.value = value;
     }
 
+    public static boolean containsType(Integer type){
+        if (null != type){
+            for (AttitudeTypeEnum enumTemp : AttitudeTypeEnum.values()) {
+                if (type == enumTemp.getKey()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

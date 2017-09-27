@@ -193,6 +193,11 @@ public class PostCommentReplyServiceImpl extends PostServiceAbstract<PostComment
         }
         return postCommentReplyMap;
     }
+
+    @Override
+    public int updateAttitudeInfo(PostCommentReply postCommentReply) {
+        return repository.updateAttitudeInfo(postCommentReply);
+    }
 }
 
 

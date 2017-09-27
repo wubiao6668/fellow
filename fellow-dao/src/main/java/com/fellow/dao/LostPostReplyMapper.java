@@ -36,4 +36,6 @@ public interface LostPostReplyMapper extends DeleteAble, DeletePhysicalAble, Fin
 
     @MapKey("id")
     Map<Long,LostPostReply> selectByIds(LostPostReplyQuery lostPostReplyQuery);
+
+    int updateAttitudeInfo(LostPostReply lostPostReply);
 }

@@ -8,7 +8,10 @@
 package com.fellow.service.impl;
 
 import com.fellow.dao.AttitudeInfoMapper;
+import com.fellow.domain.enums.AttitudeStatusEnum;
 import com.fellow.domain.enums.AttitudeTypeEnum;
+import com.fellow.domain.enums.IsDeleteEnum;
+import com.fellow.domain.model.AttitudeInfo;
 import com.fellow.domain.model.LostPost;
 import com.fellow.domain.model.LostPostReply;
 import com.fellow.domain.model.PostCommentReply;
@@ -125,4 +128,147 @@ public class AttitudeInfoServiceImpl extends ServiceAbstract<AttitudeInfoMapper>
         List<AttitudeInfoVo> attitudeInfoList = repository.selectByFromAccount(attitudeInfoQuery);
         return toFillEntity(attitudeInfoList);
     }
+
+    @Override
+    public boolean myAttitude(AttitudeInfo attitudeInfo) {
+        AttitudeInfoQuery attitudeInfoQuery = new AttitudeInfoQuery();
+        attitudeInfoQuery.setBusId(attitudeInfo.getBusId());
+        attitudeInfoQuery.setType(attitudeInfo.getType());
+        AttitudeInfo dbAttitudeInfo = repository.selectByFromAccountAndBusIdAndType(attitudeInfoQuery);
+        //两种情况不考虑 1、状态跟现在的相同 2、直接取消
+        if (null != dbAttitudeInfo
+                && (dbAttitudeInfo.getStatus().intValue() == attitudeInfo.getStatus().intValue()
+                || (null == dbAttitudeInfo && AttitudeStatusEnum.CANCEL.getKey() == attitudeInfo.getStatus().intValue()))) {
+            return false;
+        }
+        Integer upNum = null;
+        Integer downNum = null;
+        Integer loveNum = null;
+        if (AttitudeStatusEnum.UP.getKey() == attitudeInfo.getStatus().intValue()) {
+            upNum = 1;
+        } else if (AttitudeStatusEnum.DOWN.getKey() == attitudeInfo.getStatus().intValue()) {
+            downNum = 1;
+        } else if (AttitudeStatusEnum.LOVE.getKey() == attitudeInfo.getStatus().intValue()) {
+            loveNum = 1;
+        }
+        if (null != dbAttitudeInfo) {
+            if (AttitudeStatusEnum.UP.getKey() == dbAttitudeInfo.getStatus().intValue() && attitudeInfo.getStatus().intValue() == AttitudeStatusEnum.CANCEL.getKey()) {
+                upNum = -1;
+            } else if (AttitudeStatusEnum.DOWN.getKey() == dbAttitudeInfo.getStatus().intValue() && attitudeInfo.getStatus().intValue() == AttitudeStatusEnum.CANCEL.getKey()) {
+                downNum = -1;
+            } else if (AttitudeStatusEnum.LOVE.getKey() == dbAttitudeInfo.getStatus().intValue() && attitudeInfo.getStatus().intValue() == AttitudeStatusEnum.CANCEL.getKey()) {
+                loveNum = -1;
+            }
+        }
+        Integer delete = IsDeleteEnum.NO.getKey();
+        if (AttitudeTypeEnum.POST.getKey() == attitudeInfo.getType().intValue()) {
+            LostPost lostPostDb = (LostPost) lostPostService.getByKey(attitudeInfo.getBusId());
+            if (null == lostPostDb) {
+                return false;
+            }
+            delete = lostPostDb.getIsDelete();
+            LostPost lostPost = new LostPost();
+            lostPost.setUpNum(upNum);
+            lostPost.setDownNum(downNum);
+            lostPost.setLoveNum(loveNum);
+            lostPost.setId(lostPostDb.getId());
+            int row = lostPostService.updateAttitudeInfo(lostPost);
+            if (1 != row) {
+                return false;
+            }
+        } else if (AttitudeTypeEnum.COMMENT.getKey() == attitudeInfo.getType().intValue()) {
+            LostPostReply dbLostPostReply = (LostPostReply) lostPostReplyService.getByKey(attitudeInfo.getBusId());
+            if (null == dbLostPostReply) {
+                return false;
+            }
+            delete = dbLostPostReply.getIsDelete();
+            LostPostReply lostPostReply = new LostPostReply();
+            lostPostReply.setUpNum(upNum);
+            lostPostReply.setDownNum(downNum);
+            lostPostReply.setLoveNum(loveNum);
+            lostPostReply.setId(dbLostPostReply.getId());
+            int row = lostPostReplyService.updateAttitudeInfo(lostPostReply);
+            if (1 != row) {
+                return false;
+            }
+        } else if (AttitudeTypeEnum.COMMENT.getKey() == attitudeInfo.getType().intValue()) {
+            PostCommentReply dbPostCommentReply = (PostCommentReply) postCommentReplyService.getByKey(attitudeInfo.getBusId());
+            if (null == dbPostCommentReply) {
+                return false;
+            }
+            delete = dbPostCommentReply.getIsDelete();
+            PostCommentReply postCommentReply = new PostCommentReply();
+            postCommentReply.setUpNum(upNum);
+            postCommentReply.setDownNum(downNum);
+            postCommentReply.setLoveNum(loveNum);
+            postCommentReply.setId(dbPostCommentReply.getId());
+            int row = postCommentReplyService.updateAttitudeInfo(postCommentReply);
+            if (1 != row) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        if (null != dbAttitudeInfo) {
+            attitudeInfo.setId(dbAttitudeInfo.getId());
+            attitudeInfo.setIsDelete(delete);
+            repository.updateStatusById(attitudeInfo);
+        } else {
+            repository.insertSelective(attitudeInfo);
+        }
+        return true;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

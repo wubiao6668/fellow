@@ -11,6 +11,7 @@ import com.fellow.common.db.able.*;
 import com.fellow.domain.model.AttitudeInfo;
 import com.fellow.domain.query.AttitudeInfoQuery;
 import com.fellow.domain.vo.AttitudeInfoVo;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +23,8 @@ public interface AttitudeInfoMapper extends DeleteAble, DeletePhysicalAble, Find
     List<AttitudeInfoVo> selectByToAccount(AttitudeInfoQuery attitudeInfoQuery);
 
     List<AttitudeInfoVo> selectByFromAccount(AttitudeInfoQuery attitudeInfoQuery);
+
+    AttitudeInfo selectByFromAccountAndBusIdAndType(AttitudeInfoQuery attitudeInfoQuery);
+
+    int updateStatusById(AttitudeInfo attitudeInfo);
 }

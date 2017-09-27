@@ -37,5 +37,7 @@ public interface PostCommentReplyMapper extends DeleteAble, DeletePhysicalAble, 
 
     int deleteById(PostCommentReply postCommentReply);
 
+    int updateAttitudeInfo(PostCommentReply postCommentReply);
+
 
 }
