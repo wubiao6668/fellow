@@ -35,7 +35,7 @@
                     #end
                 </a>
                 <br>
-                <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
+                <small class="text-muted">${attitudeInfoTemp.fromUser.userName} | 23rd June at 5:00pm</small>
                 <hr>
             </div>
         </div>

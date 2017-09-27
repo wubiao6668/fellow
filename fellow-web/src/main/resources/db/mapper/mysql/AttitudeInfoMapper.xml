@@ -401,6 +401,13 @@
         <if test="@Ognl@isNotEmpty(status)">
             AND status = #{status}
         </if>
+        <if test="@Ognl@isNotEmpty(statusSet)">
+            AND status IN
+            <foreach collection="statusSet" item="statusTemp" open="(" separator="," close=")">
+                #{statusTemp}
+            </foreach>
+
+        </if>
         <if test="@Ognl@isNotEmpty(attitudeTimeBegin)">
             AND attitude_time &gt; #{attitudeTimeBegin}
         </if>

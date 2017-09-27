@@ -305,6 +305,7 @@
             var tabObj = $("#" + id);
             tabObj.addClass("active");
             $.get(tabObj.attr("action"), function (html) {
+                $("[name='centerTab']").html("");
                 tabObj.html(html);
             })
         }

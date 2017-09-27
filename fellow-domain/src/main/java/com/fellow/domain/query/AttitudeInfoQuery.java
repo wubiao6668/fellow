@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public class AttitudeInfoQuery extends QueryDomain implements Serializable {
     private static final long serialVersionUID = 3148176768559230877L;
@@ -64,6 +65,8 @@ public class AttitudeInfoQuery extends QueryDomain implements Serializable {
     /** 时间戳 */
     private Date tsBegin;
     private Date tsEnd;
+
+    private Set<Integer> statusSet;
 
     /**
      * 获得id
@@ -496,7 +499,14 @@ public class AttitudeInfoQuery extends QueryDomain implements Serializable {
             setTsEnd(DateUtils.parseDate(value, new String[]{FORMAT_TS}));
         }
     }
-    
+
+    public Set<Integer> getStatusSet() {
+        return statusSet;
+    }
+
+    public void setStatusSet(Set<Integer> statusSet) {
+        this.statusSet = statusSet;
+    }
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
