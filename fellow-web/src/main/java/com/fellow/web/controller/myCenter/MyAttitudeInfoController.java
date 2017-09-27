@@ -43,7 +43,7 @@ public class MyAttitudeInfoController extends WebAbstract<AttitudeInfoService> {
         } else {
             attitudeInfoQuery.setAttitudeTimeEnd(new Date(attitudeInfoQuery.getQueryTime()));
         }
-        List<AttitudeInfoVo> attitudeInfoVoList = service.selectByToAccount(attitudeInfoQuery);
+        List<AttitudeInfoVo> attitudeInfoVoList = service.selectByFromAccount(attitudeInfoQuery);
         long attitudeEndTime = 0;
         boolean hasNextPage = false;
         if (CollectionUtils.isNotEmpty(attitudeInfoVoList)){
