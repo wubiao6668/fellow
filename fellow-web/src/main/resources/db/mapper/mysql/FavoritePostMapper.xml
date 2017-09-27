@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fellow.dao.FavoritePostMapper">
+
+    <resultMap id="FavoritePost" type="com.fellow.domain.model.FavoritePost">
+        <result property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="postId" column="post_id"/>
+        <result property="type" column="type"/>
+        <result property="favoriteTime" column="favorite_time"/>
+        <result property="status" column="status"/>
+        <result property="createAccount" column="create_account"/>
+        <result property="createName" column="create_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateAccount" column="update_account"/>
+        <result property="updateName" column="update_name"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="sysVersion" column="sys_version"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="ts" column="ts"/>
+    </resultMap>
+
+    <sql id="columns">
+        id,account,post_id,type,favorite_time,status,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO favorite_post (
+            account,
+            post_id,
+            type,
+            favorite_time,
+            status,
+            create_account,
+            create_name,
+            create_time,
+            update_account,
+            update_name,
+            update_time,
+            sys_version,
+            is_delete
+            
+        ) VALUES (
+            #{account},
+            #{postId},
+            #{type},
+            #{favoriteTime},
+            #{status},
+            #{createAccount},
+            #{createName},
+            now(),
+            #{updateAccount},
+            #{updateName},
+            #{updateTime},
+            1,
+            0
+
+        )
+    </insert>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO favorite_post (
+            <if test="@Ognl@isNotEmpty(account)">
+                account,
+            </if>
+            <if test="@Ognl@isNotEmpty(postId)">
+                post_id,
+            </if>
+            <if test="@Ognl@isNotEmpty(type)">
+                type,
+            </if>
+            <if test="@Ognl@isNotEmpty(favoriteTime)">
+                favorite_time,
+            </if>
+            <if test="@Ognl@isNotEmpty(status)">
+                status,
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account,
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name,
+            </if>
+                create_time,
+                                <if test="@Ognl@isNotEmpty(updateAccount)">
+                update_account,
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                update_name,
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                update_time,
+            </if>
+sys_version,
+is_delete
+                            ) VALUES (
+            <if test="@Ognl@isNotEmpty(account)">
+                #{account},
+           </if>
+            <if test="@Ognl@isNotEmpty(postId)">
+                #{postId},
+           </if>
+            <if test="@Ognl@isNotEmpty(type)">
+                #{type},
+           </if>
+            <if test="@Ognl@isNotEmpty(favoriteTime)">
+                #{favoriteTime},
+           </if>
+            <if test="@Ognl@isNotEmpty(status)">
+                #{status},
+           </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                #{createAccount},
+           </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                #{createName},
+           </if>
+            now(),
+                        <if test="@Ognl@isNotEmpty(updateAccount)">
+                #{updateAccount},
+           </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                #{updateName},
+           </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                #{updateTime},
+           </if>
+            1,
+            0
+            )
+    </insert>
+
+    <update id="update" >
+        UPDATE favorite_post SET
+            <if test="@Ognl@isNotEmpty(account)">
+                account = #{account},
+            </if>
+            <if test="@Ognl@isNotEmpty(postId)">
+                post_id = #{postId},
+            </if>
+            <if test="@Ognl@isNotEmpty(type)">
+                type = #{type},
+            </if>
+            <if test="@Ognl@isNotEmpty(favoriteTime)">
+                favorite_time = #{favoriteTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(status)">
+                status = #{status},
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account = #{createAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name = #{createName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createTime)">
+                create_time = #{createTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                update_account = #{updateAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                update_name = #{updateName},
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTime)">
+                update_time = now(),
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                sys_version = CASE WHEN sys_version IS NULL THEN 0 ELSE sys_version + 1 END,
+            </if>
+            <if test="@Ognl@isNotEmpty(isDelete)">
+                is_delete = #{isDelete}
+            </if>
+        WHERE
+            id = #{id} 
+    </update>
+
+    <update id="updateByOptimisticLock" >
+        UPDATE favorite_post
+        SET
+            <if test="@Ognl@isNotEmpty(account)">
+                account = #{account},
+            </if>
+            <if test="@Ognl@isNotEmpty(postId)">
+                post_id = #{postId},
+            </if>
+            <if test="@Ognl@isNotEmpty(type)">
+                type = #{type},
+            </if>
+            <if test="@Ognl@isNotEmpty(favoriteTime)">
+                favorite_time = #{favoriteTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(status)">
+                status = #{status},
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                create_account = #{createAccount},
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                create_name = #{createName},
+            </if>
+            <if test="@Ognl@isNotEmpty(createTime)">
+                create_time = #{createTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(isDelete)">
+                is_delete = #{isDelete},
+            </if>
+            update_account =#{updateAccount} ,
+            update_name = #{updateName} ,
+            update_time = now(),
+            sys_version = sys_version + 1
+        WHERE
+            sys_version = #{sysVersion, jdbcType=INTEGER}
+            AND id = #{id} 
+    </update>
+
+    <delete id="delete">
+        UPDATE favorite_post
+        SET is_delete = 1
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account = #{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <delete id="deletePhysical">
+        DELETE
+        FROM favorite_post
+        WHERE
+            id = #{id} 
+    </delete>
+
+    <select id="getByKey" resultMap="FavoritePost">
+        SELECT <include refid="columns" />
+        FROM favorite_post
+        WHERE
+            id = #{id} 
+    </select>
+
+    <select id="findList" resultMap="FavoritePost">
+    SELECT <include refid="columns" />
+    FROM favorite_post
+    <include refid="findList_where"/>
+    <if test="@Ognl@isNotEmpty(sortColumns)">
+        ORDER BY ${sortColumns}
+    </if>
+    </select>
+
+    <select id="findListCount" resultType="int">
+    SELECT count(1)
+    FROM favorite_post
+    <include refid="findList_where"/>
+    </select>
+
+    <sql id="findList_where">
+        <where>
+            <if test="@Ognl@isNotEmpty(id)">
+                AND id = #{id}
+            </if>
+            <if test="@Ognl@isNotEmpty(account)">
+                AND account = #{account}
+            </if>
+            <if test="@Ognl@isNotEmpty(postId)">
+                AND post_id = #{postId}
+            </if>
+            <if test="@Ognl@isNotEmpty(type)">
+                AND type = #{type}
+            </if>
+            <if test="@Ognl@isNotEmpty(favoriteTimeBegin)">
+                AND favorite_time &gt;= #{favoriteTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(favoriteTimeEnd)">
+                AND favorite_time &lt;= #{favoriteTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(status)">
+                AND status = #{status}
+            </if>
+            <if test="@Ognl@isNotEmpty(createAccount)">
+                AND create_account = #{createAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(createName)">
+                AND create_name = #{createName}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeBegin)">
+                AND create_time &gt;= #{createTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeEnd)">
+                AND create_time &lt;= #{createTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateAccount)">
+                AND update_account = #{updateAccount}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateName)">
+                AND update_name = #{updateName}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeBegin)">
+                AND update_time &gt;= #{updateTimeBegin}
+            </if>
+            <if test="@Ognl@isNotEmpty(updateTimeEnd)">
+                AND update_time &lt;= #{updateTimeEnd}
+            </if>
+            <if test="@Ognl@isNotEmpty(sysVersion)">
+                AND sys_version = #{sysVersion}
+            </if>
+            <choose>
+                <when test="@Ognl@isNotEmpty(isDelete)">
+                    AND is_delete = #{isDelete}
+                </when>
+                <otherwise>
+                    AND is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+</mapper>
