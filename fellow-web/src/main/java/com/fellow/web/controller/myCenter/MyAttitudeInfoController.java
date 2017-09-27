@@ -35,7 +35,6 @@ public class MyAttitudeInfoController extends WebAbstract<AttitudeInfoService> {
     }
 
     private void condition(Model model, AttitudeInfoQuery attitudeInfoQuery) {
-        attitudeInfoQuery.setPageSize(1);
         attitudeInfoQuery.initMysqlLimit();
         attitudeInfoQuery.setToAccount(super.getAccount());
         attitudeInfoQuery.setSortColumns(" attitude_time desc");
