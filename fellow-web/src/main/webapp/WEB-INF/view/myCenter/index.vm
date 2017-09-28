@@ -192,7 +192,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="javascript:;" onclick="loadTab(this,'myPostTab')">
+                <a href="javascript:;" onclick="loadTab(this,'myFavoritePostTab')">
                     我的收藏
                 </a>
             </li>
@@ -268,14 +268,16 @@
             </div>
 
             <div id="postCommentTab" name="centerTab" action="/myCenter/commentReply/index" class="tab-pane fade in">
-                <!-- Begin tab comment and popular posts -->
 
-                <!-- End tab comment and popular posts -->
             </div>
-            <div id="myAttitudeInfoTab" name="centerTab" action="/myCenter/myAttitudeInfo/index" class="tab-pane fade in">
-                <!-- Begin tab comment and popular posts -->
+            <div id="myAttitudeInfoTab" name="centerTab" action="/myCenter/myAttitudeInfo/index"
+                 class="tab-pane fade in">
 
-                <!-- End tab comment and popular posts -->
+            </div>
+
+            <div id="myFavoritePostTab" name="centerTab" action="/myCenter/myFavoritePost/index"
+                 class="tab-pane fade in">
+
             </div>
 
             <div id="passwordTab" name="centerTab" action="/myCenter/passwordSet/index" class="tab-pane fade in active">

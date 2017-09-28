@@ -10,6 +10,7 @@ import org.apache.commons.lang.time.DateUtils;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Set;
 
 public class FavoritePostQuery extends QueryDomain implements Serializable {
     private static final long serialVersionUID = 3148176768559230877L;
@@ -55,6 +56,8 @@ public class FavoritePostQuery extends QueryDomain implements Serializable {
     /** 时间戳 */
     private Date tsBegin;
     private Date tsEnd;
+
+    private Set<Long> idSet;
 
     /**
      * 获得id
@@ -473,7 +476,14 @@ public class FavoritePostQuery extends QueryDomain implements Serializable {
             setTsEnd(DateUtils.parseDate(value, new String[]{FORMAT_TS}));
         }
     }
-    
+
+    public Set<Long> getIdSet() {
+        return idSet;
+    }
+
+    public void setIdSet(Set<Long> idSet) {
+        this.idSet = idSet;
+    }
 
     public String toString() {
         return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);

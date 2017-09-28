@@ -91,8 +91,8 @@
             <if test="@Ognl@isNotEmpty(updateTime)">
                 update_time,
             </if>
-sys_version,
-is_delete
+                        sys_version,
+                        is_delete
                             ) VALUES (
             <if test="@Ognl@isNotEmpty(account)">
                 #{account},
@@ -116,7 +116,7 @@ is_delete
                 #{createName},
            </if>
             now(),
-                        <if test="@Ognl@isNotEmpty(updateAccount)">
+           <if test="@Ognl@isNotEmpty(updateAccount)">
                 #{updateAccount},
            </if>
             <if test="@Ognl@isNotEmpty(updateName)">
@@ -318,5 +318,69 @@ is_delete
             </choose>
         </where>
     </sql>
+
+    <select id="selectByAccount" resultMap="FavoritePost">
+        SELECT
+            id,
+            account,
+            post_id,
+            type,
+            favorite_time,
+            `status`
+        FROM favorite_post
+        WHERE
+            account = #{account}
+            AND is_delete = 0
+        <if test="@Ognl@isNotEmpty(type)">
+            AND type = #{type}
+        </if>
+        <if test="@Ognl@isNotEmpty(status)">
+            AND status = #{status}
+        </if>
+        <if test="@Ognl@isNotEmpty(favoriteTimeBegin)">
+            AND favorite_time &gt; #{favoriteTimeBegin}
+        </if>
+        <if test="@Ognl@isNotEmpty(favoriteTimeEnd)">
+            AND favorite_time &lt; #{favoriteTimeEnd}
+        </if>
+        <if test="@Ognl@isNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+            LIMIT ${limit}
+    </select>
+
+    <select id="selectAccountPostIdAndType" resultMap="FavoritePost">
+        SELECT
+            id,
+            account,
+            post_id,
+            type,
+            favorite_time,
+            `status`
+        FROM favorite_post
+        WHERE
+            account = #{account}
+            AND type = #{type}
+            AND post_id = #{postId}
+        LIMIT 1
+    </select>
+
+    <update id="updateStatusByIdsAndAccount">
+        UPDATE favorite_post
+        SET
+        status = #{status},
+        <if test="@Ognl@isNotEmpty(favoriteTime)">
+            favorite_time = #{favoriteTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+            account = #{account}
+            AND id = #{id}
+    </update>
+
 
 </mapper>

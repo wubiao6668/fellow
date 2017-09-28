@@ -455,7 +455,30 @@
         update_time = now(),
         sys_version = sys_version + 1
         WHERE
-        sys_version = #{sysVersion, jdbcType=INTEGER}
-        AND id = #{id}
+       id = #{id}
+    </update>
+
+    <update id="updateStatusByIds">
+        UPDATE attitude_info
+        status = #{status},
+        <if test="@Ognl@isNotEmpty(updateAccount)">
+            update_account =#{updateAccount} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(updateName)">
+            update_name = #{updateName} ,
+        </if>
+        <if test="@Ognl@isNotEmpty(attitudeTime)">
+            attitude_time = #{attitudeTime},
+        </if>
+        <if test="@Ognl@isNotEmpty(isDelete)">
+            is_delete = #{isDelete},
+        </if>
+        update_time = now(),
+        sys_version = sys_version + 1
+        WHERE
+        id IN
+        <foreach collection="idSet" item="idTemp" open="(" separator="," close=")">
+            #{idTemp}
+        </foreach>
     </update>
 </mapper>

@@ -1,0 +1,13 @@
+#set($layout="/layout/empty.vm")
+#foreach($favoritePostVoTemp in $favoritePostVoList)
+    #parse("/myCenter/myFavoritePost/li_list.vm")
+#end
+
+
+<script>
+    $("#load_favorite_more").attr("queryTime","$!{favoriteTimeEnd}");
+    //没有下一页隐藏加载更多按钮
+        #if(!${hasNextPage})
+        $("#load_favorite_more").hide();
+        #end
+</script>

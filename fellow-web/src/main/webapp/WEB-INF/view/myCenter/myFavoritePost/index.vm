@@ -1,0 +1,106 @@
+#set($layout="/layout/empty.vm")
+
+<style>
+    .blue {
+        background: blue
+    }
+
+    .grey {
+        background: grey
+    }
+
+    .chats-row {
+        height: 100vh;
+    }
+
+    .chats-row div {
+        height: 50%;
+        border: 1px solid #ddd;
+        padding: 0px;
+    }
+
+    .list-group-item {
+        border: none;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+
+    }
+
+    .list-group-item:first-child {
+        border-top: none;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+
+    .current-chat {
+        height: 100vh;
+        border: 1px solid #ddd;
+    }
+
+    .chat-toolbar-row {
+        background-color: #f5f5f5;
+    }
+
+    .chat-toolbar {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .current-chat-area {
+        padding-top: 10px;
+        overflow: auto;
+        height: 85vh;
+    }
+
+    .current-chat-footer {
+        position: absolute;
+        bottom: 0;
+
+    }
+
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="media-list" id="more_ul_id">
+                #if($collectionUtils.isNotEmpty($favoritePostVoList))
+                    #foreach($favoritePostVoTemp in $favoritePostVoList)
+                        #parse("/myCenter/myFavoritePost/li_list.vm")
+                    #end
+                #else
+                    <div class="text-center"><em>暂时没有收到任何收藏</em></div>
+                #end
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-sm-12 text-center">
+    <a id="load_favorite_more" href="javascript:;" onclick="loadMore()"  class="btn btn-sm btn-white btn-info" queryTime="$!{favoriteTimeEnd}">
+        加载更多 &nbsp;
+        <i class="ace-icon fa fa-arrow-down"></i>
+    </a>
+</div>
+
+<script>
+    $(function () {
+        //没有下一页隐藏加载更多按钮
+        #if(!${hasNextPage})
+            $("#load_favorite_more").hide();
+        #end
+    })
+    function loadMore() {
+        var param = {};
+        param.queryTime=$("#load_favorite_more").attr("queryTime");
+        $.ajax({
+            url: '/myCenter/myFavoritePost/more',
+            data: param,
+            dataType: 'html',
+            success: function (res) {
+                if (res) {
+                    $("#more_ul_id").append(res);
+                }
+            }
+        })
+    }
+</script>
