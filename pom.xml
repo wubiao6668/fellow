@@ -109,7 +109,7 @@
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-commons</artifactId>
-                <version>1.9.2.RELEASE</version>
+                <version>1.13.7.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>org.aspectj</groupId>
@@ -272,6 +272,12 @@
                 <version>${commons-email.version}</version>
             </dependency>
             <!--邮件结束-->
+            <!--es-->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>2.1.7.RELEASE</version>
+            </dependency>
             <!-- LOG4J dependency start-->
             <dependency>
                 <groupId>com.googlecode.log4jdbc</groupId>

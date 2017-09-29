@@ -17,6 +17,7 @@
     <import resource="classpath:/db/spring-datasource.xml"/>
     <import resource="classpath:/db/spring-mybatis.xml"/>
     <import resource="classpath:/db/spring-tx.xml"/>
+    <import resource="classpath:/es/elsaticsearch.xml"/>
     <import resource="classpath:/service/spring-service.xml"/>
 
 </beans>
