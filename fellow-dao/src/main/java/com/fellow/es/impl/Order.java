@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
  */
 @Document(indexName = "test_es_order_index", type = "test_es_order_type")
 public class Order {
+    public static final String indexName = "test_es_order_index";
     @Id
     private Long id;
     private String userName;
