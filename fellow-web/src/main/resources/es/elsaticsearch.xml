@@ -10,17 +10,22 @@
     <!-- bean管理支持注解 -->
     <context:component-scan base-package="com.fellow.es"/>
 
-    <!--&lt;!&ndash; Spring data 自动扫描repository接口，生成实现类 &ndash;&gt;-->
-    <!--<elasticsearch:repositories base-package="name.liuxi.es" />-->
+    <!-- Spring data 自动扫描repository接口，生成实现类 -->
+    <elasticsearch:repositories base-package="com.fellow.es"/>
 
     <!-- ip:port换成具体的ip和端口，多个以逗号分隔 -->
-    <elasticsearch:transport-client id="client" cluster-nodes="127.0.0.1:9300"  cluster-name="elasticsearch"/>
+    <elasticsearch:transport-client id="client" cluster-nodes="127.0.0.1:9300" cluster-name="elasticsearch"/>
 
     <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
         <constructor-arg ref="client"/>
     </bean>
 
+    <bean id="simpleElasticsearchRepository"
+          class="org.springframework.data.elasticsearch.repository.support.SimpleElasticsearchRepository">
+        <constructor-arg name="elasticsearchOperations" ref="elasticsearchTemplate"/>
+    </bean>
+
     <!--<bean name="orderRepositoryImpl" class="name.liuxi.es.impl.OrderRepositoryImpl">-->
-        <!--<property name="elasticsearchTemplate" ref="elasticsearchTemplate"/>-->
+    <!--<property name="elasticsearchTemplate" ref="elasticsearchTemplate"/>-->
     <!--</bean>-->
 </beans>
