@@ -1,7 +1,7 @@
 package com.fellow.web.base;
 
 import com.alibaba.fastjson.JSON;
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.db.able.post.PostAble;
 import com.fellow.common.util.VelocityUtil;
 import com.fellow.domain.base.QueryDomain;

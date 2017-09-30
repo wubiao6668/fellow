@@ -7,7 +7,7 @@
 
 package com.fellow.web.controller.login;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.security.CookiesUtil;
 import com.fellow.common.security.PasswordUtil;
 import com.fellow.common.util.captcha.XVcode.generator.Generator;

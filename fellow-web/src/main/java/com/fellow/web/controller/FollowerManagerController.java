@@ -1,6 +1,6 @@
 package com.fellow.web.controller;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.util.PinyinHelperUtil;
 import com.fellow.domain.enums.FriendTypeEnum;
 import com.fellow.domain.enums.RestrictDynamicsEnum;

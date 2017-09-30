@@ -1,6 +1,6 @@
 package com.fellow.web.controller.myCenter;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.exception.BusinessException;
 import com.fellow.domain.model.LostPostReply;
 import com.fellow.domain.model.PostCommentReply;

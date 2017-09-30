@@ -1,7 +1,7 @@
 package com.fellow.web.controller.personalHome;
 
 import com.alibaba.fastjson.JSON;
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.domain.model.PhotoImage;
 import com.fellow.domain.model.UserDetail;
 import com.fellow.domain.model.UserSkill;

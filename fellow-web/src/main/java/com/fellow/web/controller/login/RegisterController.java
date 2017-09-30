@@ -7,7 +7,7 @@
 
 package com.fellow.web.controller.login;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.security.PasswordUtil;
 import com.fellow.common.util.VelocityUtil;
 import com.fellow.domain.dto.RegisterDto;

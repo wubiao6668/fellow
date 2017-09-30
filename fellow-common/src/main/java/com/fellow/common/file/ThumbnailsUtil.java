@@ -1,18 +1,14 @@
 package com.fellow.common.file;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.exception.BusinessException;
-import com.fellow.domain.web.Response;
 import net.coobird.thumbnailator.Thumbnails;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Created by wubiao on 2016/9/2.

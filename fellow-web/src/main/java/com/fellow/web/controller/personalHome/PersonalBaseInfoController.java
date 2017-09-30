@@ -1,6 +1,6 @@
 package com.fellow.web.controller.personalHome;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.exception.BusinessException;
 import com.fellow.domain.enums.*;
 import com.fellow.domain.model.User;

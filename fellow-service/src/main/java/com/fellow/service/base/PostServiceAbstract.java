@@ -1,6 +1,6 @@
 package com.fellow.service.base;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.db.able.DecrementAble;
 import com.fellow.common.db.able.IncrementAble;
 import com.fellow.common.db.able.InsertSelectiveAble;

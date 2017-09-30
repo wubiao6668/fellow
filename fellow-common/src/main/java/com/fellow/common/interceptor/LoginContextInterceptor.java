@@ -1,6 +1,6 @@
 package com.fellow.common.interceptor;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.security.CookiesUtil;
 import com.fellow.domain.session.LocalSession;
 import com.fellow.domain.session.Session;

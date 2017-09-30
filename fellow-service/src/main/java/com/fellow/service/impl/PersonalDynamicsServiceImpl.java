@@ -7,7 +7,7 @@
 
 package com.fellow.service.impl;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.emotion.EmoticonUtil;
 import com.fellow.common.util.VelocityUtil;
 import com.fellow.dao.DynamicsImgMapper;

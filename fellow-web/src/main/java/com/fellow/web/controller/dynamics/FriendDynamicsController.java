@@ -1,6 +1,6 @@
 package com.fellow.web.controller.dynamics;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.util.VelocityUtil;
 import com.fellow.domain.enums.AttitudeStatusEnum;
 import com.fellow.domain.enums.DynamicsPropertyEnum;

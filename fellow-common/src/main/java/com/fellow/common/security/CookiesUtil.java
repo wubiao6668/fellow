@@ -1,7 +1,7 @@
 package com.fellow.common.security;
 
 import com.alibaba.fastjson.JSON;
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.domain.session.User;
 import com.fellow.domain.session.UserInfo;
 import org.apache.commons.lang.ArrayUtils;

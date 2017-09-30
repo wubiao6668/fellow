@@ -1,4 +1,4 @@
-package com.fellow.common.constant;
+package com.fellow.domain.constant;
 
 /**
  * Created by wubiao on 2016/8/31.

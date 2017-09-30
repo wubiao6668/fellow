@@ -2,7 +2,7 @@ package com.fellow.common.emotion;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.domain.emoticon.EmoticonItem;
 import com.fellow.domain.emoticon.EmoticonType;
 import org.apache.commons.collections.CollectionUtils;

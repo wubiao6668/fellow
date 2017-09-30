@@ -1,6 +1,6 @@
 package com.fellow.common.security;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import org.apache.commons.lang.RandomStringUtils;
 
 import java.math.BigInteger;

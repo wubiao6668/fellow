@@ -1,6 +1,6 @@
 package com.fellow.web.controller.myCenter;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.util.VelocityUtil;
 import com.fellow.domain.enums.ContentTypeEnum;
 import com.fellow.domain.enums.MessageTypeEnum;

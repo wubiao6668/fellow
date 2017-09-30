@@ -65,7 +65,7 @@ public class PostMangerController extends WebAbstract<LostPostService> {
         boolean isHadPrePage = 1 >= postQuery.getPage() ? false : true;
         boolean isHadNextPage = false;
         if (CollectionUtils.isNotEmpty(postList)) {
-//            for (Post postTemp : postList) {
+//            for (LostPostEsDomain postTemp : postList) {
 //                postTemp.setPostTypeString(PostEnum.getValueByKey(postTemp.getPostType()));
 //            }
             isHadNextPage = postList.size() < postQuery.getPageSize() ? false : true;

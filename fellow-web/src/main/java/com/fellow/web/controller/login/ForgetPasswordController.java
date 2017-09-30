@@ -1,7 +1,7 @@
 package com.fellow.web.controller.login;
 
 import com.alibaba.fastjson.JSON;
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.exception.BusinessException;
 import com.fellow.common.security.PasswordUtil;
 import com.fellow.common.security.UrlUtil;

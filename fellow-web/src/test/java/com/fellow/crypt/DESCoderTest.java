@@ -3,7 +3,7 @@ package com.fellow.crypt;
 import static org.junit.Assert.*;
 
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.security.DESCoder;
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 package com.fellow.web.controller.post.lostPost;
 
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.domain.enums.PostEnum;
 import com.fellow.domain.model.LostPostReply;
 import com.fellow.domain.model.PostCommentReply;

@@ -1,7 +1,6 @@
 package com.fellow.web.base;
 
-import com.alibaba.fastjson.JSON;
-import com.fellow.common.constant.SystemConstant;
+import com.fellow.domain.constant.SystemConstant;
 import com.fellow.common.db.able.IncrementAble;
 import com.fellow.domain.enums.PostEnum;
 import com.fellow.domain.session.LocalSession;
