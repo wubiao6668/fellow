@@ -1,0 +1,30 @@
+{
+  "_all": {
+    "analyzer": "ik_max_word",
+    "search_analyzer": "ik_max_word",
+    "term_vector": "no",
+    "store": "false"
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "store": "yes",
+      "term_vector": "with_positions_offsets",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word",
+      "include_in_all": "true",
+      "index_options":"offsets",
+      "boost": 2
+    },
+    "postText": {
+      "type": "string",
+      "store": "yes",
+      "term_vector": "with_positions_offsets",
+      "analyzer": "ik_max_word",
+      "search_analyzer": "ik_max_word",
+      "include_in_all": "true",
+      "index_options":"offsets",
+      "boost": 2
+    }
+  }
+}

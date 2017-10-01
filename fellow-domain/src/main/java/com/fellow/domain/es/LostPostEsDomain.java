@@ -1,9 +1,10 @@
 package com.fellow.domain.es;
 
 import com.fellow.domain.constant.EsConstant;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,14 +13,17 @@ import java.util.Date;
  * Created by wubiao on 30/9/2017.
  */
 @Document(indexName = EsConstant.FELLOW_INDEX_NAME, type = LostPostEsDomain.TYPE_NAME)
+@Setting(settingPath = "/es/setting/fellow.json")
+@Mapping(mappingPath = "/es/setting/mapping/post.json")
 public class LostPostEsDomain implements Serializable {
     public static final String TYPE_NAME = "lost_post";
 
     private static final long serialVersionUID = -3513988892109224171L;
-    @Id
+
     /**
      * 主键
      */
+    @Id
     private Long id;
     /**
      * 标题

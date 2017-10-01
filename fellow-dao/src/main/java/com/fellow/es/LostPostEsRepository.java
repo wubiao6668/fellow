@@ -8,4 +8,6 @@ import com.fellow.domain.es.LostPostEsDomain;
 public interface LostPostEsRepository {
 
     boolean save(LostPostEsDomain lostPostEsDomain);
+
+    void queryB();
 }
