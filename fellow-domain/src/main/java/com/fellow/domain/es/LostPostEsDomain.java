@@ -29,6 +29,8 @@ public class LostPostEsDomain implements Serializable {
      * 标题
      */
     private String title;
+
+    private String titleSuggest;
     /**
      * 帖子内容
      */
@@ -164,5 +166,13 @@ public class LostPostEsDomain implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getTitleSuggest() {
+        return titleSuggest;
+    }
+
+    public void setTitleSuggest(String titleSuggest) {
+        this.titleSuggest = titleSuggest;
     }
 }

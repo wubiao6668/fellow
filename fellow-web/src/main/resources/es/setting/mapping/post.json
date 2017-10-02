@@ -16,6 +16,14 @@
       "index_options":"offsets",
       "boost": 2
     },
+    "titleSuggest": {
+      "type":"completion",
+      "analyzer":"ik_smart",
+      "search_analyzer":"ik_smart",
+      "payloads":true,
+      "preserve_separators" : false,//那么建议将忽略空格之类的分隔符。
+      "preserve_position_increments" : false //如果建议项的第一个词使用的是停用词,并且我们使用了过滤停用词的分析器，需要把该项设置成false
+    },
     "postText": {
       "type": "string",
       "store": "yes",
