@@ -2,7 +2,6 @@ package com.fellow.es;
 
 import com.fellow.domain.constant.EsConstant;
 import com.fellow.domain.es.LostPostEsDomain;
-import org.apache.commons.lang.RandomStringUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.suggest.SuggestResponse;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -41,11 +40,9 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 @ContextConfiguration(locations = {"classpath:elsaticsearch.xml"})
 public class LostPostEsTest {
     @Resource
-    private LostPostEsRepository lostPostEsRepository;
-    @Resource
     private ElasticsearchTemplate elasticsearchTemplate;
     @Resource
-    private LostPostRepository lostPostRepository;
+    private LostPostEsRepository lostPostRepository;
 
     @Test
     public void createIndexTest() {
@@ -177,7 +174,7 @@ public class LostPostEsTest {
         lostPostEsDomain.setId(System.nanoTime());
         lostPostEsDomain.setTitle( "牙齿美白小窍门到底靠不靠谱？");
         lostPostEsDomain.setPostText("这显然是有代价的：翻翻美白牙贴的买家评论区，会发现牙贴使用过程中经常会伴随牙齿酸软的感觉，这是轻微的牙本质过敏症状，主要来自于美白牙贴最核心的有效成分——低浓度的过氧化物（一般是过氧化氢or过氧化脲），它们在通过氧化还原作用漂白牙齿的同时，也会对牙釉质和更加脆弱的牙龈产生刺激。");
-        lostPostEsRepository.save(lostPostEsDomain);
+        lostPostRepository.save(lostPostEsDomain);
 //        }
     }
 

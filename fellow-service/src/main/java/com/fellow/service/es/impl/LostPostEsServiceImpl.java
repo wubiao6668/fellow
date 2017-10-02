@@ -17,8 +17,9 @@ public class LostPostEsServiceImpl implements LostPostEsService {
     private LostPostEsRepository lostPostRepository;
 
     @Override
-    public boolean save(LostPostEsDomain lostPostEsDomain) {
-        boolean flag = lostPostRepository.save(lostPostEsDomain);
-        return flag;
+    public LostPostEsDomain save(LostPostEsDomain lostPostEsDomain) {
+        lostPostEsDomain = lostPostRepository.save(lostPostEsDomain);
+        return lostPostEsDomain;
     }
+
 }

@@ -7,6 +7,6 @@ import com.fellow.domain.es.LostPostEsDomain;
  */
 public interface LostPostEsService {
 
-    boolean save(LostPostEsDomain lostPostEsDomain);
+    LostPostEsDomain save(LostPostEsDomain lostPostEsDomain);
 
 }
