@@ -56,8 +56,8 @@ public class LostPostEsTest {
     public void testRepository() {
         LostPostEsDomain lostPostEsDomain = new LostPostEsDomain();
         lostPostEsDomain.setId(System.nanoTime());
-        lostPostEsDomain.setTitle( "寒防霾口罩可以重复使用吗？");
-        lostPostEsDomain.setTitleSuggest( "寒防霾口罩可以重复使用吗？");
+        lostPostEsDomain.setTitle( "<span>寒潮预警html</span>！寒防霾口罩可以重复使用吗？");
+        lostPostEsDomain.setTitleSuggest( "<span>寒潮预警html</span>！寒防霾口罩可以重复使用吗？");
         lostPostEsDomain.setPostText("我们的建议是：一次使用后就丢弃。原因：为了达到有效过滤效果，防霾口罩的密闭性都相对高，我们佩戴的时候会呼出水汽，夹带着口腔里的微生物，温暖湿润又封闭的口罩内侧，这时候就变成了一个优秀的细菌培养皿。细菌的繁殖生长速度普遍惊人，所以口罩用过一次后，再戴多久，细菌就陪你多久，而且会越来越多。2.可更换式半面罩，按说明书使用即可。可更换滤芯的防霾口罩在包装上一般会有如下说明\uD83D\uDC47");
         lostPostRepository.save(lostPostEsDomain);
     }
@@ -88,7 +88,7 @@ public class LostPostEsTest {
         LostPostEsDomain lostPostEsDomain = new LostPostEsDomain();
         lostPostEsDomain.setId(System.nanoTime());
         lostPostEsDomain.setTitle( "寒潮预警！21款儿童秋衣秋裤评测，宝妈速来~");
-        lostPostEsDomain.setTitleSuggest( "寒潮预警！21款儿童秋衣秋裤评测，宝妈速来~");
+        lostPostEsDomain.setTitleSuggest( "<span>寒潮预警html</span>！21款儿童秋衣秋裤评测，宝妈速来~");
         lostPostEsDomain.setPostText("万水千山总是情，没穿秋裤行不行？不行！秋风瑟瑟，又到了你妈觉得你冷的季节。响应宝爸宝妈的号召，宝宝干妈组又一力作——儿童秋衣秋裤评测，正式出炉！");
         IndexQuery iq = new IndexQueryBuilder().withObject(lostPostEsDomain).build();
         ArrayList<IndexQuery> inserts = new ArrayList<IndexQuery>();
@@ -198,7 +198,7 @@ public class LostPostEsTest {
     @Test
     public void testQuery() {
 //        QueryBuilder queryBuilder = queryStringQuery("超薄纸尿裤透气性一定好吗").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
-        QueryBuilder queryBuilder = multiMatchQuery("进去", "title", "postText").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
+        QueryBuilder queryBuilder = multiMatchQuery("<span>", "title", "postText").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder).withHighlightFields()
                 .withHighlightFields(new HighlightBuilder.Field("*").preTags("<em>").postTags("</em>").requireFieldMatch(false))
