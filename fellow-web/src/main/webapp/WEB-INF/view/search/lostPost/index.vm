@@ -130,6 +130,33 @@
         </div>
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->
+    <div name="paginator" index="paginator_1">
+        <ul name="paginationUl" class="pagination">
+            <li class="disabled" name="pagePre">
+                <a href="javascript:;">
+                    上一页
+                </a>
+            </li>
+            <li class="disabled">
+                <a href="javascript:;" name="pageNext">
+                    下一页
+                </a>
+            </li>
+            <li class="active">
+                <a href="javascript:;" onclick="loadPostList(1,10)">1</a>
+            </li>
+            <li>
+                <input type="number" placeholder="页码" style="width:50px;text-align:center;float:left" id="gotoPageText"
+                       value="">
+            </li>
+            <li>
+                <a href="javascript:;" onclick="gotoPage(this)" limit="10" totalpages="1"
+                   class="btn btn-mini btn-success">
+                    跳转
+                </a>
+            </li>
+        </ul>
+    </div>
 </div><!-- /.row -->
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hMOwbodAwP7lGCPyYoTOPf2K"></script>
