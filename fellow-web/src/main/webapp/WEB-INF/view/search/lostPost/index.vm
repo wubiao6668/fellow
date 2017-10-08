@@ -1,3 +1,15 @@
+<style>
+    .tangram-suggestion{
+        z-index: 999999;
+    }
+    .f_map{
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+</style>
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
@@ -6,274 +18,79 @@
             <div class="row search-page" id="search-page-1">
                 <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3">
-                            <!-- #section:pages/search.well -->
-                            <div class="search-area well well-sm">
-                                <div class="search-filter-header bg-primary">
-                                    <h5 class="smaller no-margin-bottom">
-                                        <i class="ace-icon fa fa-sliders light-green bigger-130"></i>&nbsp; Refine your Search
-                                    </h5>
-                                </div>
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="row">
+                                <div class="search-area well col-xs-12">
 
-                                <div class="space-10"></div>
-
-                                <form>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-11 col-md-10">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="keywords" placeholder="Look within results" />
-                                                <div class="input-group-btn">
-                                                    <button type="button" class="btn btn-default no-border btn-sm">
-                                                        <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
-                                                    </button>
+                                    <div class="col-xs-4">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-11 col-md-10">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="keywords" placeholder="请输入要查询的关键字" />
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-default no-border btn-sm">
+                                                                <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <div class="col-xs-3  no-margin  no-padding text-right">
+                                            <label class="smaller-90 label-warning ">视野范围</label>
+                                        </div>
+                                        <div class="col-xs-9 no-padding">
+                                            <input id="lostPlace" onclick="showUserOrgTree('lost_place_map_panel_id');loadMap(); return false;"   style="height: 25px" readonly="" class="" placeholder="丢失地点" type="text">
+                                            <button class="btn-link pull-right" onclick="cancelMapView()"><i class="ace-icon red glyphicon glyphicon-remove"></i></button>
+                                            <div id="lost_place_map_panel_id" class="well  no-padding" name="downPanel"    style="position: absolute; width: 666px;z-index:9999; margin-top: -2px;display: none">
+                                                <input id="lost_post_lng" name="postLng" type="hidden">
+                                                <input id="lost_post_lat" name="postLat" type="hidden">
+
+                                                <div class="col-xs-12 no-margin  well" style="padding:4px">
+                                                    <div class="col-xs-12 no-padding">
+                                                        <div class="col-xs-1  no-margin  no-padding text-right">
+                                                            <label class="smaller-90 label-warning ">地址</label>
+                                                        </div>
+                                                        <div class="col-xs-4 no-padding">
+                                                            <input id="lostSuggestId" class="form-control input-sm" style="height:24px" placeholder="输入地址查找" type="text">
+                                                            <div id="lostPlaceResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+                                                        </div>
+                                                        <div class="col-xs-1  no-margin  no-padding">
+                                                            <button class="btn btn-info btn-minier" type="button" onclick="setLostPlace()">
+                                                                <i class="glyphicon glyphicon-search"></i>
+                                                                查找
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-xs-3   no-margin  no-padding">
+                                                            <button class="btn pull-right btn-info btn-minier" type="button" onclick="definiteMapView()">
+                                                                <i class="glyphicon glyphicon-search"></i>
+                                                                确定视野范围
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="lost_map" class="f_map" ></div>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-
-                                <div class="hr hr-dotted"></div>
-
-                                <h4 class="blue smaller">
-                                    <i class="fa fa-tags"></i>
-                                    Category
-                                </h4>
-
-                                <!-- #section:plugins/fuelux.treeview -->
-                                <div class="tree-container">
-                                    <ul id="cat-tree"></ul>
-                                </div>
-
-                                <!-- /section:plugins/fuelux.treeview -->
-                                <div class="hr hr-dotted"></div>
-
-                                <!-- #section:plugins/input.select2 -->
-                                <h4 class="blue smaller">
-                                    <i class="fa fa-map-marker light-orange bigger-110"></i>
-                                    Location
-                                </h4>
-
-                                <div>
-                                    <select multiple="" name="state" class="select2 tag-input-style" data-placeholder="Click to Choose...">
-                                        <option value="">&nbsp;</option>
-                                        <option value="AL">Alabama</option>
-                                        <option value="AK">Alaska</option>
-                                        <option value="AZ">Arizona</option>
-                                        <option value="AR">Arkansas</option>
-                                        <option value="CA">California</option>
-                                        <option value="CO">Colorado</option>
-                                        <option value="CT">Connecticut</option>
-                                        <option value="DE">Delaware</option>
-                                        <option value="FL">Florida</option>
-                                        <option value="GA">Georgia</option>
-                                        <option value="HI">Hawaii</option>
-                                        <option value="ID">Idaho</option>
-                                        <option value="IL">Illinois</option>
-                                        <option value="IN">Indiana</option>
-                                        <option value="IA">Iowa</option>
-                                        <option value="KS">Kansas</option>
-                                        <option value="KY">Kentucky</option>
-                                        <option value="LA">Louisiana</option>
-                                        <option value="ME">Maine</option>
-                                        <option value="MD">Maryland</option>
-                                        <option value="MA">Massachusetts</option>
-                                        <option value="MI">Michigan</option>
-                                        <option value="MN">Minnesota</option>
-                                        <option value="MS">Mississippi</option>
-                                        <option value="MO">Missouri</option>
-                                        <option value="MT">Montana</option>
-                                        <option value="NE">Nebraska</option>
-                                        <option value="NV">Nevada</option>
-                                        <option value="NH">New Hampshire</option>
-                                        <option value="NJ">New Jersey</option>
-                                        <option value="NM">New Mexico</option>
-                                        <option value="NY">New York</option>
-                                        <option value="NC">North Carolina</option>
-                                        <option value="ND">North Dakota</option>
-                                        <option value="OH">Ohio</option>
-                                        <option value="OK">Oklahoma</option>
-                                        <option value="OR">Oregon</option>
-                                        <option value="PA">Pennsylvania</option>
-                                        <option value="RI">Rhode Island</option>
-                                        <option value="SC">South Carolina</option>
-                                        <option value="SD">South Dakota</option>
-                                        <option value="TN">Tennessee</option>
-                                        <option value="TX">Texas</option>
-                                        <option value="UT">Utah</option>
-                                        <option value="VT">Vermont</option>
-                                        <option value="VA">Virginia</option>
-                                        <option value="WA">Washington</option>
-                                        <option value="WV">West Virginia</option>
-                                        <option value="WI">Wisconsin</option>
-                                        <option value="WY">Wyoming</option>
-                                    </select>
-                                </div>
-
-                                <!-- /section:plugins/input.select2 -->
-                                <div class="hr hr-dotted"></div>
-
-                                <!-- #section:plugins/jquery.slider -->
-                                <h4 class="blue smaller">
-                                    <i class="fa fa-location-arrow light-grey bigger-110"></i>
-                                    Distance
-                                </h4>
-
-                                <div class="search-filter-element">
-                                    <span>within</span>
-                                    &nbsp;
-                                    <div id="slider-range" class="inline"></div>
-                                    &nbsp;
-                                    <span>miles</span>
-                                </div>
-
-                                <!-- /section:plugins/jquery.slider -->
-                                <div class="hr hr-dotted hr-24"></div>
-
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-default btn-round btn-sm btn-white">
-                                        <i class="ace-icon fa fa-remove red2"></i>
-                                        Reset
-                                    </button>
-
-                                    <button type="button" class="btn btn-default btn-round btn-white">
-                                        <i class="ace-icon fa fa-refresh green"></i>
-                                        Update
-                                    </button>
-                                </div>
-
-                                <div class="space-4"></div>
-                            </div>
-
-                            <!-- /section:pages/search.well -->
-                        </div>
-
-                        <div class="col-xs-12 col-sm-9">
-                            <div class="row">
-                                <div class="search-area well col-xs-12">
-                                    <div class="pull-left">
-                                        <b class="text-primary">Display</b>
-
-                                        &nbsp;
-                                        <div id="toggle-result-format" class="btn-group btn-overlap" data-toggle="buttons">
-                                            <label title="Thumbnail view" class="btn btn-lg btn-white btn-success active" data-class="btn-success" aria-pressed="true">
-                                                <input type="radio" value="2" autocomplete="off" />
-                                                <i class="icon-only ace-icon fa fa-th"></i>
-                                            </label>
-
-                                            <label title="List view" class="btn btn-lg btn-white btn-grey" data-class="btn-primary">
-                                                <input type="radio" value="1" checked="" autocomplete="off" />
-                                                <i class="icon-only ace-icon fa fa-list"></i>
-                                            </label>
-
-                                            <label title="Map view" class="btn btn-lg btn-white btn-grey" data-class="btn-warning">
-                                                <input type="radio" value="3" autocomplete="off" />
-                                                <i class="icon-only ace-icon fa fa-crosshairs"></i>
-                                            </label>
-                                        </div>
-                                    </div>
+##                                    <div class="pull-left">
+##
+##                                    </div>
 
                                     <div class="pull-right">
-                                        <b class="text-primary">Order</b>
+                                        <b class="text-primary">排序</b>
 
                                         &nbsp;
                                         <select>
-                                            <option>Relevance</option>
-                                            <option>Newest First</option>
-                                            <option>Rating</option>
+                                            <option>默认</option>
+                                            <option>事件时间</option>
+                                            <option>发表时间</option>
                                         </select>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-4 col-md-3">
-                                    <!-- #section:pages/search.thumb -->
-                                    <div class="thumbnail search-thumbnail">
-                                        <span class="search-promotion label label-success arrowed-in arrowed-in-right">Sponsored</span>
-
-                                        <img class="media-object" data-src="holder.js/100px200?theme=gray" />
-                                        <div class="caption">
-                                            <div class="clearfix">
-                                                <span class="pull-right label label-grey info-label">London</span>
-
-                                                <div class="pull-left bigger-110">
-                                                    <i class="ace-icon fa fa-star orange2"></i>
-
-                                                    <i class="ace-icon fa fa-star orange2"></i>
-
-                                                    <i class="ace-icon fa fa-star orange2"></i>
-
-                                                    <i class="ace-icon fa fa-star-half-o orange2"></i>
-
-                                                    <i class="ace-icon fa fa-star light-grey"></i>
-                                                </div>
-                                            </div>
-
-                                            <h3 class="search-title">
-                                                <a href="#" class="blue">Thumbnail label</a>
-                                            </h3>
-                                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam ...</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- /section:pages/search.thumb -->
-                                </div>
-
-                                <div class="col-xs-6 col-sm-4 col-md-3">
-                                    <!-- #section:pages/search.thumb -->
-                                    <div class="thumbnail search-thumbnail">
-                                        <img class="media-object" data-src="holder.js/100px200?theme=gray" />
-                                        <div class="caption">
-                                            <div class="clearfix">
-                                                <span class="pull-right label label-grey info-label">Tokyo</span>
-                                            </div>
-
-                                            <h3 class="search-title">
-                                                <a href="#" class="blue">Thumbnail label</a>
-                                            </h3>
-                                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam ...</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- /section:pages/search.thumb -->
-                                </div>
-
-                                <div class="col-xs-6 col-sm-4 col-md-3">
-                                    <!-- #section:pages/search.thumb -->
-                                    <div class="thumbnail search-thumbnail">
-                                        <img class="media-object" data-src="holder.js/100px200?theme=gray" />
-                                        <div class="caption">
-                                            <div class="clearfix">
-                                                <span class="pull-right label label-grey info-label">Istanbul</span>
-                                            </div>
-
-                                            <h3 class="search-title">
-                                                <a href="#" class="blue">Thumbnail label</a>
-                                            </h3>
-                                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam ...</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- /section:pages/search.thumb -->
-                                </div>
-
-                                <div class="col-xs-6 col-sm-4 col-md-3">
-                                    <!-- #section:pages/search.thumb -->
-                                    <div class="thumbnail search-thumbnail">
-                                        <img class="media-object" data-src="holder.js/100px200?theme=social" />
-                                        <div class="caption">
-                                            <div class="clearfix">
-                                                <span class="pull-right label label-grey info-label">Chicago</span>
-                                            </div>
-
-                                            <h3 class="search-title">
-                                                <a href="#" class="blue">Thumbnail label</a>
-                                            </h3>
-                                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam ...</p>
-                                        </div>
-                                    </div>
-
-                                    <!-- /section:pages/search.thumb -->
                                 </div>
                             </div>
 
@@ -296,125 +113,14 @@
                                                 </h4>
                                             </div>
                                             <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis ...</p>
-
-                                            <!-- #section:pages/search.media.buttons -->
-                                            <div class="search-actions text-center">
-                                                <span class="text-info">$</span>
-
-                                                <span class="blue bolder bigger-150">300</span>
-
-                                                monthly
-                                                <div class="action-buttons bigger-125">
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-phone green"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-heart red"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-star orange2"></i>
-                                                    </a>
-                                                </div>
-                                                <a class="search-btn-action btn btn-sm btn-block btn-info">Book it!</a>
+                                            <div class="" style="clear: both">
+                                                <i class="fa fa-map-marker"></i> &nbsp; <span name="geoPointToText" postlng="116.39446" postlat="39.920008">北京市北京市西城区</span>
                                             </div>
-
-                                            <!-- /section:pages/search.media.buttons -->
                                         </div>
                                     </div>
 
                                     <!-- /section:pages/search.media -->
 
-                                    <!-- #section:pages/search.media -->
-                                    <div class="media search-media disabled">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object" data-src="holder.js/72x72" />
-                                            </a>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div>
-                                                <h4 class="media-heading">
-                                                    <a href="#" class="blue">Media heading</a>
-                                                </h4>
-                                            </div>
-                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis ...</p>
-
-                                            <!-- #section:pages/search.media.buttons -->
-                                            <div class="search-actions text-center">
-                                                <span class="grey">$</span>
-
-                                                <span class="grey bolder bigger-125">250</span>
-
-                                                monthly
-                                                <div class="action-buttons bigger-125">
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-phone green"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-heart red"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-star orange2"></i>
-                                                    </a>
-                                                </div>
-                                                <a class="search-btn-action btn btn-sm btn-block btn-grey disabled">Unavailable!</a>
-                                            </div>
-
-                                            <!-- /section:pages/search.media.buttons -->
-                                        </div>
-                                    </div>
-
-                                    <!-- /section:pages/search.media -->
-
-                                    <!-- #section:pages/search.media -->
-                                    <div class="media search-media">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object" data-src="holder.js/72x72" />
-                                            </a>
-                                        </div>
-
-                                        <div class="media-body">
-                                            <div>
-                                                <h4 class="media-heading">
-                                                    <a href="#" class="blue">Media heading</a>
-                                                </h4>
-                                            </div>
-                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis ...</p>
-
-                                            <!-- #section:pages/search.media.buttons -->
-                                            <div class="search-actions text-center">
-                                                <span class="text-info">$</span>
-
-                                                <span class="blue bolder bigger-150">220</span>
-
-                                                monthly
-                                                <div class="action-buttons bigger-125">
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-phone green"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-heart red"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-star orange2"></i>
-                                                    </a>
-                                                </div>
-                                                <a class="search-btn-action btn btn-sm btn-block btn-info">Book it!</a>
-                                            </div>
-
-                                            <!-- /section:pages/search.media.buttons -->
-                                        </div>
-                                    </div>
-
-                                    <!-- /section:pages/search.media -->
                                 </div>
                             </div>
                         </div>
@@ -426,12 +132,86 @@
     </div><!-- /.col -->
 </div><!-- /.row -->
 
-
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hMOwbodAwP7lGCPyYoTOPf2K"></script>
+<script type="text/javascript" src="/static/js/app/map.js"></script>
 
 <script>
+    $("#nav-search").hide();
     $(function () {
         ace.settingFunction.main_container_fixed(null, true);
     })
+    var maps = null;
+    function loadMap() {
+        $("#lost_place_map_panel_id").show();
+        if (null == maps) {
+            // 百度地图API功能
+            maps = new BMap.Map("lost_map");    // 创建Map实例
+            var localCity = new BMap.LocalCity();
+            localCity.get(function (localCityResult) {
+                maps.centerAndZoom(localCityResult.center, 11);  // 初始化地图,设置中心点坐标和地图级别
+            });
+            maps.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+            maps.addControl(new BMap.NavigationControl());
+            maps.addControl(new BMap.OverviewMapControl());
+            maps.addControl(new BMap.ScaleControl());
+            maps.addControl(new BMap.GeolocationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT}));
+            var size = new BMap.Size(100, 20);
+            maps.addControl(new BMap.CityListControl());
+            maps.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+            initCliSuggest();
+            setLostPoint();
+
+        }
+    }
+    function initCliSuggest(){
+        var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+                {"input" : "lostSuggestId"
+                    ,"location" : maps
+                });
+
+        ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+            var str = "";
+            var _value = e.fromitem.value;
+            var value = "";
+            if (e.fromitem.index > -1) {
+                value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            }
+            str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+            value = "";
+            if (e.toitem.index > -1) {
+                _value = e.toitem.value;
+                value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            }
+            str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+            $("#lostPlaceResultPanel").html(str);
+        });
+
+        var myValue;
+        ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+            var _value = e.item.value;
+            myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            $("#lostPlaceResultPanel").html("onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue);
+            console.info("*****onconfirm*******");
+            console.info(_value);
+            setLostPlace();
+        });
+    }
+    function setLostPoint(){
+        maps.addEventListener("tilesloaded", function (v1, v2, v3) {
+            if($("#lost_place_map_panel_id").css("display")=="none"){
+                return;
+            }
+            var point = maps.getCenter();
+            var marker = new BMap.Marker(maps.getCenter());  // 创建标注
+            maps.clearOverlays();    //清除地图上所有覆盖物
+            maps.addOverlay(marker);               // 将标注添加到地图中
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+//            $("#lost_post_lng").val(point.lng);
+//            $("#lost_post_lat").val(point.lat);
+        });
+    }
+
 </script>
 
 
