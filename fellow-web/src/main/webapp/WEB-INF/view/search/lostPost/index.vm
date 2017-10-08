@@ -1,8 +1,9 @@
 <style>
-    .tangram-suggestion{
+    .tangram-suggestion {
         z-index: 999999;
     }
-    .f_map{
+
+    .f_map {
         width: 100%;
         height: 300px;
         overflow: hidden;
@@ -13,75 +14,20 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <div class="hr dotted"></div>
+    ##        <div class="hr dotted"></div>
         <div>
             <div class="row search-page" id="search-page-1">
                 <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12">
-                            <div class="row">
-                                <div class="search-area well col-xs-12">
+                        <div class="col-xs-12 col-sm-12 ">
+                            <div class="row no-padding ">
+                                <div class="search-area well col-xs-12 no-padding ">
 
-                                    <div class="col-xs-4">
-                                        <form>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-11 col-md-10">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="keywords" placeholder="请输入要查询的关键字" />
-                                                        <div class="input-group-btn">
-                                                            <button type="button" class="btn btn-default no-border btn-sm">
-                                                                <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                ##                                    <div class="pull-left">
+                                ##
+                                ##                                    </div>
 
-                                    <div class="col-xs-3">
-                                        <div class="col-xs-3  no-margin  no-padding text-right">
-                                            <label class="smaller-90 label-warning ">视野范围</label>
-                                        </div>
-                                        <div class="col-xs-9 no-padding">
-                                            <input id="lostPlace" onclick="showUserOrgTree('lost_place_map_panel_id');loadMap(); return false;"   style="height: 25px" readonly="" class="" placeholder="丢失地点" type="text">
-                                            <button class="btn-link pull-right" onclick="cancelMapView()"><i class="ace-icon red glyphicon glyphicon-remove"></i></button>
-                                            <div id="lost_place_map_panel_id" class="well  no-padding" name="downPanel"    style="position: absolute; width: 666px;z-index:9999; margin-top: -2px;display: none">
-                                                <input id="lost_post_lng" name="postLng" type="hidden">
-                                                <input id="lost_post_lat" name="postLat" type="hidden">
-
-                                                <div class="col-xs-12 no-margin  well" style="padding:4px">
-                                                    <div class="col-xs-12 no-padding">
-                                                        <div class="col-xs-1  no-margin  no-padding text-right">
-                                                            <label class="smaller-90 label-warning ">地址</label>
-                                                        </div>
-                                                        <div class="col-xs-4 no-padding">
-                                                            <input id="lostSuggestId" class="form-control input-sm" style="height:24px" placeholder="输入地址查找" type="text">
-                                                            <div id="lostPlaceResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
-                                                        </div>
-                                                        <div class="col-xs-1  no-margin  no-padding">
-                                                            <button class="btn btn-info btn-minier" type="button" onclick="setLostPlace()">
-                                                                <i class="glyphicon glyphicon-search"></i>
-                                                                查找
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-xs-3   no-margin  no-padding">
-                                                            <button class="btn pull-right btn-info btn-minier" type="button" onclick="definiteMapView()">
-                                                                <i class="glyphicon glyphicon-search"></i>
-                                                                确定视野范围
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="lost_map" class="f_map" ></div>
-                                            </div>
-                                        </div>
-                                    </div>
-##                                    <div class="pull-left">
-##
-##                                    </div>
-
-                                    <div class="pull-right">
+                                    <div class="pull-right" style="margin-right: 80px">
                                         <b class="text-primary">排序</b>
 
                                         &nbsp;
@@ -91,10 +37,60 @@
                                             <option>发表时间</option>
                                         </select>
                                     </div>
+                                    <div class="col-xs-3 pull-right">
+                                        <div class="col-xs-3  no-margin  no-padding text-right">
+                                            <label class="smaller-90 label-warning ">视野范围</label>
+                                        </div>
+                                        <div class="col-xs-9 no-padding">
+                                            <input id="lostPlace"
+                                                   onclick="showUserOrgTree('lost_place_map_panel_id');loadMap(); return false;"
+                                                   style="height: 25px" readonly="" class="" placeholder="丢失地点"
+                                                   type="text">
+                                            <button class="btn-link pull-right" onclick="cancelMapView()"><i
+                                                    class="ace-icon red glyphicon glyphicon-remove"></i></button>
+                                            <div id="lost_place_map_panel_id" class="well  no-padding" name="downPanel"
+                                                 style="position: absolute; width: 666px;z-index:9999; left: -507px; margin-top: -2px;display: none">
+                                                <input id="lost_post_lng" name="postLng" type="hidden">
+                                                <input id="lost_post_lat" name="postLat" type="hidden">
+
+                                                <div class="col-xs-12 no-margin  well" style="padding:4px">
+                                                    <div class="col-xs-12 no-padding">
+                                                        <div class="col-xs-3">
+
+                                                        </div>
+                                                        <div class="col-xs-3   no-margin  no-padding">
+                                                            <button class="btn pull-right btn-info btn-minier"
+                                                                    type="button" onclick="definiteMapView()">
+                                                                <i class="glyphicon glyphicon-search"></i>
+                                                                确定视野范围
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-xs-1  no-margin  no-padding text-right">
+                                                            <label class="smaller-90 label-warning ">地址</label>
+                                                        </div>
+                                                        <div class="col-xs-4 no-padding">
+                                                            <input id="lostSuggestId" class="form-control input-sm"
+                                                                   style="height:24px" placeholder="输入地址查找" type="text">
+                                                            <div id="lostPlaceResultPanel"
+                                                                 style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+                                                        </div>
+                                                        <div class="col-xs-1  no-margin  no-padding">
+                                                            <button class="btn btn-info btn-minier" type="button"
+                                                                    onclick="setLostPlace()">
+                                                                <i class="glyphicon glyphicon-search"></i>
+                                                                查找
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="lost_map" class="f_map"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="space-12"></div>
+                        ##                            <div class="space-12"></div>
 
                             <div class="row">
                                 <div class="col-xs-12">
@@ -102,7 +98,7 @@
                                     <div class="media search-media">
                                         <div class="media-left">
                                             <a href="#">
-                                                <img class="media-object" data-src="holder.js/72x72" />
+                                                <img class="media-object" data-src="holder.js/72x72"/>
                                             </a>
                                         </div>
 
@@ -112,9 +108,13 @@
                                                     <a href="#" class="blue">Media heading</a>
                                                 </h4>
                                             </div>
-                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis ...</p>
+                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                                ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+                                                tempus viverra turpis ...</p>
                                             <div class="" style="clear: both">
-                                                <i class="fa fa-map-marker"></i> &nbsp; <span name="geoPointToText" postlng="116.39446" postlat="39.920008">北京市北京市西城区</span>
+                                                <i class="fa fa-map-marker"></i> &nbsp; <span name="geoPointToText"
+                                                                                              postlng="116.39446"
+                                                                                              postlat="39.920008">北京市北京市西城区</span>
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +136,6 @@
 <script type="text/javascript" src="/static/js/app/map.js"></script>
 
 <script>
-    $("#nav-search").hide();
     $(function () {
         ace.settingFunction.main_container_fixed(null, true);
     })
@@ -163,43 +162,44 @@
 
         }
     }
-    function initCliSuggest(){
+    function initCliSuggest() {
         var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
-                {"input" : "lostSuggestId"
-                    ,"location" : maps
+                {
+                    "input": "lostSuggestId"
+                    , "location": maps
                 });
 
-        ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        ac.addEventListener("onhighlight", function (e) {  //鼠标放在下拉列表上的事件
             var str = "";
             var _value = e.fromitem.value;
             var value = "";
             if (e.fromitem.index > -1) {
-                value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+                value = _value.province + _value.city + _value.district + _value.street + _value.business;
             }
             str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
 
             value = "";
             if (e.toitem.index > -1) {
                 _value = e.toitem.value;
-                value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+                value = _value.province + _value.city + _value.district + _value.street + _value.business;
             }
             str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
             $("#lostPlaceResultPanel").html(str);
         });
 
         var myValue;
-        ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        ac.addEventListener("onconfirm", function (e) {    //鼠标点击下拉列表后的事件
             var _value = e.item.value;
-            myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
             $("#lostPlaceResultPanel").html("onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue);
             console.info("*****onconfirm*******");
             console.info(_value);
             setLostPlace();
         });
     }
-    function setLostPoint(){
+    function setLostPoint() {
         maps.addEventListener("tilesloaded", function (v1, v2, v3) {
-            if($("#lost_place_map_panel_id").css("display")=="none"){
+            if ($("#lost_place_map_panel_id").css("display") == "none") {
                 return;
             }
             var point = maps.getCenter();
