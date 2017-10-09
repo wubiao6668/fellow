@@ -188,7 +188,7 @@ public class LostPostEsTest {
 
     @Test
     public void matchPhraseQueryTest() {
-        QueryBuilder termQueryBuilder = matchQuery("title", "透气 年轻 处女");
+        QueryBuilder termQueryBuilder = matchQuery("title", "透气 年轻");
         SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQueryBuilder).build();
         List<LostPostEsDomain> lostPostDomain = elasticsearchTemplate.queryForList(searchQuery, LostPostEsDomain.class);
         System.out.print(lostPostDomain);
@@ -197,11 +197,11 @@ public class LostPostEsTest {
 
     @Test
     public void testQuery() {
-//        QueryBuilder queryBuilder = queryStringQuery("超薄纸尿裤透气性一定好吗").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
-        QueryBuilder queryBuilder = multiMatchQuery("<span>", "title", "postText").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
+//        QueryBuilder queryBuilder = queryStringQuery("透气").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
+        QueryBuilder queryBuilder = multiMatchQuery("一定", "title", "postText").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder).withHighlightFields()
-                .withHighlightFields(new HighlightBuilder.Field("*").preTags("<em>").postTags("</em>").requireFieldMatch(false))
+                .withHighlightFields(new HighlightBuilder.Field("*").preTags("<span style='color: #d70c0c;'>").postTags("</span>").requireFieldMatch(false))
 //                .withHighlightFields(new HighlightBuilder.Field("postText").preTags("<em>").postTags("</em>").requireFieldMatch(true))
                 .withPageable(new PageRequest(0, 20))
                 .build();
@@ -240,6 +240,12 @@ public class LostPostEsTest {
         });
         System.out.print(lostPostEsDomainPage);
     }
+
+    @Test
+    public void testByPage(){
+
+    }
+
 
     @Test
     public void testSuggest() {

@@ -22,11 +22,6 @@
                         <div class="col-xs-12 col-sm-12 ">
                             <div class="row no-padding ">
                                 <div class="search-area well col-xs-12 no-padding ">
-
-                                ##                                    <div class="pull-left">
-                                ##
-                                ##                                    </div>
-
                                     <div class="pull-right" style="margin-right: 80px">
                                         <b class="text-primary">排序</b>
 
@@ -93,35 +88,50 @@
                         ##                            <div class="space-12"></div>
 
                             <div class="row">
-                                <div class="col-xs-12">
-                                    <!-- #section:pages/search.media -->
-                                    <div class="media search-media">
-                                        <div class="media-left">
-                                            <a href="#">
-                                                <img class="media-object" data-src="holder.js/72x72"/>
-                                            </a>
-                                        </div>
+                                #if($postEsDomainPage && $collectionUtils.isNotEmpty($postEsDomainPage.content))
+                                    #foreach($lostPostDomainTemp in $postEsDomainPage.content)
+                                        <div class="col-xs-12">
+                                            <!-- #section:pages/search.media -->
+                                            <div class="media search-media">
+                                                <div class="media-left">
+                                                    <a href="#">
+                                                        <img class="media-object" data-src="holder.js/72x72"/>
+                                                    </a>
+                                                </div>
 
-                                        <div class="media-body">
-                                            <div>
-                                                <h4 class="media-heading">
-                                                    <a href="#" class="blue">Media heading</a>
-                                                </h4>
+                                                <div class="media-body">
+                                                    <div>
+                                                        <h4 class="media-heading">
+                                                            <a href="#" class="blue">$!{lostPostDomainTemp.title}</a>
+                                                        </h4>
+                                                    </div>
+                                                    <p>
+                                                        $!{lostPostDomainTemp.postText}
+                                                    </p>
+                                                    <div class="col-xs-12 no-padding">
+                                                        <div class="col-xs-3 no-padding">
+                                                            <span class="" style="width: 300px;di">
+                                                            <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                                            2017-06-20 21:39:27
+                                                        </span>
+                                                        </div>
+                                                        <div class="col-xs-3">
+                                                            <i class="fa fa-map-marker"></i> &nbsp;
+                                                            <span
+                                                                    name="geoPointToText"
+                                                                    postlng="116.39446"
+                                                                    postlat="39.920008">北京市北京市西城区
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                                ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-                                                tempus viverra turpis ...</p>
-                                            <div class="" style="clear: both">
-                                                <i class="fa fa-map-marker"></i> &nbsp; <span name="geoPointToText"
-                                                                                              postlng="116.39446"
-                                                                                              postlat="39.920008">北京市北京市西城区</span>
-                                            </div>
+
+                                            <!-- /section:pages/search.media -->
+
                                         </div>
-                                    </div>
-
-                                    <!-- /section:pages/search.media -->
-
-                                </div>
+                                    #end
+                                #end
                             </div>
                         </div>
                     </div>
@@ -163,6 +173,7 @@
 <script type="text/javascript" src="/static/js/app/map.js"></script>
 
 <script>
+    $("#nav-search-input-form").attr("target", "_self");
     $(function () {
         ace.settingFunction.main_container_fixed(null, true);
     })
