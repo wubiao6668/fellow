@@ -43,7 +43,7 @@ public class PostSearchController extends WebAbstract<LostPostEsService> {
     }
 
     private void condition(Model model, String keywords, LostPostQuery lostPostQuery) {
-        lostPostQuery.setPageSize(1);
+        lostPostQuery.setPageSize(3);
         Page<LostPostEsDomain> postEsDomainPage = null;
         if (StringUtils.isNotBlank(keywords)) {
             QueryBuilder queryBuilder = multiMatchQuery(keywords, "title", "postText").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
