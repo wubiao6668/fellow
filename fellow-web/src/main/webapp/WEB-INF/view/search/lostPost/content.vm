@@ -1,0 +1,88 @@
+#if($postEsDomainPage && $collectionUtils.isNotEmpty($postEsDomainPage.content))
+    #foreach($lostPostDomainTemp in $postEsDomainPage.content)
+    <div class="col-xs-12">
+        <!-- #section:pages/search.media -->
+        <div class="media search-media">
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" data-src="holder.js/72x72"/>
+                </a>
+            </div>
+
+            <div class="media-body">
+                <div>
+                    <h4 class="media-heading">
+                        <a href="#" class="blue">$!{lostPostDomainTemp.title}</a>
+                    </h4>
+                </div>
+                <p>
+                    $!{lostPostDomainTemp.postText}
+                </p>
+                <div class="col-xs-12 no-padding">
+                    <div class="col-xs-3 no-padding">
+                                                            <span class="" style="width: 300px;di">
+                                                            <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                                            2017-06-20 21:39:27
+                                                        </span>
+                    </div>
+                    <div class="col-xs-3">
+                        <i class="fa fa-map-marker"></i> &nbsp;
+                        <span
+                                name="geoPointToText"
+                                postlng="116.39446"
+                                postlat="39.920008">北京市北京市西城区
+                                                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /section:pages/search.media -->
+
+    </div>
+    #end
+#else
+<div class="alert alert-warning text-center">
+    <i class="ace-icon fa fa-globe"></i>没有找到"$!{keywords}"相关的结果！
+</div>
+#end
+<div class="col-xs-12">
+    #if(1 < ${paginator.totalPages})
+        <ul name="paginationUl" class="pagination">
+            <li page="1" class="#if(${paginator.firstPage}) disabled #end" data-spider>
+                <a href="javascript:;">第一页</a>
+            </li>
+            <li page="${paginator.prePage}"
+                class="#if(!${paginator.hasPrePage}) disabled  #end" data-spider>
+                <a href="javascript:;">上一页</a>
+            </li>
+            #foreach($pageTemp in $paginator.slider)
+                #if($pageTemp == $paginator.page)
+                    <li page="$!{pageTemp}" class="active" data-spider>
+                        <a href="javascript:;">$!{pageTemp}</a>
+                    </li>
+                #else
+                    <li page="$!{pageTemp}" class="" data-spider>
+                        <a href="javascript:;">$!{pageTemp}</a>
+                    </li>
+                #end
+            #end
+            <li page="${paginator.nextPage}"
+                class="#if(!${paginator.hasNextPage}) disabled #end" data-spider>
+                <a href="javascript:;">下一页</a>
+            </li>
+
+            <li page="${paginator.totalPages}"
+                class="#if(${paginator.lastPage}) disabled #end" data-spider>
+                <a href="javascript:;">最后一页</a>
+            </li>
+        </ul>
+    #end
+</div>
+
+<script>
+
+    $(function () {
+        bindPageClick();
+    })
+</script>

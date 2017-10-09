@@ -55,6 +55,7 @@ public class LostPostEsServiceImpl implements LostPostEsService {
                 log.info("searchByPage--查询共耗时:" + response.getTookInMillis() + "毫秒.");
                 List<LostPostEsDomain> postEsDomainList = new ArrayList<LostPostEsDomain>();
                 LostPostEsDomain lostPostEsDomain = null;
+                long total = response.getHits().getTotalHits();
                 for (SearchHit searchHit : response.getHits()) {
                     if (response.getHits().getHits().length <= 0) {
                         return null;
@@ -78,7 +79,7 @@ public class LostPostEsServiceImpl implements LostPostEsService {
                     postEsDomainList.add(lostPostEsDomain);
                 }
                 if (postEsDomainList.size() > 0) {
-                    return new AggregatedPageImpl<T>((List<T>) postEsDomainList);
+                    return new AggregatedPageImpl<T>((List<T>) postEsDomainList,pageable,total);
                 }
                 return null;
             }

@@ -166,7 +166,7 @@
                     <div class="nav-search" id="nav-search">
                         <form id="nav-search-input-form" class="form-search" target="_blank" action="/search/lostPost/index">
 								<span class="input-icon">
-									<input name="keywords" type="text" placeholder="关键字" class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<input name="keywords" value="$!{keywords}" type="text" placeholder="关键字" class="nav-search-input" id="nav-search-input" autocomplete="off" />
 									<i class="ace-icon fa fa-search nav-search-icon"></i>
 								</span>
                         </form>

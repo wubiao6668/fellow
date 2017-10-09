@@ -2,10 +2,12 @@ package com.fellow.web.controller.search;
 
 import com.fellow.domain.constant.EsConstant;
 import com.fellow.domain.es.LostPostEsDomain;
+import com.fellow.domain.mybatis.PaginatorImpl;
 import com.fellow.domain.query.LostPostQuery;
 import com.fellow.domain.web.Response;
 import com.fellow.service.es.LostPostEsService;
 import com.fellow.web.base.WebAbstract;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.highlight.HighlightBuilder;
@@ -16,7 +18,6 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
@@ -30,19 +31,19 @@ public class PostSearchController extends WebAbstract<LostPostEsService> {
 
     @RequestMapping("/index")
     public String index(Model model, String keywords, LostPostQuery lostPostQuery) {
-        condition(model,keywords,lostPostQuery);
+        condition(model, keywords, lostPostQuery);
         return "/search/lostPost/index";
     }
 
-    @RequestMapping("/more")
-    @ResponseBody
-    public Response more(Model model, String keywords, LostPostQuery lostPostQuery){
-        Response response =Response.newResponse();
-        condition(model,keywords,lostPostQuery);
-        return response;
+    @RequestMapping("/query")
+    public String query(Model model, String keywords, LostPostQuery lostPostQuery) {
+        Response response = Response.newResponse();
+        condition(model, keywords, lostPostQuery);
+        return "/search/lostPost/query";
     }
 
-    private void condition(Model model, String keywords, LostPostQuery lostPostQuery){
+    private void condition(Model model, String keywords, LostPostQuery lostPostQuery) {
+        lostPostQuery.setPageSize(1);
         Page<LostPostEsDomain> postEsDomainPage = null;
         if (StringUtils.isNotBlank(keywords)) {
             QueryBuilder queryBuilder = multiMatchQuery(keywords, "title", "postText").analyzer(EsConstant.IK_PINYIN_ANALYZER_NAME);
@@ -59,14 +60,18 @@ public class PostSearchController extends WebAbstract<LostPostEsService> {
             SearchQuery searchQuery =
                     nativeSearchQueryBuilder.withQuery(queryBuilder).withHighlightFields().
                             withHighlightFields(new HighlightBuilder.Field("*").preTags("<span style='color: #d70c0c;'>").postTags("</span>").requireFieldMatch(false)).
-                            withPageable(new PageRequest(lostPostQuery.getPage() - 1, 20)).
+                            withPageable(new PageRequest(lostPostQuery.getPage() - 1, lostPostQuery.getPageSize())).
                             build();
             postEsDomainPage = service.searchByPage(searchQuery);
         }
+        PaginatorImpl paginator = null;
+        if (null != postEsDomainPage) {
+            paginator = new PaginatorImpl(lostPostQuery.getPage(), lostPostQuery.getPageSize(), (int) postEsDomainPage.getTotalElements());
+        }
         model.addAttribute("postEsDomainPage", postEsDomainPage);
+        model.addAttribute("keywords", StringEscapeUtils.escapeHtml(keywords));
+        model.addAttribute("paginator", paginator);
     }
-
-
 
 
 }

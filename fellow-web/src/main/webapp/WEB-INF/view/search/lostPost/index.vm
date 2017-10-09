@@ -11,6 +11,7 @@
         font-family: "微软雅黑";
     }
 </style>
+<input type="hidden" value="$!{keywords}" id="keywordsHiddenId">
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
@@ -87,52 +88,10 @@
 
                         ##                            <div class="space-12"></div>
 
-                            <div class="row">
-                                #if($postEsDomainPage && $collectionUtils.isNotEmpty($postEsDomainPage.content))
-                                    #foreach($lostPostDomainTemp in $postEsDomainPage.content)
-                                        <div class="col-xs-12">
-                                            <!-- #section:pages/search.media -->
-                                            <div class="media search-media">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" data-src="holder.js/72x72"/>
-                                                    </a>
-                                                </div>
-
-                                                <div class="media-body">
-                                                    <div>
-                                                        <h4 class="media-heading">
-                                                            <a href="#" class="blue">$!{lostPostDomainTemp.title}</a>
-                                                        </h4>
-                                                    </div>
-                                                    <p>
-                                                        $!{lostPostDomainTemp.postText}
-                                                    </p>
-                                                    <div class="col-xs-12 no-padding">
-                                                        <div class="col-xs-3 no-padding">
-                                                            <span class="" style="width: 300px;di">
-                                                            <i class="ace-icon fa fa-clock-o bigger-110"></i>
-                                                            2017-06-20 21:39:27
-                                                        </span>
-                                                        </div>
-                                                        <div class="col-xs-3">
-                                                            <i class="fa fa-map-marker"></i> &nbsp;
-                                                            <span
-                                                                    name="geoPointToText"
-                                                                    postlng="116.39446"
-                                                                    postlat="39.920008">北京市北京市西城区
-                                                        </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- /section:pages/search.media -->
-
-                                        </div>
-                                    #end
-                                #end
+                            <div class="row" id="search_row_id">
+                                #parse("/search/lostPost/content.vm")
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -140,41 +99,15 @@
         </div>
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->
-    <div name="paginator" index="paginator_1">
-        <ul name="paginationUl" class="pagination">
-            <li class="disabled" name="pagePre">
-                <a href="javascript:;">
-                    上一页
-                </a>
-            </li>
-            <li class="disabled">
-                <a href="javascript:;" name="pageNext">
-                    下一页
-                </a>
-            </li>
-            <li class="active">
-                <a href="javascript:;" onclick="loadPostList(1,10)">1</a>
-            </li>
-            <li>
-                <input type="number" placeholder="页码" style="width:50px;text-align:center;float:left" id="gotoPageText"
-                       value="">
-            </li>
-            <li>
-                <a href="javascript:;" onclick="gotoPage(this)" limit="10" totalpages="1"
-                   class="btn btn-mini btn-success">
-                    跳转
-                </a>
-            </li>
-        </ul>
-    </div>
 </div><!-- /.row -->
 
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=hMOwbodAwP7lGCPyYoTOPf2K"></script>
 <script type="text/javascript" src="/static/js/app/map.js"></script>
 
 <script>
-    $("#nav-search-input-form").attr("target", "_self");
+
     $(function () {
+        $("#nav-search-input-form").attr("target", "_self");
         ace.settingFunction.main_container_fixed(null, true);
     })
     var maps = null;
@@ -249,7 +182,28 @@
 //            $("#lost_post_lat").val(point.lat);
         });
     }
+    function bindPageClick() {
+        $("[name='paginationUl'] li").click(function () {
+            if ($(this).hasClass("disabled")) {
+                return;
+            }
+            query(this, $(this).attr("page"));
+        });
+    }
+    function query(obj, page) {
+        var param = "";
+        param += "page=" + page;
+        param += "&keywords=" + $("#keywordsHiddenId").val();
+//        if (null != map){
+//            var southWest = map.getBounds().getSouthWest();
+//            var northEast = map.getBounds().getNorthEast();
+//            param += "&postLatStart=" + southWest.lat + "&postLatEnd=" + northEast.lat + "&postLngStart=" + southWest.lng + "&postLngEnd=" + northEast.lng + "&page=" + $.trim(page);
+//        }
 
+        $.get("/search/lostPost/query?" + param, function (html) {
+            $("#search_row_id").html(html);
+        });
+    }
 </script>
 
 
