@@ -6,7 +6,7 @@
     Javascript and reload this page!</h2></noscript>
 <div id="main-content" class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <form class="form-inline">
                 <div class="form-group">
                     <label for="connect">WebSocket connection:</label>
@@ -16,13 +16,14 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             <form class="form-inline">
                 <div class="form-group">
+                    <input type="text" id="myNameId" value="">
                     <label for="name">What is your name?</label>
                     <input type="text" id="name" class="form-control" placeholder="Your name here...">
                 </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <button id="send" class="btn btn-default" type="button">Send</button>
             </form>
         </div>
     </div>
@@ -57,13 +58,19 @@
     }
 
     function connect() {
+        var myname = $("#myNameId").val();
         var socket = new SockJS('/gs-guide-websocket');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/topic/greetings', function (greeting) {
-                showGreeting(JSON.parse(greeting.body).content);
+            stompClient.subscribe('/user/topic/greetings', function (greeting) {
+//                debugger;
+                showGreeting(greeting);
+            });
+            stompClient.subscribe('/user/' + myname + '/message', function (greeting) {
+//                debugger;
+                showGreeting(greeting);
             });
         });
     }
@@ -77,7 +84,14 @@
     }
 
     function sendName() {
-        stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+//        var myname = $("#myNameId").val();
+        var name = document.getElementById('name').value;
+//        stompClient.send("/app/hello", {}, myname + "_" + $("#name").val());
+//        stompClient.send("/app/message", {},JSON.stringify({ 'name': name }));
+        var url = "/socket/message/send?content=" + name;
+        $.get(url,function (data) {
+            console.info(data);
+        });
     }
 
     function showGreeting(message) {

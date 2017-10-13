@@ -109,9 +109,11 @@ public class LoginController extends WebAbstract<UserService> {
             response.setMessage("请输入账号");
         } else if (StringUtils.isBlank(userQuery.getPassword())) {
             response.setMessage("请输入密码");
-        } else if (StringUtils.isBlank(userQuery.getCaptcha()) || !userQuery.getCaptcha().equals(session.getAttribute(SystemConstant.CAPTCHA_NAME))) {
-            response.setMessage("请输入正确的验证码");
-        } else {
+        }
+//        else if (StringUtils.isBlank(userQuery.getCaptcha()) || !userQuery.getCaptcha().equals(session.getAttribute(SystemConstant.CAPTCHA_NAME))) {
+//            response.setMessage("请输入正确的验证码");
+//        }
+        else {
             User user = userService.queryByAccount(userQuery);
             try {
                 if (null != user && PasswordUtil.passwordEncrypt(userQuery.getPassword(), user.getRandomSalt()).equals(user.getPassword())) {
