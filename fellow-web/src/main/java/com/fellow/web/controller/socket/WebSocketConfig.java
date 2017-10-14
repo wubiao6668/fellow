@@ -39,7 +39,9 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
                 .setRelayHost("127.0.0.1") //activeMq服务器地址
                 .setRelayPort(61613)//activemq 服务器服务端口
                 .setClientLogin("guest")    //登陆账户
-                .setClientPasscode("guest");
+                .setClientPasscode("guest").
+                 setSystemHeartbeatReceiveInterval(2000) // 设置心跳信息接收时间间隔
+                .setSystemHeartbeatSendInterval(2000); // 设置心跳信息发送时间间隔();
         registry.setApplicationDestinationPrefixes("/app");
         registry.setUserDestinationPrefix("/user");
     }

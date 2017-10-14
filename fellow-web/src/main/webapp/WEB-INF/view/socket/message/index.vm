@@ -61,6 +61,8 @@
         var myname = $("#myNameId").val();
         var socket = new SockJS('/gs-guide-websocket');
         stompClient = Stomp.over(socket);
+        stompClient.heartbeat.outgoing=10000;
+        stompClient.heartbeat.incoming=10000;
         stompClient.connect({}, function (frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
