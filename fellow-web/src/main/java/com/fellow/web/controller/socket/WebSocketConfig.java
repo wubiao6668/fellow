@@ -34,7 +34,12 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         //应用程序以/app为前缀，代理目的地以/topic、/user为前缀
-        registry.enableSimpleBroker("/topic", "/user");
+//        registry.enableSimpleBroker("/topic", "/user");
+        registry.enableStompBrokerRelay("/topic", "/user")
+                .setRelayHost("127.0.0.1") //activeMq服务器地址
+                .setRelayPort(61613)//activemq 服务器服务端口
+                .setClientLogin("guest")    //登陆账户
+                .setClientPasscode("guest");
         registry.setApplicationDestinationPrefixes("/app");
         registry.setUserDestinationPrefix("/user");
     }

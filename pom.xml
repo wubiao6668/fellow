@@ -287,6 +287,12 @@
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-elasticsearch</artifactId>
+                <exclusions>
+                    <!--<exclusion>-->
+                            <!--<groupId>io.netty</groupId>-->
+                            <!--<artifactId>netty</artifactId>-->
+                    <!--</exclusion>-->
+                </exclusions>
                 <version>2.1.7.RELEASE</version>
             </dependency>
             <!-- LOG4J dependency start-->
@@ -329,6 +335,23 @@
                     </exclusion>
                 </exclusions>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>2.0.4.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-net</artifactId>
+                <version>2.0.4.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.0.30.Final</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
