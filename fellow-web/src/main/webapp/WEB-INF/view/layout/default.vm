@@ -186,6 +186,9 @@
                     <a href="/user/lookFor/index">查找好友</a>
                 </li>
                 <li class="grey dropdown-modal">
+                    <a href="/myCenter/message_index">消息</a>
+                </li>
+                <li class="grey dropdown-modal">
                     <a href="/myCenter/index">个人中心</a>
                 </li>
                 <li class="light-red dropdown-modal">
@@ -491,7 +494,7 @@
                         <div class="btn-group">
                             <a class="btn btn-sm btn-danger"  href="/post/lost/post/publishPost" target="_blank" >
                                 <i class="ace-icon glyphicon glyphicon-plus  bigger-110"></i>
-                                发帖
+                                发起
                             </a>
                         </div>
                     </li>

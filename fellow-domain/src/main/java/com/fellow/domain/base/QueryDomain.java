@@ -48,13 +48,7 @@ public class QueryDomain extends BaseDomain {
         this.limit = limit;
     }
 
-    public void initMysqlLimit(){
-        if (page <=1){
-            setLimit(pageSize+"");
-        }else {
-            setLimit(((page - 1) * pageSize) + "," + pageSize);
-        }
-    }
+
 
     public int getCount() {
         return count;
@@ -67,7 +61,13 @@ public class QueryDomain extends BaseDomain {
     public long getQueryTime() {
         return queryTime;
     }
-
+    public void initMysqlLimit(){
+        if (page <=1){
+            setLimit(pageSize+"");
+        }else {
+            setLimit(((page - 1) * pageSize) + "," + pageSize);
+        }
+    }
     public void setQueryTime(long queryTime) {
         this.queryTime = queryTime;
     }

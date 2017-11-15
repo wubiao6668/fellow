@@ -16,7 +16,7 @@ public class SystemInit {
 
     public void init(){
         log.info("##################                init begin            ##########################");
-        esIndexInitService.createIndexIfNotExists();
+//        esIndexInitService.createIndexIfNotExists();
         log.info("##################                init end            ##########################");
     }
 }

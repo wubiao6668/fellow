@@ -19,4 +19,10 @@ public class MyCenterController extends WebAbstract<PostService> {
         return VIEW_PATH + "/index";
     }
 
+    @RequestMapping("/message_index")
+    public String messageIndex() {
+        return VIEW_PATH + "/message_index";
+    }
+
+
 }
