@@ -130,8 +130,10 @@
                                     这时候第一辆真正意义上的自行车诞生了，是由苏格兰铁匠麦克米伦（Kirkpatrik Macmillan）设计的，它还有一个专门的名字——Velocipede。
                                 </p>
                                 <div class="row">
-                                    <div class="col-lg-2 small">
-                                    <i class="fa fa-eye btn-big"> </i> 100 浏览
+                                    <div class="col-lg-2 text-left">
+                                        <a type="button" class="btn btn-outline btn-link">
+                                            <i class="fa fa-eye btn-big"> </i>100 浏览
+                                        </a>
                                     </div>
                                     <div class="col-lg-8 text-center">
                                         <a class="btn  btn-big btn-white "><i class="fa fa-thumbs-up"></i> 赞 </a>
@@ -139,12 +141,18 @@
                                         <a class="btn btn-big btn-white"><i class="fa fa-heart"></i>暖</a>
                                         <a class="btn btn-big btn-white"><i class="fa fa-star"></i> 收藏</a>
                                     </div>
+                                    <div class="col-lg-2 text-right">
+                                        <a type="button" class="btn btn-outline btn-link">
+                                            <i class="fa fa-exclamation-triangle"> </i>举报
+                                        </a>
+                                    </div>
                                 </div>
                                 <hr>
                                 <!--评论-->
                                 <div class="row">
+                                    <!--评论文章-->
                                     <div class="col-lg-12">
-                                        <h2>评论：</h2>
+                                        <h2>评论：<span class="text-danger">(12)</span></h2>
                                         <div class="row">
                                             <div class="col-lg-1">
                                                 <div class="social-avatar">
@@ -164,80 +172,176 @@
                                             </div>
                                         </div>
                                          <br>
-                                         <br>
+                                    </div>
+                                    <!--评论展示区-->
+                                    <div class="col-sm-12">
                                         <div class="social-feed-box">
+                                            <div class="pull-right social-action dropdown">
+                                                <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu m-t-xs">
+                                                    <li><a href="#">设置</a></li>
+                                                </ul>
+                                            </div>
                                             <div class="social-avatar">
                                                 <a href="#" class="pull-left">
                                                     <img alt="image" src="img/a1.jpg">
                                                 </a>
                                                 <div class="media-body">
                                                     <a href="#">
-                                                        逆光狂胜蔡舞娘
+                                                        尤小右
                                                     </a>
-                                                    <small class="text-muted">17 小时前</small>
+                                                    <small class="text-muted">8月18日 16:05 来自 微博 weibo.com</small>
                                                 </div>
                                             </div>
                                             <div class="social-body">
                                                 <p>
-                                                    好东西，我朝淘宝准备跟进，1折开卖
+                                                    看到说是 React 的也是醉了，他说的是 falcor... Khan Academy 是最早在生产环境里使用 React 的公司之一
                                                 </p>
+
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <a class="btn  btn-xs btn-white "><i class="fa fa-thumbs-up"></i> 赞 </a>
+                                                        <a class="btn  btn-xs btn-white "><i class="fa fa-thumbs-down"></i> 踩 </a>
+                                                        <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i>暖</a>
+                                                        <button class="btn btn-white btn-xs" onclick="javascript:if ($('#first_reply').is(':hidden')){$('#first_reply').show()}else{$('#first_reply').hide()};"><i class="fa fa-comments"></i>回复</button>
+                                                    </div>
+                                                    <div class="col-sm-4 text-center">
+                                                        <a data-toggle="dropdown" onclick="javascript:if ($('#social-footer-id').is(':hidden')){$('#social-footer-id').show()}else{$('#social-footer-id').hide()};" class="dropdown-toggle" aria-expanded="false">
+                                                           <p class="text-info"> <i class="fa fa-angle-down"></i>12条回复</p>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-sm-4 text-right">
+                                                        <a class="small text-danger" onclick=""><i class="fa fa-trash-o"></i>删除</a>
+                                                        &nbsp;
+                                                        &nbsp;
+                                                        <a class="small" onclick="">
+                                                            <i class="fa fa-exclamation-triangle"> </i>举报
+                                                        </a>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="media-body" id="first_reply">
+                                                    <textarea  class="form-control" placeholder="填写评论..."></textarea>
+                                                    <button id="emoj_btn4" class="btn btn-sm btn-default">:)</button>
+                                                    <a class="btn btn-xs btn-info btn-rounded pull-right"
+                                                       href="javascript:;" onclick="article_comment(this)">回复</a>
+                                                </div>
                                             </div>
+                                            <div class="social-footer" id="social-footer-id">
+                                                <div class="social-comment">
+                                                    <a href="#" class="pull-left">
+                                                        <img alt="image" src="img/a1.jpg">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a href="#">
+                                                            尤小右
+                                                        </a> jQuery的作者在Twitter上发了一条这样的推，也是有点平衡了
+                                                        <br/>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <small class="text-muted">8月18日</small>
+                                                                <a class="small"><i class="fa fa-thumbs-up"></i> 赞 </a>
+                                                                <a class="small"><i class="fa fa-thumbs-down"></i> 踩
+                                                                </a>
+                                                                <a class="small"><i class="fa fa-heart"></i>暖</a>
+                                                                <a class="small" onclick="javascript:if ($('#comment_reply').is(':hidden')){$('#comment_reply').show()}else{$('#comment_reply').hide()};"><i
+                                                                        class="fa fa-comments"></i> 回复</a>
+                                                            </div>
+                                                            <div class="col-sm-6 text-right">
+                                                                <a class="small  text-danger" onclick=""><i class="fa fa-trash-o"></i>删除</a>
+                                                                &nbsp;
+                                                                &nbsp;
+                                                                <a class="small" onclick="">
+                                                                    <i class="fa fa-exclamation-triangle"> </i>举报
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="comment_reply">
+                                                        <textarea class="form-control" placeholder="填写评论..."></textarea>
+                                                        <button id="emoj_btn3" class="btn btn-sm btn-default">:)</button>
+                                                        <a class="btn btn-xs btn-rounded pull-right"
+                                                           href="javascript:;" onclick="article_comment(this)">回复</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="social-comment">
+                                                    <a href="#" class="pull-left">
+                                                        <img alt="image" src="img/a2.jpg">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <a href="#">
+                                                            尤小右
+                                                        </a> John大概是在学习React和Flux。。。//<a href="#">尤小右</a>你说的都对吗
+                                                        <br/>
+                                                        <small class="text-muted">8月18日</small>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
+
                                         <div class="social-feed-box">
+
+                                            <div class="pull-right social-action dropdown">
+                                                <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu m-t-xs">
+                                                    <li><a href="#">设置</a></li>
+                                                </ul>
+                                            </div>
                                             <div class="social-avatar">
                                                 <a href="#" class="pull-left">
-                                                    <img alt="image" src="img/a2.jpg">
+                                                    <img alt="image" src="img/a4.jpg">
                                                 </a>
                                                 <div class="media-body">
                                                     <a href="#">
-                                                        避雷范儿
+                                                        尤小右
                                                     </a>
-                                                    <small class="text-muted"> 16 小时前</small>
+                                                    <small class="text-muted">8月18日</small>
                                                 </div>
                                             </div>
                                             <div class="social-body">
                                                 <p>
-                                                    第一个真的好美 就是噪音太大了 挺唯美的意境瞬间变成工厂了
+                                                    5本《Node与Express开发》免费抽】本书涵盖Express 4.0，系统讲解利用Express开发Web应用的流程和步骤。通过实例讲授了开发网站和REST API的基础知识。还有设计与实现Web架构的最佳实践，帮你用Express构建单页、多页以及混合Web应用。
                                                 </p>
-                                            </div>
-                                        </div>
-                                        <div class="social-feed-box">
-                                            <div class="social-avatar">
-                                                <a href="#" class="pull-left">
-                                                    <img alt="image" src="img/a3.jpg">
-                                                </a>
-                                                <div class="media-body">
-                                                    <a href="#">
-                                                        kamppi
-                                                    </a>
-                                                    <small class="text-muted"> 6 小时前</small>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> 赞</button>
+                                                    <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> 评论</button>
+                                                    <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> 分享</button>
                                                 </div>
                                             </div>
-                                            <div class="social-body">
-                                                <p>
-                                                    好美的装置艺术，第二个让我想起了海中缓缓游动的鲸鱼。
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="social-feed-box">
-                                            <div class="social-avatar">
-                                                <a href="#" class="pull-left">
-                                                    <img alt="image" src="img/a5.jpg">
-                                                </a>
-                                                <div class="media-body">
-                                                    <a href="#">
-                                                        kamppi
+                                            <div class="social-footer">
+
+
+                                                <div class="social-comment">
+                                                    <a href="#" class="pull-left">
+                                                        <img alt="image" src="img/a8.jpg">
                                                     </a>
-                                                    <small class="text-muted">6 小时前</small>
+                                                    <div class="media-body">
+                                                        <a href="#">
+                                                            尤小右
+                                                        </a> 几位中奖，请私信我你们的收获地址、电话等信息，没中的同学敬请期待下次哦
+                                                        <br/>
+                                                        <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11</a> -
+                                                        <small class="text-muted">8月18日</small>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <a type="button" class="btn btn-xs btn-rounded">加载更多回复</a>
                                                 </div>
                                             </div>
-                                            <div class="social-body">
-                                                <p>
-                                                    “Flylight 的灯管并不固定，由一套软件控制：每一个灯管都根据与其它灯管的互动进行移动，就像一群真正的鸟群一样。”
-                                                    好像介绍的描述不对，灯管是固定的，控制的只是点亮和熄灭的时间，模拟成一团亮点移动
-                                                </p>
-                                            </div>
                                         </div>
+
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary btn-block m"><i class="fa fa-arrow-down"></i>加载更多评论
+                                        </button>
                                     </div>
                                 </div>
                             </div>
