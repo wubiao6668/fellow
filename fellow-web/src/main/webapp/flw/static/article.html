@@ -10,9 +10,29 @@
     <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
-
+    <!--表情-->
+    <link rel="stylesheet" href="plugins/emoji/lib/css/jquery.mCustomScrollbar.min.css"/>
+    <link rel="stylesheet" href="plugins/emoji/dist/css/jquery.emoji.css"/>
+    <link rel="stylesheet" href="plugins/emoji/lib/css/railscasts.css"/>
+    <link rel="stylesheet" href="plugins/emoji/dist/css/index.css"/>
     <style>
         #container {width:300px; height: 180px; }
+        /*文章评论框*/
+        #article_comment {
+            height: 91px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+            color: #555;
+            display: block;
+            font-size: 14px;
+            line-height: 1.42857;
+            padding: 6px 12px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            width: 100%;
+        }
+
     </style>
 </head>
 <body class="gray-bg top-navigation">
@@ -124,8 +144,27 @@
                                 <!--评论-->
                                 <div class="row">
                                     <div class="col-lg-12">
-
                                         <h2>评论：</h2>
+                                        <div class="row">
+                                            <div class="col-lg-1">
+                                                <div class="social-avatar">
+                                                    <a href="#" class="pull-left">
+                                                        <img alt="image" src="img/a4.jpg">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-11 text-left">
+                                                <!--<textarea id="article_comment" class="form-control" style="height: 130px"  placeholder="填写评论..."></textarea>-->
+                                                <div id="article_comment" contenteditable="true"></div>
+                                                <div style="padding-top: 10px">
+                                                    <button id="emoj_btn" class="btn btn-sm btn-default">:)</button>
+                                                    <a class="btn btn-danger btn-rounded pull-right"
+                                                       href="javascript:;" onclick="article_comment(this)">评论</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <br>
+                                         <br>
                                         <div class="social-feed-box">
                                             <div class="social-avatar">
                                                 <a href="#" class="pull-left">
@@ -259,8 +298,147 @@
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.6"></script>
 <script src="js/content.min.js?v=1.0.0"></script>
+<!--表情-->
+<script src="plugins/emoji/lib/script/highlight.pack.js"></script>
+<script src="plugins/emoji/lib/script/jquery.mousewheel-3.0.6.min.js"></script>
+<script src="plugins/emoji/lib/script/jquery.mCustomScrollbar.min.js"></script>
+<script src="plugins/emoji/dist/js/jquery.emoji.min.js"></script>
+<!--地图-->
 <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=f0de53e835eba72f7765753d2702872d"></script>
 <script>
+   var  emoji_alias={
+            1: "hehe",
+            2: "haha",
+            3: "tushe",
+            4: "a",
+            5: "ku",
+            6: "lu",
+            7: "kaixin",
+            8: "han",
+            9: "lei",
+            10: "heixian",
+            11: "bishi",
+            12: "bugaoxing",
+            13: "zhenbang",
+            14: "qian",
+            15: "yiwen",
+            16: "yinxian",
+            17: "tu",
+            18: "yi",
+            19: "weiqu",
+            20: "huaxin",
+            21: "hu",
+            22: "xiaonian",
+            23: "neng",
+            24: "taikaixin",
+            25: "huaji",
+            26: "mianqiang",
+            27: "kuanghan",
+            28: "guai",
+            29: "shuijiao",
+            30: "jinku",
+            31: "shengqi",
+            32: "jinya",
+            33: "pen",
+            34: "aixin",
+            35: "xinsui",
+            36: "meigui",
+            37: "liwu",
+            38: "caihong",
+            39: "xxyl",
+            40: "taiyang",
+            41: "qianbi",
+            42: "dnegpao",
+            43: "chabei",
+            44: "dangao",
+            45: "yinyue",
+            46: "haha2",
+            47: "shenli",
+            48: "damuzhi",
+            49: "ruo",
+            50: "OK"
+    };
+    var emoji_title = {
+        1: "呵呵",
+            2: "哈哈",
+            3: "吐舌",
+            4: "啊",
+            5: "酷",
+            6: "怒",
+            7: "开心",
+            8: "汗",
+            9: "泪",
+            10: "黑线",
+            11: "鄙视",
+            12: "不高兴",
+            13: "真棒",
+            14: "钱",
+            15: "疑问",
+            16: "阴脸",
+            17: "吐",
+            18: "咦",
+            19: "委屈",
+            20: "花心",
+            21: "呼~",
+            22: "笑脸",
+            23: "冷",
+            24: "太开心",
+            25: "滑稽",
+            26: "勉强",
+            27: "狂汗",
+            28: "乖",
+            29: "睡觉",
+            30: "惊哭",
+            31: "生气",
+            32: "惊讶",
+            33: "喷",
+            34: "爱心",
+            35: "心碎",
+            36: "玫瑰",
+            37: "礼物",
+            38: "彩虹",
+            39: "星星月亮",
+            40: "太阳",
+            41: "钱币",
+            42: "灯泡",
+            43: "茶杯",
+            44: "蛋糕",
+            45: "音乐",
+            46: "haha",
+            47: "胜利",
+            48: "大拇指",
+            49: "弱",
+            50: "OK"
+    }
+    $(function () {
+        //初始化表情
+        $("#article_comment").emoji({
+            button: "#emoj_btn",
+            showTab: false,
+            animation: 'slide',
+            icons: [{
+                name: "QQ表情",
+                path: "plugins/emoji/dist/img/qq/",
+                maxNum: 91,
+                excludeNums: [41, 45, 54],
+                file: ".gif"
+            }]
+        });
+    })
+    <!--评论-->
+    function article_comment(obj) {
+        var commentHtml =$("#article_comment").html();
+        commentHtml = commentHtml.replace(/<img [^>]*src=['"][^'"]+(\d).gif[^>]*>/gi, function (match, emoji_name) {
+            var alias = "";
+            if ("" != $.trim(emoji_name)){
+                alias = ":" + emoji_alias[emoji_name] ;
+            }
+            return alias;
+
+        });
+        console.info(commentHtml);
+    }
+    <!--地图-->
     var map = new AMap.Map('container',{
         zoom: 13,
         center: [116.39,39.9]//new AMap.LngLat(116.39,39.9)
