@@ -6,7 +6,7 @@
         <result property="id" column="id"/>
         <result property="account" column="account"/>
         <result property="skillId" column="skill_id"/>
-        <result property="skillNum" column="skill_num"/>
+        <!--<result property="skillNum" column="skill_num"/>-->
         <result property="createAccount" column="create_account"/>
         <result property="createName" column="create_name"/>
         <result property="createTime" column="create_time"/>
@@ -19,14 +19,14 @@
     </resultMap>
 
     <sql id="columns">
-        id,account,skill_id,skill_num,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
+        id,account,skill_id,create_account,create_name,create_time,update_account,update_name,update_time,sys_version,is_delete,ts
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_skill (
         account,
         skill_id,
-        skill_num,
+--         skill_num,
         create_account,
         create_name,
         create_time,
@@ -60,9 +60,9 @@
         <if test="@Ognl@isNotEmpty(skillId)">
             skill_id,
         </if>
-        <if test="@Ognl@isNotEmpty(skillNum)">
-            skill_num,
-        </if>
+        <!--<if test="@Ognl@isNotEmpty(skillNum)">-->
+            <!--skill_num,-->
+        <!--</if>-->
         <if test="@Ognl@isNotEmpty(createAccount)">
             create_account,
         </if>
@@ -120,9 +120,9 @@
         <if test="@Ognl@isNotEmpty(skillId)">
             skill_id = #{skillId},
         </if>
-        <if test="@Ognl@isNotEmpty(skillNum)">
-            skill_num = #{skillNum},
-        </if>
+        <!--<if test="@Ognl@isNotEmpty(skillNum)">-->
+            <!--skill_num = #{skillNum},-->
+        <!--</if>-->
         <if test="@Ognl@isNotEmpty(createAccount)">
             create_account = #{createAccount},
         </if>
@@ -160,9 +160,9 @@
         <if test="@Ognl@isNotEmpty(skillId)">
             skill_id = #{skillId},
         </if>
-        <if test="@Ognl@isNotEmpty(skillNum)">
-            skill_num = #{skillNum},
-        </if>
+        <!--<if test="@Ognl@isNotEmpty(skillNum)">-->
+            <!--skill_num = #{skillNum},-->
+        <!--</if>-->
         <if test="@Ognl@isNotEmpty(createAccount)">
             create_account = #{createAccount},
         </if>
@@ -239,9 +239,9 @@
             <if test="@Ognl@isNotEmpty(skillId)">
                 AND skill_id = #{skillId}
             </if>
-            <if test="@Ognl@isNotEmpty(skillNum)">
-                AND skill_num = #{skillNum}
-            </if>
+            <!--<if test="@Ognl@isNotEmpty(skillNum)">-->
+                <!--AND skill_num = #{skillNum}-->
+            <!--</if>-->
             <if test="@Ognl@isNotEmpty(createAccount)">
                 AND create_account = #{createAccount}
             </if>
@@ -283,8 +283,9 @@
     <select id="selectPersonalSkill" resultMap="UserSkill">
         SELECT
             id,
-            skill_id,
-            skill_num
+            skill_id
+--             ,
+--             skill_num
         FROM
             user_skill
         WHERE
@@ -295,7 +296,7 @@
     <update id="updatePersonalSkill">
         UPDATE user_skill
         SET
-            skill_num = #{skillNum},
+--             skill_num = #{skillNum},
             update_account = #{updateAccount},
             update_name = #{updateName},
             update_time = now(),
