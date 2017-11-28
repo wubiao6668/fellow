@@ -17,6 +17,10 @@
         .carousel img {
             width: 1181px;
         }
+        /**
+        *地图
+        */
+        #map_container {width:300px; height: 180px; }
     </style>
 </head>
 <body class="gray-bg top-navigation">
@@ -49,7 +53,153 @@
         </div>
         <div class="wrapper wrapper-content">
             <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <form role="form" class="form-inline">
+                                    <label>目标时间</label>
+                                    <input id="mubiao_time" class="laydate-icon form-control layer-date">
+                                    <label>出发时间</label>
+                                    <input id="chufa_time" class="laydate-icon form-control layer-date">
+                                    <label>目标地址</label>
+                                    <input  class=" form-control">
+                                    <label>出发地址</label>
+                                    <input  class="form-control">
+                                    <div class="checkbox m-l m-r-xs">
+                                        <label class="i-checks">
+                                            <input type="radio" name="sex"><i></i>男</label>
+                                    </div>
+                                    <div class="checkbox m-l m-r-xs">
+                                        <label class="i-checks">
+                                            <input type="radio" name="sex"><i></i>女</label>
+                                    </div>
+                                    <button class="btn btn-white pull-right" type="button">查找</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="row">
+                   <div class="col-lg-8">
+                       <div class="ibox">
+                           <div class="ibox-content">
+                               <div class="row">
+                                   <div class="col-lg-2">
+                                       <div class="text-center">
+                                           <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a2.jpg">
+                                           <div class="m-t-xs font-bold">奔波儿灞</div>
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-10">
+                                       <p>
+                                           <span class="badge badge-primary">看电影</span>
 
+                                           <span class="badge badge-danger">逛街</span>
+                                           <span class="badge badge-info">美食</span>
+                                       </p>
+                                       <div class="row">
+                                           <div class="col-lg-6">
+                                               <b>目的</b>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-time"></span> 09-12 12:12(周三) ~ 09-12 18:12(周三)
+                                               </p>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-map-marker"></span>北京朝阳区酒仙桥北街星科大厦A座2楼
+                                               </p>
+                                           </div>
+                                           <div class="col-lg-6">
+                                               <b>出发</b>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-time"></span> 09-12 12:12(周三) ~ 09-12 18:12(周三)
+                                               </p>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-map-marker"></span>北京朝阳区酒仙桥北街星科大厦A座2楼
+                                               </p>
+                                           </div>
+                                       </div>
+                                       <p>
+                                           就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。 夏天刚来时就不停地听到有人提起“有没有在我游泳的时候可以帮忙数圈的设备”，今天
+                                           <br>
+                                           <button type="button" class="btn btn-xs btn-primary pull-right">约ta</button>
+                                       </p>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="ibox">
+                           <div class="ibox-content">
+                               <div class="row">
+                                   <div class="col-lg-2">
+                                       <div class="text-center">
+                                           <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a2.jpg">
+                                           <div class="m-t-xs font-bold">奔波儿灞</div>
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-10">
+                                       <p>
+                                           <span class="badge badge-primary">看电影</span>
+
+                                           <span class="badge badge-danger">逛街</span>
+                                           <span class="badge badge-info">美食</span>
+                                       </p>
+                                       <div class="row">
+                                           <div class="col-lg-6">
+                                               <b>目的</b>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-time"></span> 09-12 12:12(周三) ~ 09-12 18:12(周三)
+                                               </p>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-map-marker"></span>北京朝阳区酒仙桥北街星科大厦A座2楼
+                                               </p>
+                                           </div>
+                                           <div class="col-lg-6">
+                                               <b>出发</b>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-time"></span> 09-12 12:12(周三) ~ 09-12 18:12(周三)
+                                               </p>
+                                               <p>
+                                                   <span class="glyphicon glyphicon-map-marker"></span>北京朝阳区酒仙桥北街星科大厦A座2楼
+                                               </p>
+                                           </div>
+                                       </div>
+                                       <p>
+                                           就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。 夏天刚来时就不停地听到有人提起“有没有在我游泳的时候可以帮忙数圈的设备”，今天
+                                           <br>
+                                           <button type="button" class="btn btn-xs btn-primary pull-right">约ta</button>
+                                       </p>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <!--分页-->
+                       <div class="col-sm-12 ">
+                           <ul class="pagination pagination-lg pull-right">
+                               <li><a href="#">&laquo;</a></li>
+                               <li class="active"><a href="#">1</a></li>
+                               <li class="disabled"><a href="#">2</a></li>
+                               <li><a href="#">3</a></li>
+                               <li><a href="#">4</a></li>
+                               <li><a href="#">5</a></li>
+                               <li><a href="#">&raquo;</a></li>
+                           </ul>
+                       </div>
+                   </div>
+                   <div class="col-lg-4">
+                       <!--地图-->
+                       <div class="col-sm-12">
+                           <div class="ibox float-e-margins">
+                               <div class="ibox-title">
+                                   <h5>目的地</h5>
+                               </div>
+                               <div class="ibox-content">
+                                   <div id="map_container"></div>
+                                   <small><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</small>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
             </div>
         </div>
         <div class="footer fixed">
@@ -65,9 +215,23 @@
 
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.6"></script>
-<script src="js/content.min.js?v=1.0.0"></script>
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+<!--地图-->
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=f0de53e835eba72f7765753d2702872d"></script>
 <script>
-
+    laydate({elem:"#mubiao_time",event:"focus"});
+    laydate({elem:"#chufa_time",event:"focus"});
+    <!--地图-->
+    var map = new AMap.Map('map_container',{
+        zoom: 13,
+        center: [116.39,39.9]//new AMap.LngLat(116.39,39.9)
+    });
+    var marker = new AMap.Marker({
+        position: [116.480983, 39.989628],//marker所在的位置
+        map:map//创建时直接赋予map属性
+    });
+    //也可以在创建完成后通过setMap方法执行地图对象
+    marker.setMap(map);
 </script>
 </body>
 <!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:52 GMT -->
