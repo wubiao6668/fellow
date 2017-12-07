@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="plugins/emoji/lib/css/railscasts.css"/>
     <link rel="stylesheet" href="plugins/emoji/dist/css/index.css"/>
     <style>
-        <!--地图-->
-        #container {width:300px; height: 180px; }
+        /*地图*/
+        #container_map {width:300px; height: 180px; }
         /*文章评论框*/
         #article_comment {
             height: 91px;
@@ -357,7 +357,7 @@
                                     <h5>地址</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <div id="container"></div>
+                                    <div id="container_map"></div>
                                     <small><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</small>
                                 </div>
                             </div>
@@ -544,7 +544,7 @@
         console.info(commentHtml);
     }
     <!--地图-->
-    var map = new AMap.Map('container',{
+    var map = new AMap.Map('container_map',{
         zoom: 13,
         center: [116.39,39.9]//new AMap.LngLat(116.39,39.9)
     });

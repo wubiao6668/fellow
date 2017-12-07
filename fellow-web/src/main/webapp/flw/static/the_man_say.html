@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:51 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>那人说</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <style>
+        /*地图*/
+        #container_map {width:300px; height: 180px; }
+        .carousel .item {
+            height: 282px;
+        }
+        .carousel img {
+            width: 1181px;
+        }
+    </style>
+</head>
+<body class="gray-bg top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+            <nav class="navbar navbar-static-top " role="navigation">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                            class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="#" class="navbar-brand">flw</a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a aria-expanded="false" role="button" href="index-2.html">首页</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <a href="login.html">
+                                <i class="fa fa-sign-out"></i>退出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <!--查询条件-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <form method="get" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">主题</label>
+                                        <div class="col-sm-10">
+                                            <button type="button" class="btn btn-outline btn-default">不限</button>
+                                            <button type="button" class="btn btn-outline btn-default">默认</button>
+                                            <button type="button" class="btn btn-outline btn-default">默认</button>
+                                            <div class="btn-group">
+                                                <button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">操作 <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="buttons.html#">置顶</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#" class="font-bold">修改</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#">禁用</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="buttons.html#">删除</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="hr-line-dashed"></div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">地点</label>
+                                        <div class="col-sm-10">
+                                            <button type="button" class="btn btn-outline btn-default">不限</button>
+                                            <button type="button" class="btn btn-outline btn-default">公交</button>
+                                            <button type="button" class="btn btn-outline btn-default">地铁</button>
+                                        </div>
+                                    </div>
+                                    <!--<div class="hr-line-dashed"></div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">视野</label>
+                                        <div class="col-sm-2">
+                                            <input  class="form-control">
+                                        </div>
+                                        <label class="col-sm-1 control-label">事情时间</label>
+                                        <div class="col-sm-2">
+                                            <input id="evetn_time" class="laydate-icon form-control layer-date">
+                                        </div>
+                                        <label class="col-sm-1 control-label">发表时间</label>
+                                        <div class="col-sm-2">
+                                            <input id="publish_time" class="laydate-icon form-control layer-date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <button class="btn btn-primary " type="button"><i class="fa fa-search"></i>&nbsp;搜索</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--帖子-->
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>热帖</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="profile.html#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li><a href="profile.html#">选项1</a>
+                                        </li>
+                                        <li><a href="profile.html#">选项2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div>
+                                    <div class="feed-activity-list">
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong>
+                                                <br>
+                                                <div class="">
+                                                    <a href="article.html" class="btn-link">
+                                                        <h2>
+                                                            想知道宁泽涛每天游多少圈？送他 Misfit 最新款 Speedo Shine
+                                                        </h2>
+                                                    </a>
+                                                    <p>
+                                                        就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。
+                                                        夏天刚来时就不停地听到有人提起“有没有在我游泳的时候可以帮忙数圈的设备”，今天 Misfit
+                                                        终于赶在夏天结束之前推出可追踪游泳运动的新款 Shine。这款新设备是 Misfit 与泳衣品牌 Speedo
+                                                        （速比涛）合作推出，因此被命名为 Speedo Shine。
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <!--<h5>标签：</h5>-->
+                                                            <button class="btn btn-primary btn-xs" type="button">Apple
+                                                                Watch
+                                                            </button>
+                                                            <button class="btn btn-white btn-xs" type="button">速比涛
+                                                            </button>
+                                                            <br>
+                                                            <small><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</small>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="small text-right">
+                                                                <!--<h5>状态：</h5>-->
+                                                                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
+                                                                <i class="fa fa-eye"> </i> 144 浏览
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong>
+                                                <br>
+                                                <div class="">
+                                                    <a href="article.html" class="btn-link">
+                                                        <h2>
+                                                            想知道宁泽涛每天游多少圈？送他 Misfit 最新款 Speedo Shine
+                                                        </h2>
+                                                    </a>
+                                                    <p>
+                                                        就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。
+                                                        夏天刚来时就不停地听到有人提起“有没有在我游泳的时候可以帮忙数圈的设备”，今天 Misfit
+                                                        终于赶在夏天结束之前推出可追踪游泳运动的新款 Shine。这款新设备是 Misfit 与泳衣品牌 Speedo
+                                                        （速比涛）合作推出，因此被命名为 Speedo Shine。
+                                                    </p>
+                                                    <div class="photos">
+                                                        <a target="_blank"
+                                                           href="../../../24.media.tumblr.com/20a9c501846f50c1271210639987000f/tumblr_n4vje69pJm1st5lhmo1_1280.jpg">
+                                                            <img alt="image" class="feed-photo" src="img/p1.jpg">
+                                                        </a>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <!--<h5>标签：</h5>-->
+                                                            <button class="btn btn-primary btn-xs" type="button">Apple
+                                                                Watch
+                                                            </button>
+                                                            <button class="btn btn-white btn-xs" type="button">速比涛
+                                                            </button>
+                                                            <br>
+                                                            <small><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</small>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="small text-right">
+                                                                <!--<h5>状态：</h5>-->
+                                                                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
+                                                                <i class="fa fa-eye"> </i> 144 浏览
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong>
+                                                <br>
+                                                <div class="">
+                                                    <a href="article.html" class="btn-link">
+                                                        <h2>
+                                                            想知道宁泽涛每天游多少圈？送他 Misfit 最新款 Speedo Shine
+                                                        </h2>
+                                                    </a>
+                                                    <p>
+                                                        就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。
+                                                        夏天刚来时就不停地听到有人提起“有没有在我游泳的时候可以帮忙数圈的设备”，今天 Misfit
+                                                        终于赶在夏天结束之前推出可追踪游泳运动的新款 Shine。这款新设备是 Misfit 与泳衣品牌 Speedo
+                                                        （速比涛）合作推出，因此被命名为 Speedo Shine。
+                                                    </p>
+                                                    <div class="photos">
+                                                        <a target="_blank"
+                                                           href="../../../24.media.tumblr.com/20a9c501846f50c1271210639987000f/tumblr_n4vje69pJm1st5lhmo1_1280.jpg">
+                                                            <img alt="image" class="feed-photo" src="img/p1.jpg">
+                                                        </a>
+                                                        <a target="_blank"
+                                                           href="../../../37.media.tumblr.com/9afe602b3e624aff6681b0b51f5a062b/tumblr_n4ef69szs71st5lhmo1_1280.jpg">
+                                                            <img alt="image" class="feed-photo" src="img/p3.jpg">
+                                                        </a>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <!--<h5>标签：</h5>-->
+                                                            <button class="btn btn-primary btn-xs" type="button">Apple
+                                                                Watch
+                                                            </button>
+                                                            <button class="btn btn-white btn-xs" type="button">速比涛
+                                                            </button>
+                                                            <br>
+                                                            <small><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</small>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="small text-right">
+                                                                <!--<h5>状态：</h5>-->
+                                                                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
+                                                                <i class="fa fa-eye"> </i> 144 浏览
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary btn-block m"><i class="fa fa-arrow-down"></i> 显示更多
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <!--地图-->
+                        <div class="col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>地址</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <div id="container_map"></div>
+                                    <small><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</small>
+                                </div>
+                            </div>
+                        </div>
+                        <!--热门推荐-->
+                        <div class="col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>热门推荐</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <ul>
+                                        <li><a href="index.html">每个人都有一个死角， 自己走不出来，别人也闯不进去。</a></li>
+                                        <li><a href="index.html">我把最深沉的秘密放在那里。</a></li>
+                                        <li><a href="index.html">你不懂我，我不怪你。</a></li>
+                                        <li><a href="index.html">每个人都有一道伤口， 来说，盖上布，识破。</a></li>
+                                        <li><a href="index.html">每个人都有一道伤口， 或深或浅，平时，以为不存在。</a></li>
+                                        <li><a href="index.html">按时， 或深或浅，盖上布，以为不存在。</a></li>
+                                        <li><a href="index.html">每个人都有一道伤口， 上档次，盖上布，收到。</a></li>
+                                        <li><a href="index.html">公司的， 电饭锅吧，盖上布，了，晚餐。</a></li>
+                                        <li><a href="index.html">李老师， 或深或浅，用户，打车。</a></li>
+                                        <li><a href="index.html"> 或深或浅，盖s上布，以为不存在。</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer fixed">
+            <div class="pull-right">
+                By：<a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
+            </div>
+            <div>
+                <strong>Copyright</strong> H+ &copy; 2014
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/content.min.js?v=1.0.0"></script>
+<!--地图-->
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=f0de53e835eba72f7765753d2702872d"></script>
+<script>
+    <!--地图-->
+    var map = new AMap.Map('container_map',{
+        zoom: 13,
+        center: [116.39,39.9]//new AMap.LngLat(116.39,39.9)
+    });
+    var marker = new AMap.Marker({
+        position: [116.480983, 39.989628],//marker所在的位置
+        map:map//创建时直接赋予map属性
+    });
+    //也可以在创建完成后通过setMap方法执行地图对象
+    marker.setMap(map);
+</script>
+</body>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:52 GMT -->
+</html>
