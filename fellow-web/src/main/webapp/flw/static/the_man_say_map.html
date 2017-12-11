@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:51 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>那人说-map</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <style>
+        html,
+        body{
+            width:100%;
+            height:100%;
+            margin:0px;
+            padding:0;
+            font-size:13px;
+        }
+        ul,
+        li{
+            padding:0;
+            margin:0;
+            list-style:none;
+        }
+        #outer-box{
+            height:100%;
+            padding-right:300px;
+        }
+        #container_map{
+            height:100%;
+            width:100%;
+        }
+        #panel{
+            position:absolute;
+            top:0;
+            bottom:0;
+            right:0;
+            height:100%;
+            overflow:auto;
+            width:300px;
+            z-index:999;
+            border-left:1px solid #eaeaea;
+            background:#fff;
+        }
+        #btnList{
+            position:absolute;
+            right:300px;
+            top:0;
+            padding:0;
+            margin:0;
+            z-index:999;
+        }
+        #btnList li{
+            padding:5px;
+        }
+        #btnList input{
+            padding:3px 10px;
+            min-width:120px;
+        }
+        li.poibox{
+            border-bottom:1px solid #eaeaea;
+            border-left:2px solid rgba(0,0,0,0);
+            padding:10px 3px;
+            cursor:pointer;
+        }
+        li.poibox.selected{
+            border-left-color:#f00;
+            background:#f6f6f6;
+        }
+        li.poibox:hover{
+            background:#f6f6f6;
+        }
+        li.poibox:last-child{
+            border-bottom:none;
+        }
+        h3.poi-title{
+            margin:3px 0;
+            font-size:13px;
+        }
+        .poibox .poi-info-left{
+            padding-left:8px
+        }
+        .poi-addr{
+            margin:7px 0 0;
+        }
+        .poibox .poi-imgbox{
+            width:100px;
+            height:74px;
+            vertical-align:top;
+            float:right;
+            margin:0 8px;
+            overflow:hidden
+        }
+        .poibox .poi-img{
+            display:inline-block;
+            width:100%;
+            height:100%;
+            background-size:cover;
+            background-position:50% 50%;
+        }
+        .amap-simple-marker.my-marker .amap-simple-marker-label{
+            font-size:12px;
+            color:#eee;
+            font-family:sans-serif;
+        }
+        .selected .amap-simple-marker.my-marker .amap-simple-marker-label{
+            font-size:14px;
+            color:orange;
+            font-weight:700;
+        }
+        @-webkit-keyframes flash{
+            from,
+            50%,
+            to{
+                opacity:1;
+            }
+            25%,
+            75%{
+                opacity:0;
+            }
+        }
+        @keyframes flash{
+            from,
+            50%,
+            to{
+                opacity:1;
+            }
+            25%,
+            75%{
+                opacity:0;
+            }
+        }
+        .flash{
+            -webkit-animation-name:flash;
+            animation-name:flash;
+        }
+        .animated{
+            -webkit-animation-duration:1s;
+            animation-duration:1s;
+            -webkit-animation-fill-mode:both;
+            animation-fill-mode:both;
+        }
+        .scrollbar1::-webkit-scrollbar-track{
+            -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
+            background-color:#fff;
+        }
+        .scrollbar1::-webkit-scrollbar{
+            width:6px;
+            background-color:#fff;
+        }
+        .scrollbar1::-webkit-scrollbar-thumb{
+            background-color:#aaa;
+        }
+        .clear{
+            clear:both;
+        }
+        /*地图*/
+        #container_map {
+            min-height: 300px;
+            min-width: 300px;
+        }
+
+        .carousel .item {
+            height: 282px;
+        }
+
+        .carousel img {
+            width: 1181px;
+        }
+    </style>
+</head>
+<body class="gray-bg top-navigation">
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+            <nav class="navbar navbar-static-top " role="navigation">
+                <div class="navbar-header">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
+                            class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="#" class="navbar-brand">flw</a>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a aria-expanded="false" role="button" href="index-2.html">首页</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <a href="login.html">
+                                <i class="fa fa-sign-out"></i>退出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="container">
+                <!--查询条件-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                                <form method="get" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">主题</label>
+                                        <div class="col-sm-10">
+                                            <button type="button" class="btn btn-outline btn-default">不限</button>
+                                            <button type="button" class="btn btn-outline btn-default">默认</button>
+                                            <button type="button" class="btn btn-outline btn-default">默认</button>
+                                            <div class="btn-group">
+                                                <button data-toggle="dropdown"
+                                                        class="btn btn-default btn-sm dropdown-toggle">操作 <span
+                                                        class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="buttons.html#">置顶</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#" class="font-bold">修改</a>
+                                                    </li>
+                                                    <li><a href="buttons.html#">禁用</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="buttons.html#">删除</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="hr-line-dashed"></div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">地点</label>
+                                        <div class="col-sm-10">
+                                            <button type="button" class="btn btn-outline btn-default">不限</button>
+                                            <button type="button" class="btn btn-outline btn-default">公交</button>
+                                            <button type="button" class="btn btn-outline btn-default">地铁</button>
+                                        </div>
+                                    </div>
+                                    <!--<div class="hr-line-dashed"></div>-->
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">事情时间</label>
+                                        <div class="col-sm-2">
+                                            <input id="evetn_time" class="laydate-icon form-control layer-date">
+                                        </div>
+                                        <label class="col-sm-1 control-label">发表时间</label>
+                                        <div class="col-sm-2">
+                                            <input id="publish_time" class="laydate-icon form-control layer-date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <button class="btn btn-primary " type="button"><i class="fa fa-search"></i>&nbsp;搜索
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--帖子-->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="outer-box">
+                            <div id="container_map" tabindex="0"></div>
+                            <div id="panel" class="scrollbar1">
+                                <ul id="myList">
+                                </ul>
+                            </div>
+                            <ul id="btnList">
+                                <li><input value="美食数据" type="button"
+                                           data-path="//a.amap.com/amap-ui/static/data/restaurant.json"/>
+                                </li>
+                                <li><input value="酒店数据" type="button"
+                                           data-path="//a.amap.com/amap-ui/static/data/hotel.json"/>
+                                </li>
+                                <li>
+                                    <input value="上一批" type="button" data-enable='markerList.getData().length>0'
+                                           data-eval='markerList.selectByDataIndex(0)'/>
+                                </li>
+                                <li><input value="下一批" type="button" data-enable='markerList.getData().length>0'
+                                           data-eval='markerList.selectByDataReverseIndex(0)'/>
+                                </li>
+                                <li><input value="清除选中" type="button" data-enable='!!markerList.getSelectedDataId()'
+                                           data-eval='markerList.clearSelected()'/>
+                                </li>
+                                <li><input value="清除数据" type="button" data-enable='markerList.getData().length>0'
+                                           data-eval='markerList.clearData()'/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer fixed">
+            <div class="pull-right">
+                By：<a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
+            </div>
+            <div>
+                <strong>Copyright</strong> H+ &copy; 2014
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/content.min.js?v=1.0.0"></script>
+<!--地图-->
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=f0de53e835eba72f7765753d2702872d"></script>
+<!-- UI组件库 1.0 -->
+<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript" src="//webapi.amap.com/demos/js/liteToolbar.js?v=1.0.11"></script>
+<script type="text/javascript">
+    //创建地图
+    var map = new AMap.Map('container_map', {
+        zoom: 9
+    });
+
+    AMapUI.loadUI(['misc/MarkerList', 'overlay/SimpleMarker', 'overlay/SimpleInfoWindow'],
+        function (MarkerList, SimpleMarker, SimpleInfoWindow) {
+
+            //即jQuery/Zepto
+            var $ = MarkerList.utils.$;
+
+            var defaultIconStyle = 'red', //默认的图标样式
+                hoverIconStyle = 'green', //鼠标hover时的样式
+                selectedIconStyle = 'purple' //选中时的图标样式
+            ;
+
+            var markerList = new MarkerList({
+                map: map,
+                //ListElement对应的父节点或者ID
+                listContainer: "myList", //document.getElementById("myList"),
+                //选中后显示
+
+                //从数据中读取位置, 返回lngLat
+                getPosition: function (item) {
+                    return [item.longitude, item.latitude];
+                },
+                //数据ID，如果不提供，默认使用数组索引，即index
+                getDataId: function (item, index) {
+
+                    return item.id;
+                },
+                getInfoWindow: function (data, context, recycledInfoWindow) {
+
+                    if (recycledInfoWindow) {
+
+                        recycledInfoWindow.setInfoTitle(data.name);
+                        recycledInfoWindow.setInfoBody(data.address);
+
+                        return recycledInfoWindow;
+                    }
+
+                    return new SimpleInfoWindow({
+                        infoTitle: data.name,
+                        infoBody: data.address,
+                        offset: new AMap.Pixel(0, -37)
+                    });
+                },
+                //构造marker用的options对象, content和title支持模板，也可以是函数，返回marker实例，或者返回options对象
+                getMarker: function (data, context, recycledMarker) {
+
+                    var label = String.fromCharCode('A'.charCodeAt(0) + context.index);
+
+                    if (recycledMarker) {
+                        recycledMarker.setIconLabel(label);
+                        return;
+                    }
+
+                    return new SimpleMarker({
+                        containerClassNames: 'my-marker',
+                        iconStyle: defaultIconStyle,
+                        iconLabel: label
+                    });
+                },
+                //构造列表元素，与getMarker类似，可以是函数，返回一个dom元素，或者模板 html string
+                getListElement: function (data, context, recycledListElement) {
+
+                    var label = String.fromCharCode('A'.charCodeAt(0) + context.index);
+
+                    //使用模板创建
+                    var innerHTML = MarkerList.utils.template('<div class="poi-imgbox">' +
+                        '<span class="poi-img" style="background-image:url(<%- data.pic %>)"> </span>'
+                        + '</div>' + '<div class="poi-info-left">' +
+                        '<h3 class="poi-title">' +
+                        '        <%- label %>. <%- data.name %>' +
+                        ' </h3>' +
+                        ' <div class="poi-info">' +
+                        ' <span class="poi-price">' +
+                        '            <%= data.price %>' +
+                        ' </span>' +
+                        ' <p class="poi-addr"><%- data.address %> </p>' +
+                        ' </div>' +
+                        ' </div>' +
+                        ' <div class="clear"></div>', {
+                        data: data,
+                        label: label
+                    });
+
+                    if (recycledListElement) {
+                        recycledListElement.innerHTML = innerHTML;
+                        return recycledListElement;
+                    }
+
+                    return '<li class="poibox">' +
+                        innerHTML +
+                        '</li>';
+                },
+                //列表节点上监听的事件
+                listElementEvents: ['click', 'mouseenter', 'mouseleave'],
+                //marker上监听的事件
+                markerEvents: ['click', 'mouseover', 'mouseout'],
+                //makeSelectedEvents:false,
+                selectedClassNames: 'selected',
+                autoSetFitView: true
+            });
+
+            window.markerList = markerList;
+
+            markerList.on('selectedChanged', function (event, info) {
+
+                checkBtnStats();
+
+                if (info.selected) {
+
+                    console.log(info);
+
+                    if (info.selected.marker) {
+                        //更新为选中样式
+                        info.selected.marker.setIconStyle(selectedIconStyle);
+                    }
+
+                    //选中并非由列表节点上的事件触发，将关联的列表节点移动到视野内
+                    if (!info.sourceEventInfo.isListElementEvent) {
+
+                        if (info.selected.listElement) {
+                            scrollListElementIntoView($(info.selected.listElement));
+                        }
+                    }
+                }
+
+                if (info.unSelected && info.unSelected.marker) {
+                    //更新为默认样式
+                    info.unSelected.marker.setIconStyle(defaultIconStyle);
+                }
+            });
+
+            markerList.on('listElementMouseenter markerMouseover', function (event, record) {
+
+                if (record && record.marker) {
+
+                    forcusMarker(record.marker);
+
+                    //this.openInfoWindowOnRecord(record);
+
+                    //非选中的id
+                    if (!this.isSelectedDataId(record.id)) {
+                        //设置为hover样式
+                        record.marker.setIconStyle(hoverIconStyle);
+                        //this.closeInfoWindow();
+                    }
+                }
+            });
+
+            markerList.on('listElementMouseleave markerMouseout', function (event, record) {
+
+                if (record && record.marker) {
+
+                    if (!this.isSelectedDataId(record.id)) {
+                        //恢复默认样式
+                        record.marker.setIconStyle(defaultIconStyle);
+                    }
+                }
+            });
+
+            //数据输出完成
+            markerList.on('renderComplete', function (event, records) {
+
+                checkBtnStats();
+            });
+
+            // markerList.on('*', function(type, event, res) {
+            //     console.log(type, event, res);
+            // });
+
+            //加载数据
+            function loadData(src, callback) {
+
+                $.getJSON(src, function (data) {
+
+                    markerList._dataSrc = src;
+
+                    //渲染数据
+                    markerList.render(data);
+
+                    if (callback) {
+                        callback(null, data);
+                    }
+                });
+            }
+
+            var $btns = $('#btnList input[data-path]');
+
+            /**
+             * 检测各个button的状态
+             */
+            function checkBtnStats() {
+                $('#btnList input[data-enable]').each(function () {
+
+                    var $input = $(this),
+                        codeEval = $input.attr('data-enable');
+
+                    $input.prop({
+                        disabled: !eval(codeEval)
+                    });
+                });
+            }
+
+            $('#btnList').on('click', 'input', function () {
+
+                var $input = $(this),
+                    dataPath = $input.attr('data-path'),
+                    codeEval = $input.attr('data-eval');
+
+                if (dataPath) {
+                    loadData(dataPath);
+                } else if (codeEval) {
+                    eval(codeEval);
+                }
+
+                checkBtnStats();
+            });
+
+            loadData($btns.attr('data-path'));
+
+            function forcusMarker(marker) {
+                marker.setTop(true);
+
+                //不在地图视野内
+                if (!(map.getBounds().contains(marker.getPosition()))) {
+
+                    //移动到中心
+                    map.setCenter(marker.getPosition());
+                }
+            }
+
+            function isElementInViewport(el) {
+                var rect = el.getBoundingClientRect();
+
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+                );
+            }
+
+            function scrollListElementIntoView($listEle) {
+
+                if (!isElementInViewport($listEle.get(0))) {
+                    $('#panel').scrollTop($listEle.offset().top - $listEle.parent().offset().top);
+                }
+
+                //闪动一下
+                $listEle
+                    .one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                        function (e) {
+                            $(this).removeClass('flash animated');
+                        }).addClass('flash animated');
+            }
+
+
+        });
+
+</script>
+</body>
+<!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:52 GMT -->
+</html>
