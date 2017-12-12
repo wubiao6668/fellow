@@ -435,6 +435,16 @@
         AMap.event.addListener(marker, 'click', function() {
             infoWindow.open(map, marker.getPosition());
         });
+
+        marker = new AMap.Marker({
+            map: map,
+            position: [116.484181, 39.989792]
+        });
+
+        //鼠标点击marker弹出自定义的信息窗体
+        AMap.event.addListener(marker, 'click', function() {
+            infoWindow.open(map, marker.getPosition());
+        });
     }
     var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
