@@ -10,165 +10,58 @@
     <link href="css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.min862f.css?v=4.1.0" rel="stylesheet">
-    <style>
-        html,
-        body{
-            width:100%;
-            height:100%;
-            margin:0px;
-            padding:0;
-            font-size:13px;
-        }
-        ul,
-        li{
-            padding:0;
-            margin:0;
-            list-style:none;
-        }
-        #outer-box{
-            height:100%;
-            padding-right:300px;
-        }
+    <style type="text/css">
         #container_map{
-            height:100%;
-            width:100%;
+            height: 500px;
         }
-        #panel{
-            position:absolute;
-            top:0;
-            bottom:0;
-            right:0;
-            height:100%;
-            overflow:auto;
-            width:300px;
-            z-index:999;
-            border-left:1px solid #eaeaea;
-            background:#fff;
+        .info {
+            border: solid 1px silver;
         }
-        #btnList{
-            position:absolute;
-            right:300px;
-            top:0;
-            padding:0;
-            margin:0;
-            z-index:999;
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
         }
-        #btnList li{
-            padding:5px;
+        div.info-top div {
+            display: inline-block;
+            color: #333333;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 31px;
+            padding: 0 10px;
         }
-        #btnList input{
-            padding:3px 10px;
-            min-width:120px;
+        div.info-top img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition-duration: 0.25s;
         }
-        li.poibox{
-            border-bottom:1px solid #eaeaea;
-            border-left:2px solid rgba(0,0,0,0);
-            padding:10px 3px;
-            cursor:pointer;
+        div.info-top img:hover {
+            box-shadow: 0px 0px 5px #000;
         }
-        li.poibox.selected{
-            border-left-color:#f00;
-            background:#f6f6f6;
+        div.info-middle {
+            font-size: 12px;
+            padding: 6px;
+            line-height: 20px;
         }
-        li.poibox:hover{
-            background:#f6f6f6;
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
         }
-        li.poibox:last-child{
-            border-bottom:none;
+        div.info-bottom img {
+            position: relative;
+            z-index: 104;
         }
-        h3.poi-title{
-            margin:3px 0;
-            font-size:13px;
+        span {
+            margin-left: 5px;
+            font-size: 11px;
         }
-        .poibox .poi-info-left{
-            padding-left:8px
-        }
-        .poi-addr{
-            margin:7px 0 0;
-        }
-        .poibox .poi-imgbox{
-            width:100px;
-            height:74px;
-            vertical-align:top;
-            float:right;
-            margin:0 8px;
-            overflow:hidden
-        }
-        .poibox .poi-img{
-            display:inline-block;
-            width:100%;
-            height:100%;
-            background-size:cover;
-            background-position:50% 50%;
-        }
-        .amap-simple-marker.my-marker .amap-simple-marker-label{
-            font-size:12px;
-            color:#eee;
-            font-family:sans-serif;
-        }
-        .selected .amap-simple-marker.my-marker .amap-simple-marker-label{
-            font-size:14px;
-            color:orange;
-            font-weight:700;
-        }
-        @-webkit-keyframes flash{
-            from,
-            50%,
-            to{
-                opacity:1;
-            }
-            25%,
-            75%{
-                opacity:0;
-            }
-        }
-        @keyframes flash{
-            from,
-            50%,
-            to{
-                opacity:1;
-            }
-            25%,
-            75%{
-                opacity:0;
-            }
-        }
-        .flash{
-            -webkit-animation-name:flash;
-            animation-name:flash;
-        }
-        .animated{
-            -webkit-animation-duration:1s;
-            animation-duration:1s;
-            -webkit-animation-fill-mode:both;
-            animation-fill-mode:both;
-        }
-        .scrollbar1::-webkit-scrollbar-track{
-            -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3);
-            background-color:#fff;
-        }
-        .scrollbar1::-webkit-scrollbar{
-            width:6px;
-            background-color:#fff;
-        }
-        .scrollbar1::-webkit-scrollbar-thumb{
-            background-color:#aaa;
-        }
-        .clear{
-            clear:both;
-        }
-        /*地图*/
-        #container_map {
-            min-height: 300px;
-            min-width: 300px;
-        }
-
-        .carousel .item {
-            height: 282px;
-        }
-
-        .carousel img {
-            width: 1181px;
+        .info-middle img {
+            float: left;
+            margin-right: 6px;
         }
     </style>
 </head>
@@ -264,34 +157,198 @@
                 </div>
                 <!--帖子-->
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-8">
                         <div id="outer-box">
                             <div id="container_map" tabindex="0"></div>
-                            <div id="panel" class="scrollbar1">
-                                <ul id="myList">
-                                </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>热帖</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="profile.html#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li><a href="profile.html#">选项1</a>
+                                        </li>
+                                        <li><a href="profile.html#">选项2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <ul id="btnList">
-                                <li><input value="美食数据" type="button"
-                                           data-path="//a.amap.com/amap-ui/static/data/restaurant.json"/>
-                                </li>
-                                <li><input value="酒店数据" type="button"
-                                           data-path="//a.amap.com/amap-ui/static/data/hotel.json"/>
-                                </li>
-                                <li>
-                                    <input value="上一批" type="button" data-enable='markerList.getData().length>0'
-                                           data-eval='markerList.selectByDataIndex(0)'/>
-                                </li>
-                                <li><input value="下一批" type="button" data-enable='markerList.getData().length>0'
-                                           data-eval='markerList.selectByDataReverseIndex(0)'/>
-                                </li>
-                                <li><input value="清除选中" type="button" data-enable='!!markerList.getSelectedDataId()'
-                                           data-eval='markerList.clearSelected()'/>
-                                </li>
-                                <li><input value="清除数据" type="button" data-enable='markerList.getData().length>0'
-                                           data-eval='markerList.clearData()'/>
-                                </li>
-                            </ul>
+                            <div class="ibox-content" >
+                                <div class="pre-scrollable" style="max-height: 400px">
+                                    <div class="feed-activity-list">
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong>
+                                                <br>
+                                                <a target="_blank" href="article.html#">
+                                                    <div class="">
+                                                    <p>
+                                                    <div  class="row no-padding">
+                                                        <div class="col-md-6 no-padding">
+                                                            【就算你敢带着 Apple Watch 下水游泳】，它也不能记录你游了多少圈。
+                                                            （速比涛）合作推出，因此被命名为 Speedo Shine。
+                                                         </div>
+                                                        <div class="col-md-6 no-padding">
+                                                            <img alt="image" style="height: 90px;" class="feed-photo" src="img/p1.jpg">
+                                                        </div>
+                                                     </div>
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <!--<h5>标签：</h5>-->
+                                                            <button class="btn btn-white btn-xs" type="button">速比涛</button>
+                                                            <button class="btn btn-white btn-xs" type="button">速比涛</button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="small text-right">
+                                                                <!--<h5>状态：</h5>-->
+                                                                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
+                                                                <i class="fa fa-eye"> </i> 144 浏览
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong>
+                                                <br>
+                                                <a target="_blank" href="article.html#">
+                                                    <div class="">
+                                                        <p>
+                                                            就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。
+                                                            夏天刚来时就不停地听到有人提起“有没有
+                                                            在我游泳
+                                                        </p>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <!--<h5>标签：</h5>-->
+                                                                <button class="btn btn-primary btn-xs" type="button">Apple
+                                                                    Watch
+                                                                </button>
+                                                                <button class="btn btn-white btn-xs" type="button">速比涛
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="small text-right">
+                                                                    <!--<h5>状态：</h5>-->
+                                                                    <div><i class="fa fa-comments-o"> </i> 56 评论</div>
+                                                                    <i class="fa fa-eye"> </i> 144 浏览
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong>
+                                                <br>
+                                                <a target="_blank" href="article.html#">
+                                                    <div class="">
+                                                    <p>
+                                                        就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。
+                                                        夏天刚来时就不停地听到有人提起“有没有
+                                                        在我游泳
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <!--<h5>标签：</h5>-->
+                                                            <button class="btn btn-primary btn-xs" type="button">Apple
+                                                                Watch
+                                                            </button>
+                                                            <button class="btn btn-white btn-xs" type="button">速比涛
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="small text-right">
+                                                                <!--<h5>状态：</h5>-->
+                                                                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
+                                                                <i class="fa fa-eye"> </i> 144 浏览
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong>
+                                                <br>
+                                                <a target="_blank" href="article.html#">
+                                                <div class="">
+                                                    <p>
+                                                        就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。
+                                                        夏天刚来时就不停地听到有人提起“有没有
+                                                        在我游泳
+                                                    </p>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <!--<h5>标签：</h5>-->
+                                                            <button class="btn btn-primary btn-xs" type="button">Apple
+                                                                Watch
+                                                            </button>
+                                                            <button class="btn btn-white btn-xs" type="button">速比涛
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="small text-right">
+                                                                <!--<h5>状态：</h5>-->
+                                                                <div><i class="fa fa-comments-o"> </i> 56 评论</div>
+                                                                <i class="fa fa-eye"> </i> 144 浏览
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--分页-->
+                                <div class="col-sm-12 ">
+                                    <ul class="pagination pagination-lg pull-right">
+                                        <li><a href="#">&laquo;</a></li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li class="disabled"><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li><a href="#">&raquo;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -316,268 +373,82 @@
 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 <script type="text/javascript" src="//webapi.amap.com/demos/js/liteToolbar.js?v=1.0.11"></script>
 <script type="text/javascript">
-    //创建地图
-    var map = new AMap.Map('container_map', {
-        zoom: 9
+    //地图初始化时，在地图上添加一个marker标记,鼠标点击marker可弹出自定义的信息窗体
+    var map = new AMap.Map("container_map", {
+        resizeEnable: true,
+        center: [116.481181, 39.989792],
+        zoom: 16
+    });
+    addMarker();
+    //添加marker标记
+    function addMarker() {
+        map.clearMap();
+        var marker = new AMap.Marker({
+            map: map,
+            position: [116.481181, 39.989792]
+        });
+        //鼠标点击marker弹出自定义的信息窗体
+        AMap.event.addListener(marker, 'click', function() {
+            infoWindow.open(map, marker.getPosition());
+        });
+    }
+
+    //实例化信息窗体
+    var title = '方恒假日酒店<span style="font-size:11px;color:#F00;">价格:318</span>',
+        content = [];
+    content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
+    content.push("电话：010-64733333");
+    content.push("<a href='http://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
+    var infoWindow = new AMap.InfoWindow({
+        isCustom: true,  //使用自定义窗体
+        content: createInfoWindow(title, content.join("<br/>")),
+        offset: new AMap.Pixel(16, -45)
     });
 
-    AMapUI.loadUI(['misc/MarkerList', 'overlay/SimpleMarker', 'overlay/SimpleInfoWindow'],
-        function (MarkerList, SimpleMarker, SimpleInfoWindow) {
+    //构建自定义信息窗体
+    function createInfoWindow(title, content) {
+        var info = document.createElement("div");
+        info.className = "info";
 
-            //即jQuery/Zepto
-            var $ = MarkerList.utils.$;
+        //可以通过下面的方式修改自定义窗体的宽高
+        //info.style.width = "400px";
+        // 定义顶部标题
+        var top = document.createElement("div");
+        var titleD = document.createElement("div");
+        var closeX = document.createElement("img");
+        top.className = "info-top";
+        titleD.innerHTML = title;
+        closeX.src = "http://webapi.amap.com/images/close2.gif";
+        closeX.onclick = closeInfoWindow;
 
-            var defaultIconStyle = 'red', //默认的图标样式
-                hoverIconStyle = 'green', //鼠标hover时的样式
-                selectedIconStyle = 'purple' //选中时的图标样式
-            ;
+        top.appendChild(titleD);
+        top.appendChild(closeX);
+        info.appendChild(top);
 
-            var markerList = new MarkerList({
-                map: map,
-                //ListElement对应的父节点或者ID
-                listContainer: "myList", //document.getElementById("myList"),
-                //选中后显示
+        // 定义中部内容
+        var middle = document.createElement("div");
+        middle.className = "info-middle";
+        middle.style.backgroundColor = 'white';
+        middle.innerHTML = content;
+        info.appendChild(middle);
 
-                //从数据中读取位置, 返回lngLat
-                getPosition: function (item) {
-                    return [item.longitude, item.latitude];
-                },
-                //数据ID，如果不提供，默认使用数组索引，即index
-                getDataId: function (item, index) {
+        // 定义底部内容
+        var bottom = document.createElement("div");
+        bottom.className = "info-bottom";
+        bottom.style.position = 'relative';
+        bottom.style.top = '0px';
+        bottom.style.margin = '0 auto';
+        var sharp = document.createElement("img");
+        sharp.src = "http://webapi.amap.com/images/sharp.png";
+        bottom.appendChild(sharp);
+        info.appendChild(bottom);
+        return info;
+    }
 
-                    return item.id;
-                },
-                getInfoWindow: function (data, context, recycledInfoWindow) {
-
-                    if (recycledInfoWindow) {
-
-                        recycledInfoWindow.setInfoTitle(data.name);
-                        recycledInfoWindow.setInfoBody(data.address);
-
-                        return recycledInfoWindow;
-                    }
-
-                    return new SimpleInfoWindow({
-                        infoTitle: data.name,
-                        infoBody: data.address,
-                        offset: new AMap.Pixel(0, -37)
-                    });
-                },
-                //构造marker用的options对象, content和title支持模板，也可以是函数，返回marker实例，或者返回options对象
-                getMarker: function (data, context, recycledMarker) {
-
-                    var label = String.fromCharCode('A'.charCodeAt(0) + context.index);
-
-                    if (recycledMarker) {
-                        recycledMarker.setIconLabel(label);
-                        return;
-                    }
-
-                    return new SimpleMarker({
-                        containerClassNames: 'my-marker',
-                        iconStyle: defaultIconStyle,
-                        iconLabel: label
-                    });
-                },
-                //构造列表元素，与getMarker类似，可以是函数，返回一个dom元素，或者模板 html string
-                getListElement: function (data, context, recycledListElement) {
-
-                    var label = String.fromCharCode('A'.charCodeAt(0) + context.index);
-
-                    //使用模板创建
-                    var innerHTML = MarkerList.utils.template('<div class="poi-imgbox">' +
-                        '<span class="poi-img" style="background-image:url(<%- data.pic %>)"> </span>'
-                        + '</div>' + '<div class="poi-info-left">' +
-                        '<h3 class="poi-title">' +
-                        '        <%- label %>. <%- data.name %>' +
-                        ' </h3>' +
-                        ' <div class="poi-info">' +
-                        ' <span class="poi-price">' +
-                        '            <%= data.price %>' +
-                        ' </span>' +
-                        ' <p class="poi-addr"><%- data.address %> </p>' +
-                        ' </div>' +
-                        ' </div>' +
-                        ' <div class="clear"></div>', {
-                        data: data,
-                        label: label
-                    });
-
-                    if (recycledListElement) {
-                        recycledListElement.innerHTML = innerHTML;
-                        return recycledListElement;
-                    }
-
-                    return '<li class="poibox">' +
-                        innerHTML +
-                        '</li>';
-                },
-                //列表节点上监听的事件
-                listElementEvents: ['click', 'mouseenter', 'mouseleave'],
-                //marker上监听的事件
-                markerEvents: ['click', 'mouseover', 'mouseout'],
-                //makeSelectedEvents:false,
-                selectedClassNames: 'selected',
-                autoSetFitView: true
-            });
-
-            window.markerList = markerList;
-
-            markerList.on('selectedChanged', function (event, info) {
-
-                checkBtnStats();
-
-                if (info.selected) {
-
-                    console.log(info);
-
-                    if (info.selected.marker) {
-                        //更新为选中样式
-                        info.selected.marker.setIconStyle(selectedIconStyle);
-                    }
-
-                    //选中并非由列表节点上的事件触发，将关联的列表节点移动到视野内
-                    if (!info.sourceEventInfo.isListElementEvent) {
-
-                        if (info.selected.listElement) {
-                            scrollListElementIntoView($(info.selected.listElement));
-                        }
-                    }
-                }
-
-                if (info.unSelected && info.unSelected.marker) {
-                    //更新为默认样式
-                    info.unSelected.marker.setIconStyle(defaultIconStyle);
-                }
-            });
-
-            markerList.on('listElementMouseenter markerMouseover', function (event, record) {
-
-                if (record && record.marker) {
-
-                    forcusMarker(record.marker);
-
-                    //this.openInfoWindowOnRecord(record);
-
-                    //非选中的id
-                    if (!this.isSelectedDataId(record.id)) {
-                        //设置为hover样式
-                        record.marker.setIconStyle(hoverIconStyle);
-                        //this.closeInfoWindow();
-                    }
-                }
-            });
-
-            markerList.on('listElementMouseleave markerMouseout', function (event, record) {
-
-                if (record && record.marker) {
-
-                    if (!this.isSelectedDataId(record.id)) {
-                        //恢复默认样式
-                        record.marker.setIconStyle(defaultIconStyle);
-                    }
-                }
-            });
-
-            //数据输出完成
-            markerList.on('renderComplete', function (event, records) {
-
-                checkBtnStats();
-            });
-
-            // markerList.on('*', function(type, event, res) {
-            //     console.log(type, event, res);
-            // });
-
-            //加载数据
-            function loadData(src, callback) {
-
-                $.getJSON(src, function (data) {
-
-                    markerList._dataSrc = src;
-
-                    //渲染数据
-                    markerList.render(data);
-
-                    if (callback) {
-                        callback(null, data);
-                    }
-                });
-            }
-
-            var $btns = $('#btnList input[data-path]');
-
-            /**
-             * 检测各个button的状态
-             */
-            function checkBtnStats() {
-                $('#btnList input[data-enable]').each(function () {
-
-                    var $input = $(this),
-                        codeEval = $input.attr('data-enable');
-
-                    $input.prop({
-                        disabled: !eval(codeEval)
-                    });
-                });
-            }
-
-            $('#btnList').on('click', 'input', function () {
-
-                var $input = $(this),
-                    dataPath = $input.attr('data-path'),
-                    codeEval = $input.attr('data-eval');
-
-                if (dataPath) {
-                    loadData(dataPath);
-                } else if (codeEval) {
-                    eval(codeEval);
-                }
-
-                checkBtnStats();
-            });
-
-            loadData($btns.attr('data-path'));
-
-            function forcusMarker(marker) {
-                marker.setTop(true);
-
-                //不在地图视野内
-                if (!(map.getBounds().contains(marker.getPosition()))) {
-
-                    //移动到中心
-                    map.setCenter(marker.getPosition());
-                }
-            }
-
-            function isElementInViewport(el) {
-                var rect = el.getBoundingClientRect();
-
-                return (
-                    rect.top >= 0 &&
-                    rect.left >= 0 &&
-                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
-                    rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
-                );
-            }
-
-            function scrollListElementIntoView($listEle) {
-
-                if (!isElementInViewport($listEle.get(0))) {
-                    $('#panel').scrollTop($listEle.offset().top - $listEle.parent().offset().top);
-                }
-
-                //闪动一下
-                $listEle
-                    .one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
-                        function (e) {
-                            $(this).removeClass('flash animated');
-                        }).addClass('flash animated');
-            }
-
-
-        });
-
+    //关闭信息窗体
+    function closeInfoWindow() {
+        map.clearInfoWindow();
+    }
 </script>
 </body>
 <!-- Mirrored from www.zi-han.net/theme/hplus/index_v5.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:52 GMT -->
