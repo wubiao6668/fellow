@@ -348,6 +348,7 @@
                                         <li><a href="#">&raquo;</a></li>
                                     </ul>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -373,6 +374,49 @@
 <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
 <script type="text/javascript" src="//webapi.amap.com/demos/js/liteToolbar.js?v=1.0.11"></script>
 <script type="text/javascript">
+    //实例化信息窗体
+    var title = '',
+        content_html,
+        content = [];
+    content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
+    content.push("电话：010-64733333");
+    content.push("<a href='http://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
+    content_html ="<div class=\"feed-element\">\n" +
+        "                                            <a href=\"profile.html#\" class=\"pull-left\">\n" +
+        "                                                <img alt=\"image\" class=\"img-circle\" src=\"img/a1.jpg\">\n" +
+        "                                            </a>\n" +
+        "                                            <div class=\"media-body \">\n" +
+        "                                                <small class=\"pull-right text-navy\">1天前</small>\n" +
+        "                                                <strong>奔波儿灞</strong>\n" +
+        "                                                <br>\n" +
+        "                                                <a target=\"_blank\" href=\"article.html#\">\n" +
+        "                                                <div class=\"\">\n" +
+        "                                                    <p>\n" +
+        "                                                        就算你敢带着 Apple Watch 下水游泳，它也不能记录你游了多少圈。\n" +
+        "                                                        夏天刚来时就不停地听到有人提起“有没有\n" +
+        "                                                        在我游泳\n" +
+        "                                                    </p>\n" +
+        "                                                    <div class=\"row\">\n" +
+        "                                                        <div class=\"col-md-6\">\n" +
+        "                                                            <!--<h5>标签：</h5>-->\n" +
+        "                                                            <button class=\"btn btn-primary btn-xs\" type=\"button\">Apple\n" +
+        "                                                                Watch\n" +
+        "                                                            </button>\n" +
+        "                                                            <button class=\"btn btn-white btn-xs\" type=\"button\">速比涛\n" +
+        "                                                            </button>\n" +
+        "                                                        </div>\n" +
+        "                                                        <div class=\"col-md-6\">\n" +
+        "                                                            <div class=\"small text-right\">\n" +
+        "                                                                <!--<h5>状态：</h5>-->\n" +
+        "                                                                <div><i class=\"fa fa-comments-o\"> </i> 56 评论</div>\n" +
+        "                                                                <i class=\"fa fa-eye\"> </i> 144 浏览\n" +
+        "                                                            </div>\n" +
+        "                                                        </div>\n" +
+        "                                                    </div>\n" +
+        "                                                </div>\n" +
+        "                                                </a>\n" +
+        "                                            </div>\n" +
+        "                                        </div>";
     //地图初始化时，在地图上添加一个marker标记,鼠标点击marker可弹出自定义的信息窗体
     var map = new AMap.Map("container_map", {
         resizeEnable: true,
@@ -392,16 +436,9 @@
             infoWindow.open(map, marker.getPosition());
         });
     }
-
-    //实例化信息窗体
-    var title = '方恒假日酒店<span style="font-size:11px;color:#F00;">价格:318</span>',
-        content = [];
-    content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
-    content.push("电话：010-64733333");
-    content.push("<a href='http://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
     var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
-        content: createInfoWindow(title, content.join("<br/>")),
+        content: createInfoWindow(title,content_html),
         offset: new AMap.Pixel(16, -45)
     });
 
@@ -414,14 +451,14 @@
         //info.style.width = "400px";
         // 定义顶部标题
         var top = document.createElement("div");
-        var titleD = document.createElement("div");
+//        var titleD = document.createElement("div");
         var closeX = document.createElement("img");
         top.className = "info-top";
-        titleD.innerHTML = title;
+//        titleD.innerHTML = title;
         closeX.src = "http://webapi.amap.com/images/close2.gif";
         closeX.onclick = closeInfoWindow;
 
-        top.appendChild(titleD);
+//        top.appendChild(titleD);
         top.appendChild(closeX);
         info.appendChild(top);
 
